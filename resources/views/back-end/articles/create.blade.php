@@ -63,7 +63,7 @@
 
             <div class="form-group full-width">
                 <label for="content">Contenu <span class="required">*</span></label>
-                <textarea id="content" name="content" class="form-textarea" rows="12" required placeholder="Contenu complet de l'article">{{ old('content') }}</textarea>
+                <textarea id="content" name="content" class="form-textarea wysiwyg" rows="12" required placeholder="Contenu complet de l'article">{{ old('content') }}</textarea>
                 @error('content') <span class="form-error">{{ $message }}</span> @enderror
             </div>
 

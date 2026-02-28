@@ -79,7 +79,7 @@
 
             <div class="form-group full-width">
                 <label for="quote">Citation <span class="required">*</span></label>
-                <textarea id="quote" name="quote" class="form-textarea" rows="5" required placeholder="Le témoignage de la personne">{{ old('quote') }}</textarea>
+                <textarea id="quote" name="quote" class="form-textarea wysiwyg" rows="5" required placeholder="Le témoignage de la personne">{{ old('quote') }}</textarea>
                 @error('quote') <span class="form-error">{{ $message }}</span> @enderror
             </div>
 

@@ -9,7 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="{{ asset('assets/css/admin.css?v=3') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css?v=7') }}">
+    <script src="https://cdn.jsdelivr.net/npm/@ckeditor/ckeditor5-build-classic@43.3.1/build/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ckeditor/ckeditor5-build-classic@43.3.1/build/translations/fr.js"></script>
     @yield('head')
 </head>
 <body class="admin-body">
@@ -89,10 +91,127 @@
             setTimeout(() => dismissToast(toast), 5000);
         };
 
+        // ========== CKEditor 5 WYSIWYG ==========
+        const ckEditorConfig = {
+            language: 'fr',
+            toolbar: ['heading', '|', 'bold', 'italic', 'underline', '|', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote', 'insertTable', '|', 'undo', 'redo'],
+            heading: {
+                options: [
+                    { model: 'paragraph', title: 'Paragraphe', class: 'ck-heading_paragraph' },
+                    { model: 'heading2', view: 'h2', title: 'Titre 2', class: 'ck-heading_heading2' },
+                    { model: 'heading3', view: 'h3', title: 'Titre 3', class: 'ck-heading_heading3' },
+                    { model: 'heading4', view: 'h4', title: 'Titre 4', class: 'ck-heading_heading4' }
+                ]
+            },
+            table: { contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'] }
+        };
+
+        // Store all CKEditor instances keyed by textarea ID
+        window.ckInstances = {};
+
+        function initWysiwyg(container) {
+            container = container || document;
+            container.querySelectorAll('textarea.wysiwyg').forEach(function(textarea) {
+                if (window.ckInstances[textarea.id]) return; // already init
+                ClassicEditor.create(textarea, ckEditorConfig)
+                    .then(function(editor) {
+                        window.ckInstances[textarea.id] = editor;
+                    })
+                    .catch(function(err) { console.error('CKEditor init error:', err); });
+            });
+        }
+
+        function destroyWysiwyg(container) {
+            container = container || document;
+            container.querySelectorAll('textarea.wysiwyg').forEach(function(textarea) {
+                var editor = window.ckInstances[textarea.id];
+                if (editor) {
+                    editor.destroy().catch(function() {});
+                    delete window.ckInstances[textarea.id];
+                }
+            });
+        }
+
+        // Sync all CKEditor data to textareas before form submit
+        document.addEventListener('submit', function(e) {
+            var form = e.target;
+            if (!form.matches || !form.matches('form')) return;
+            form.querySelectorAll('textarea.wysiwyg').forEach(function(textarea) {
+                var editor = window.ckInstances[textarea.id];
+                if (editor) editor.updateSourceElement();
+            });
+        }, true);
+
+        // Init all visible editors on page load
+        document.addEventListener('DOMContentLoaded', function() { initWysiwyg(document); });
+
+        // ========== Custom File Upload ==========
+        function enhanceFileInputs(container) {
+            container = container || document;
+            container.querySelectorAll('input[type="file"].form-input').forEach(function(input) {
+                if (input.dataset.enhanced) return;
+                input.dataset.enhanced = '1';
+
+                var isImage = input.accept && input.accept.indexOf('image') !== -1;
+                var isPdf = input.accept && input.accept.indexOf('pdf') !== -1;
+                var isMultiple = input.multiple;
+                var icon, btnText;
+
+                if (isImage) {
+                    icon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
+                    btnText = 'Choisir une image';
+                } else if (isPdf) {
+                    icon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
+                    btnText = 'Choisir un PDF';
+                } else {
+                    icon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>';
+                    btnText = 'Choisir un fichier';
+                }
+
+                var wrapper = document.createElement('div');
+                wrapper.className = 'file-upload';
+                if (isImage) wrapper.classList.add('file-upload--image');
+
+                input.parentNode.insertBefore(wrapper, input);
+                wrapper.appendChild(input);
+                input.style.display = 'none';
+                input.classList.remove('form-input');
+
+                var label = document.createElement('label');
+                label.className = 'file-upload__btn';
+                label.setAttribute('for', input.id);
+                label.innerHTML = icon + '<span>' + btnText + '</span>';
+                wrapper.appendChild(label);
+
+                var nameEl = document.createElement('span');
+                nameEl.className = 'file-upload__name';
+                nameEl.textContent = 'Aucun fichier selectionne';
+                wrapper.appendChild(nameEl);
+
+                input.addEventListener('change', function() {
+                    if (this.files && this.files.length > 0) {
+                        nameEl.textContent = this.files.length > 1
+                            ? this.files.length + ' fichiers selectionnes'
+                            : this.files[0].name;
+                        wrapper.classList.add('file-upload--has-file');
+                    } else {
+                        nameEl.textContent = 'Aucun fichier selectionne';
+                        wrapper.classList.remove('file-upload--has-file');
+                    }
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() { enhanceFileInputs(document); });
+
         // ========== Modal System ==========
         function openModal(id) {
             const modal = document.getElementById(id);
-            if (modal) modal.classList.add('active');
+            if (modal) {
+                modal.classList.add('active');
+                // Init CKEditor + file uploads in modal after it becomes visible
+                setTimeout(function() { initWysiwyg(modal); enhanceFileInputs(modal); }, 100);
+            }
         }
 
         // View modal helpers
@@ -231,6 +350,14 @@
             }
 
             openModal('editModal');
+
+            // Update CKEditor instances with populated data
+            setTimeout(function() {
+                editModal.querySelectorAll('textarea.wysiwyg').forEach(function(textarea) {
+                    var editor = window.ckInstances[textarea.id];
+                    if (editor) editor.setData(textarea.value || '');
+                });
+            }, 200);
         });
 
         // ========== Image preview helper for fullpage modals ==========

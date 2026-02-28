@@ -4313,3 +4313,197 @@ input, select, textarea { font-family: inherit; }
     display: none;
   }
 }
+
+/* ========== Custom File Upload ========== */
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.file-upload:hover {
+    border-color: var(--primary);
+    background: rgba(29, 140, 79, 0.03);
+}
+
+.file-upload--has-file {
+    border-color: var(--primary);
+    border-style: solid;
+    background: rgba(29, 140, 79, 0.04);
+}
+
+.file-upload__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.file-upload__btn:hover {
+    background: var(--green-dark, #15703f);
+    box-shadow: 0 4px 12px -2px rgba(29, 140, 79, 0.3);
+}
+
+.file-upload__btn svg {
+    flex-shrink: 0;
+    stroke: currentColor;
+}
+
+.file-upload__name {
+    font-size: 0.8125rem;
+    color: var(--text-400);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+.file-upload--has-file .file-upload__name {
+    color: var(--text-700);
+    font-weight: 500;
+}
+
+/* In fullpage modal sections */
+.modal-fp-section .file-upload {
+    padding: 12px 16px;
+}
+
+/* ========== CKEditor 5 Integration ========== */
+.ck.ck-reset.ck-editor.ck-rounded-corners {
+    width: 100% !important;
+    flex: 0 0 auto !important;
+}
+
+.ck.ck-editor__main {
+    flex: 0 0 auto !important;
+    display: block !important;
+}
+
+.ck.ck-editor__editable_inline {
+    min-height: 200px;
+    border-color: var(--border) !important;
+    border-radius: 0 0 8px 8px !important;
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    font-size: 0.925rem !important;
+    line-height: 1.65 !important;
+    color: var(--text-900) !important;
+    padding: 12px 16px !important;
+}
+
+.ck.ck-editor__editable_inline:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(29, 140, 79, 0.12) !important;
+}
+
+.ck.ck-toolbar {
+    border-color: var(--border) !important;
+    border-radius: 8px 8px 0 0 !important;
+    background: var(--bg-secondary) !important;
+}
+
+.ck.ck-toolbar .ck-button {
+    border-radius: 4px !important;
+}
+
+.ck.ck-toolbar .ck-button.ck-on {
+    background: var(--primary) !important;
+    color: #fff !important;
+}
+
+.ck.ck-editor__editable_inline h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 16px 0 8px;
+}
+
+.ck.ck-editor__editable_inline h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 14px 0 6px;
+}
+
+.ck.ck-editor__editable_inline h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 12px 0 4px;
+}
+
+.ck.ck-editor__editable_inline p {
+    margin: 0 0 8px;
+}
+
+.ck.ck-editor__editable_inline ul,
+.ck.ck-editor__editable_inline ol {
+    padding-left: 20px;
+    margin: 8px 0;
+}
+
+.ck.ck-editor__editable_inline blockquote {
+    border-left: 4px solid var(--primary);
+    padding: 8px 16px;
+    margin: 12px 0;
+    color: var(--text-600);
+    background: var(--bg-secondary);
+    border-radius: 0 6px 6px 0;
+}
+
+.ck.ck-editor__editable_inline table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 12px 0;
+}
+
+.ck.ck-editor__editable_inline table td,
+.ck.ck-editor__editable_inline table th {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+}
+
+.ck.ck-editor__editable_inline a {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+/* ── CKEditor heights by context ── */
+
+/* Default: descriptions, bios, answers */
+.form-group .ck.ck-editor__editable_inline {
+    min-height: 200px;
+}
+
+/* Tall editors on create/edit pages (article/dossier content) */
+textarea.wysiwyg[rows="10"] + .ck-editor .ck-editor__editable_inline,
+textarea.wysiwyg[rows="12"] + .ck-editor .ck-editor__editable_inline,
+textarea.wysiwyg[rows="16"] + .ck-editor .ck-editor__editable_inline {
+    min-height: 380px;
+}
+
+/* Simple modals (non-fullpage) */
+.admin-modal .ck.ck-editor__editable_inline {
+    min-height: 220px;
+}
+
+/* Fullpage modals — two-column layout */
+.admin-modal.modal-fullpage .ck.ck-editor__editable_inline {
+    min-height: 300px;
+}
+
+/* Fullpage modals — single-column layout */
+.admin-modal.modal-fullpage .modal-fp-grid.single-col .ck.ck-editor__editable_inline {
+    min-height: 250px;
+}

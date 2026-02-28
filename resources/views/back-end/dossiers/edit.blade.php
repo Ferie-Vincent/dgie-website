@@ -42,7 +42,7 @@
             </div>
             <div class="form-group full-width">
                 <label for="content">Contenu <span class="required">*</span></label>
-                <textarea id="content" name="content" class="form-textarea" rows="10" required>{{ old('content', $dossier->content) }}</textarea>
+                <textarea id="content" name="content" class="form-textarea wysiwyg" rows="10" required>{{ old('content', $dossier->content) }}</textarea>
             </div>
             <div class="form-group">
                 <label for="image">Image</label>
