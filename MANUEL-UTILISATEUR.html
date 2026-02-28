@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Manuel Utilisateur — Plateforme DGIE</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --orange: #E8772A;
+    --orange-dark: #C25E15;
+    --green: #1D8C4F;
+    --green-dark: #156B3C;
+    --bordeaux: #7A1B3E;
+    --slate-50: #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1e293b;
+    --slate-900: #0f172a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--slate-800);
+    font-size: 11pt;
+    line-height: 1.65;
+    background: #fff;
+  }
+
+  /* ===== COVER PAGE ===== */
+  .cover-page {
+    page-break-after: always;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 50%, var(--slate-900) 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover-page::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: rgba(232, 119, 42, 0.15);
+  }
+
+  .cover-page::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    left: -80px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .cover-top {
+    padding: 60px 60px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cover-logo {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 24pt;
+    color: var(--green);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+
+  .cover-org {
+    font-size: 11pt;
+    opacity: 0.8;
+    line-height: 1.4;
+  }
+
+  .cover-org strong {
+    display: block;
+    font-size: 13pt;
+    opacity: 1;
+  }
+
+  .cover-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-accent {
+    width: 80px;
+    height: 5px;
+    background: var(--orange);
+    border-radius: 3px;
+    margin-bottom: 30px;
+  }
+
+  .cover-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 36pt;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .cover-subtitle {
+    font-size: 16pt;
+    font-weight: 300;
+    opacity: 0.85;
+    margin-bottom: 40px;
+    max-width: 500px;
+  }
+
+  .cover-url {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 12pt;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .cover-bottom {
+    padding: 30px 60px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    justify-content: space-between;
+    font-size: 9pt;
+    opacity: 0.6;
+  }
+
+  /* ===== TABLE OF CONTENTS ===== */
+  .toc-page {
+    page-break-after: always;
+    padding: 60px;
+  }
+
+  .toc-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid var(--green);
+  }
+
+  .toc-header h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22pt;
+    color: var(--green);
+  }
+
+  .toc-section {
+    margin-bottom: 8px;
+  }
+
+  .toc-part {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11pt;
+    color: var(--green);
+    padding: 10px 0 4px;
+    margin-top: 12px;
+    border-bottom: 1px solid var(--slate-200);
+  }
+
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0 6px 20px;
+    font-size: 10.5pt;
+    color: var(--slate-700);
+    border-bottom: 1px dotted var(--slate-200);
+  }
+
+  .toc-item span:last-child {
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  /* ===== SECTION HEADERS ===== */
+  .section-break {
+    page-break-before: always;
+  }
+
+  h1.section-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22pt;
+    color: var(--green);
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--green);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--green);
+    color: white;
+    border-radius: 10px;
+    font-size: 16pt;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15pt;
+    color: var(--orange-dark);
+    margin: 28px 0 12px;
+    padding-left: 14px;
+    border-left: 4px solid var(--orange);
+  }
+
+  h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12pt;
+    color: var(--slate-800);
+    margin: 20px 0 8px;
+  }
+
+  /* ===== CONTENT ===== */
+  .content {
+    padding: 50px 60px;
+  }
+
+  p {
+    margin-bottom: 10px;
+    text-align: justify;
+  }
+
+  /* ===== SCREENSHOTS ===== */
+  .screenshot {
+    margin: 16px 0 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--slate-200);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .screenshot img {
+    width: 100%;
+    display: block;
+  }
+
+  .screenshot-caption {
+    background: var(--slate-50);
+    padding: 8px 14px;
+    font-size: 9pt;
+    color: var(--slate-500);
+    font-style: italic;
+    border-top: 1px solid var(--slate-200);
+  }
+
+  /* ===== TABLES ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 18px;
+    font-size: 10pt;
+  }
+
+  thead th {
+    background: var(--green);
+    color: white;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 9.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  thead th:first-child { border-radius: 6px 0 0 0; }
+  thead th:last-child { border-radius: 0 6px 0 0; }
+
+  tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--slate-200);
+    vertical-align: top;
+  }
+
+  tbody tr:nth-child(even) { background: var(--slate-50); }
+  tbody tr:hover { background: #f0fdf4; }
+
+  /* ===== ALERT BOXES ===== */
+  .info-box {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin: 14px 0;
+    font-size: 10pt;
+  }
+
+  .info-box strong { color: #1d4ed8; }
+
+  .warning-box {
+    background: #fff7ed;
+    border-left: 4px solid var(--orange);
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin: 14px 0;
+    font-size: 10pt;
+  }
+
+  .warning-box strong { color: var(--orange-dark); }
+
+  .success-box {
+    background: #f0fdf4;
+    border-left: 4px solid var(--green);
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin: 14px 0;
+    font-size: 10pt;
+  }
+
+  .success-box strong { color: var(--green-dark); }
+
+  /* ===== LISTS ===== */
+  ul, ol {
+    margin: 8px 0 14px 24px;
+  }
+
+  li {
+    margin-bottom: 4px;
+  }
+
+  /* ===== BADGES ===== */
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 8.5pt;
+    font-weight: 600;
+  }
+
+  .badge-green { background: #dcfce7; color: var(--green-dark); }
+  .badge-red { background: #fde2e2; color: #991b1b; }
+  .badge-gray { background: var(--slate-200); color: var(--slate-600); }
+  .badge-orange { background: #ffedd5; color: var(--orange-dark); }
+
+  /* ===== STEPS ===== */
+  .steps {
+    counter-reset: step;
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  .steps li {
+    counter-increment: step;
+    padding: 8px 0 8px 44px;
+    position: relative;
+    border-left: 2px solid var(--slate-200);
+    margin-left: 16px;
+    margin-bottom: 0;
+  }
+
+  .steps li:last-child { border-left-color: transparent; }
+
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: -14px;
+    top: 6px;
+    width: 26px;
+    height: 26px;
+    background: var(--orange);
+    color: white;
+    border-radius: 50%;
+    font-size: 9pt;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    text-align: center;
+  }
+
+  /* ===== ROLE CARDS ===== */
+  .role-cards {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  .role-card {
+    flex: 1;
+    border-radius: 10px;
+    padding: 18px;
+    border: 2px solid;
+  }
+
+  .role-card h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12pt;
+    margin-bottom: 8px;
+  }
+
+  .role-card ul { margin: 4px 0 0 16px; font-size: 9.5pt; }
+  .role-card li { margin-bottom: 3px; }
+
+  .role-super { border-color: var(--orange); background: #fff7ed; }
+  .role-super h4 { color: var(--orange-dark); }
+
+  .role-editeur { border-color: var(--green); background: #f0fdf4; }
+  .role-editeur h4 { color: var(--green-dark); }
+
+  .role-redacteur { border-color: #6366f1; background: #eef2ff; }
+  .role-redacteur h4 { color: #4338ca; }
+
+  /* ===== PAGE HEADER/FOOTER ===== */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 60px;
+    border-bottom: 2px solid var(--green);
+    font-size: 8.5pt;
+    color: var(--slate-500);
+  }
+
+  .page-header-left {
+    font-weight: 600;
+    color: var(--green);
+  }
+
+  /* ===== CODE/URL INLINE ===== */
+  code {
+    background: var(--slate-100);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 9.5pt;
+    color: var(--orange-dark);
+  }
+
+  /* ===== SIDEBAR MAP ===== */
+  .sitemap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .sitemap-card {
+    border: 1px solid var(--slate-200);
+    border-radius: 8px;
+    padding: 14px;
+    background: var(--slate-50);
+  }
+
+  .sitemap-card h4 {
+    font-size: 10pt;
+    color: var(--green);
+    margin-bottom: 6px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .sitemap-card ul {
+    margin: 0 0 0 14px;
+    font-size: 9pt;
+    color: var(--slate-600);
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { font-size: 10pt; }
+    .content { padding: 40px 50px; }
+    .screenshot { break-inside: avoid; }
+    table { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- COVER PAGE -->
+<!-- ============================================================ -->
+<div class="cover-page">
+  <div class="cover-top">
+    <div class="cover-logo">DGIE</div>
+    <div class="cover-org">
+      <strong>Direction Generale des Ivoiriens de l'Exterieur</strong>
+      Ministere des Affaires Etrangeres — Republique de Cote d'Ivoire
+    </div>
+  </div>
+
+  <div class="cover-center">
+    <div class="cover-accent"></div>
+    <div class="cover-title">Manuel Utilisateur<br>de la Plateforme</div>
+    <div class="cover-subtitle">Guide complet d'utilisation du site public et du panneau d'administration</div>
+    <div class="cover-url">https://ivoiriendelexterieur.com</div>
+  </div>
+
+  <div class="cover-bottom">
+    <span>Document confidentiel — Usage interne</span>
+    <span>Version 1.0 — Fevrier 2026</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TABLE OF CONTENTS -->
+<!-- ============================================================ -->
+<div class="toc-page">
+  <div class="toc-header">
+    <h2>Table des matieres</h2>
+  </div>
+
+  <div class="toc-part">PARTIE I — LE SITE PUBLIC (Front-Office)</div>
+  <div class="toc-item"><span>1. Presentation generale de la plateforme</span></div>
+  <div class="toc-item"><span>2. Page d'accueil</span></div>
+  <div class="toc-item"><span>3. Actualites</span></div>
+  <div class="toc-item"><span>4. La DGIE — Presentation institutionnelle</span></div>
+  <div class="toc-item"><span>5. Nos Services</span></div>
+  <div class="toc-item"><span>6. Retour et Reintegration</span></div>
+  <div class="toc-item"><span>7. Investir et Contribuer</span></div>
+  <div class="toc-item"><span>8. Coin des Diasporas</span></div>
+  <div class="toc-item"><span>9. Dossiers thematiques</span></div>
+  <div class="toc-item"><span>10. Galerie</span></div>
+  <div class="toc-item"><span>11. Contact et formulaires publics</span></div>
+
+  <div class="toc-part">PARTIE II — L'ADMINISTRATION (Back-Office)</div>
+  <div class="toc-item"><span>12. Connexion et securite</span></div>
+  <div class="toc-item"><span>13. Tableau de bord</span></div>
+  <div class="toc-item"><span>14. Gestion des Articles</span></div>
+  <div class="toc-item"><span>15. Categories et Flash Infos</span></div>
+  <div class="toc-item"><span>16. Evenements</span></div>
+  <div class="toc-item"><span>17. Personnel et Partenaires</span></div>
+  <div class="toc-item"><span>18. Coin des Diasporas (admin)</span></div>
+  <div class="toc-item"><span>19. Nos Services et La DGIE (admin)</span></div>
+  <div class="toc-item"><span>20. Mediatheque (admin)</span></div>
+  <div class="toc-item"><span>21. Communication</span></div>
+  <div class="toc-item"><span>22. Administration — Utilisateurs et Parametres</span></div>
+
+  <div class="toc-part">ANNEXES</div>
+  <div class="toc-item"><span>A. Roles et permissions</span></div>
+  <div class="toc-item"><span>B. Conventions et bonnes pratiques</span></div>
+  <div class="toc-item"><span>C. Plan du site complet</span></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART I — FRONT OFFICE -->
+<!-- ============================================================ -->
+<div class="content section-break">
+  <h1 class="section-title" style="color: var(--orange-dark); border-color: var(--orange);">
+    PARTIE I — LE SITE PUBLIC (Front-Office)
+  </h1>
+
+  <p>Le site <strong>ivoiriendelexterieur.com</strong> est la vitrine numerique de la Direction Generale des Ivoiriens de l'Exterieur (DGIE). Il s'adresse a la diaspora ivoirienne et au grand public, et propose des informations institutionnelles, des actualites, des services, et des ressources pratiques.</p>
+
+  <!-- SECTION 1 -->
+  <h1 class="section-title" style="margin-top: 40px;">
+    <span class="section-number">1</span> Presentation generale
+  </h1>
+
+  <p>La plateforme se compose de deux espaces distincts :</p>
+
+  <table>
+    <thead>
+      <tr><th>Espace</th><th>Adresse</th><th>Acces</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Site public</strong></td><td><code>https://ivoiriendelexterieur.com</code></td><td>Ouvert a tous les visiteurs</td></tr>
+      <tr><td><strong>Administration</strong></td><td><code>https://ivoiriendelexterieur.com/admin/login</code></td><td>Reserve aux administrateurs</td></tr>
+    </tbody>
+  </table>
+
+  <p>Le site public comporte 10 rubriques principales accessibles depuis le menu de navigation en haut de chaque page.</p>
+
+  <!-- SECTION 2 — ACCUEIL -->
+  <h1 class="section-title" style="margin-top: 40px;">
+    <span class="section-number">2</span> Page d'accueil
+  </h1>
+
+  <p>La page d'accueil est le hub central du site. Elle regroupe les informations les plus importantes et oriente les visiteurs vers les differentes rubriques.</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/01-accueil-hero.png" alt="Page d'accueil — banniere hero">
+    <div class="screenshot-caption">Page d'accueil — Banniere hero, barre de navigation et flash infos</div>
+  </div>
+
+  <h3>Elements de la page d'accueil (de haut en bas) :</h3>
+
+  <table>
+    <thead>
+      <tr><th>Element</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Barre superieure</strong></td><td>Liens institutionnels et coordonnees rapides</td></tr>
+      <tr><td><strong>Flash infos</strong></td><td>Bandeau defilant avec les messages d'actualite urgente</td></tr>
+      <tr><td><strong>Menu principal</strong></td><td>Navigation vers toutes les rubriques du site</td></tr>
+      <tr><td><strong>Banniere hero</strong></td><td>Grande image de mise en avant avec titre et bouton d'action</td></tr>
+      <tr><td><strong>Articles a la une</strong></td><td>Les 3 derniers articles publies en vedette</td></tr>
+      <tr><td><strong>Bandeau d'orientation</strong></td><td>3 cartes d'acces rapide : Retour, Investir, Actions sociales</td></tr>
+      <tr><td><strong>Dernieres actualites</strong></td><td>4 articles recents en grille avec sidebar (evenements, chiffres cles)</td></tr>
+      <tr><td><strong>Galerie</strong></td><td>2 derniers albums photos/videos publies</td></tr>
+      <tr><td><strong>Mediatheque</strong></td><td>5 dernieres videos YouTube en embed</td></tr>
+      <tr><td><strong>Partenaires</strong></td><td>Logos des partenaires institutionnels</td></tr>
+      <tr><td><strong>Newsletter</strong></td><td>Formulaire d'inscription a la newsletter</td></tr>
+      <tr><td><strong>Pied de page</strong></td><td>Informations legales, liens utiles, reseaux sociaux</td></tr>
+    </tbody>
+  </table>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/02-accueil-articles.png" alt="Page d'accueil — section articles">
+    <div class="screenshot-caption">Page d'accueil — Articles a la une et bandeau d'orientation</div>
+  </div>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/03-accueil-galerie.png" alt="Page d'accueil — galerie et mediatheque">
+    <div class="screenshot-caption">Page d'accueil — Sections Galerie et Mediatheque</div>
+  </div>
+
+  <div class="info-box">
+    <strong>Popup evenementiel :</strong> Lors de la premiere visite d'un utilisateur, une fenetre modale peut s'afficher pour mettre en avant un evenement important. Elle ne s'affiche qu'une seule fois par session.
+  </div>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/04-accueil-footer.png" alt="Pied de page">
+    <div class="screenshot-caption">Pied de page du site — Liens, reseaux sociaux et mentions legales</div>
+  </div>
+
+  <!-- SECTION 3 — ACTUALITES -->
+  <h1 class="section-title section-break">
+    <span class="section-number">3</span> Actualites
+  </h1>
+
+  <p>La page <strong>Actualites</strong> (<code>/actualites</code>) liste tous les articles publies, classes par date de publication decroissante.</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/05-actualites.png" alt="Page Actualites">
+    <div class="screenshot-caption">Page Actualites — Liste des articles avec filtres par categorie</div>
+  </div>
+
+  <h3>Fonctionnalites de la page :</h3>
+  <ul>
+    <li><strong>Filtres par categorie</strong> : cliquez sur une categorie pour afficher uniquement les articles correspondants</li>
+    <li><strong>Pagination</strong> : naviguez entre les pages si le nombre d'articles est important</li>
+    <li><strong>Article individuel</strong> : cliquez sur un article pour lire son contenu complet, avec image, auteur, date, et boutons de partage (Facebook, Twitter/X, LinkedIn, WhatsApp)</li>
+    <li><strong>Commentaires</strong> : les visiteurs peuvent laisser un commentaire sur chaque article (soumis a moderation)</li>
+  </ul>
+
+  <!-- SECTION 4 — LA DGIE -->
+  <h1 class="section-title section-break">
+    <span class="section-number">4</span> La DGIE — Presentation institutionnelle
+  </h1>
+
+  <p>La page <strong>La DGIE</strong> (<code>/la-dgie</code>) presente l'institution, son organigramme et ses trois sous-directions.</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/07-la-dgie.png" alt="Page La DGIE">
+    <div class="screenshot-caption">Page La DGIE — Presentation de l'institution et organigramme</div>
+  </div>
+
+  <h3>Contenu de la page :</h3>
+  <ul>
+    <li>Presentation du <strong>Ministre</strong> et du <strong>Directeur General</strong> avec portraits et citations</li>
+    <li>Les <strong>3 sous-directions</strong> de la DGIE :
+      <ul>
+        <li><strong>DAOSAR</strong> — Direction de l'Assistance, de l'Orientation, du Suivi et de l'Accompagnement au Retour</li>
+        <li><strong>DMCRIE</strong> — Direction de la Mobilisation des Competences et des Ressources des Ivoiriens de l'Exterieur</li>
+        <li><strong>DAS</strong> — Direction de l'Action Sociale</li>
+      </ul>
+    </li>
+    <li>Documents officiels telechargeables</li>
+  </ul>
+
+  <!-- SECTION 5 — NOS SERVICES -->
+  <h1 class="section-title section-break">
+    <span class="section-number">5</span> Nos Services
+  </h1>
+
+  <p>La page <strong>Nos Services</strong> (<code>/nos-services</code>) presente les services proposes par la DGIE aux Ivoiriens de l'exterieur.</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/22-nos-services.png" alt="Page Nos Services">
+    <div class="screenshot-caption">Page Nos Services — Presentation des services offerts par la DGIE</div>
+  </div>
+
+  <p>On y retrouve les services d'assistance consulaire, d'accompagnement au retour, de mobilisation des competences, et de soutien aux investissements de la diaspora.</p>
+
+  <!-- SECTION 6 — RETOUR -->
+  <h1 class="section-title section-break">
+    <span class="section-number">6</span> Retour et Reintegration
+  </h1>
+
+  <p>La page <strong>Retour et Reintegration</strong> (<code>/retour-reintegration</code>) est dediee aux programmes d'accompagnement au retour des Ivoiriens de l'exterieur.</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/23-retour-reintegration.png" alt="Page Retour et Reintegration">
+    <div class="screenshot-caption">Page Retour et Reintegration — Programmes et temoignages</div>
+  </div>
+
+  <h3>Contenu de la page :</h3>
+  <ul>
+    <li>Programmes de retour volontaire et de reinsertion</li>
+    <li>Temoignages de personnes ayant beneficie de ces programmes</li>
+    <li>Articles lies a cette thematique</li>
+    <li>FAQ sur les procedures de retour</li>
+    <li>Dossiers thematiques associes</li>
+  </ul>
+
+  <!-- SECTION 7 — INVESTIR -->
+  <h1 class="section-title section-break">
+    <span class="section-number">7</span> Investir et Contribuer
+  </h1>
+
+  <p>La page <strong>Investir et Contribuer</strong> (<code>/investir-contribuer</code>) s'adresse aux membres de la diaspora souhaitant investir ou mettre leurs competences au service de la Cote d'Ivoire.</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/24-investir-contribuer.png" alt="Page Investir et Contribuer">
+    <div class="screenshot-caption">Page Investir et Contribuer — Opportunites pour la diaspora</div>
+  </div>
+
+  <h3>Contenu de la page :</h3>
+  <ul>
+    <li>Opportunites d'investissement</li>
+    <li>Programmes de mobilisation des competences</li>
+    <li>Temoignages d'investisseurs de la diaspora</li>
+    <li>Articles et dossiers lies</li>
+  </ul>
+
+  <!-- SECTION 8 — COIN DES DIASPOS -->
+  <h1 class="section-title section-break">
+    <span class="section-number">8</span> Coin des Diasporas
+  </h1>
+
+  <p>La page <strong>Coin des Diasporas</strong> (<code>/coin-des-diaspos</code>) est l'espace communautaire dedie a la diaspora ivoirienne.</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/06-coin-diaspos.png" alt="Page Coin des Diasporas">
+    <div class="screenshot-caption">Page Coin des Diasporas — Espace communautaire</div>
+  </div>
+
+  <h3>Sections de la page :</h3>
+  <table>
+    <thead>
+      <tr><th>Section</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Evenements diaspora</strong></td><td>Evenements organises pour la communaute diasporique</td></tr>
+      <tr><td><strong>Temoignages</strong></td><td>Recits et experiences de membres de la diaspora</td></tr>
+      <tr><td><strong>Pays de la diaspora</strong></td><td>Carte des principaux pays de concentration</td></tr>
+      <tr><td><strong>Sondage</strong></td><td>Sondage interactif pour recueillir les avis</td></tr>
+      <tr><td><strong>Coups de coeur culturels</strong></td><td>Recommandations musique, livres, films, gastronomie</td></tr>
+      <tr><td><strong>Boite a outils</strong></td><td>Ressources et liens utiles pour la diaspora</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 9 — DOSSIERS -->
+  <h1 class="section-title section-break">
+    <span class="section-number">9</span> Dossiers thematiques
+  </h1>
+
+  <p>La page <strong>Dossiers</strong> (<code>/dossiers</code>) presente des dossiers de fond sur des sujets cles (retour volontaire, cadre juridique, competences diaspora, investissement, partenariats, etc.).</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/10-dossiers.png" alt="Page Dossiers">
+    <div class="screenshot-caption">Page Dossiers — Dossiers thematiques approfondis</div>
+  </div>
+
+  <p>Chaque dossier est une page complete avec contenu enrichi, articles lies, temoignages associes et FAQ.</p>
+
+  <!-- SECTION 10 — GALERIE -->
+  <h1 class="section-title section-break">
+    <span class="section-number">10</span> Galerie
+  </h1>
+
+  <p>La page <strong>Galerie</strong> (<code>/galerie</code>) rassemble tous les albums photos et videos publies.</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/08-galerie.png" alt="Page Galerie">
+    <div class="screenshot-caption">Page Galerie — Albums photos et videos</div>
+  </div>
+
+  <h3>Fonctionnalites :</h3>
+  <ul>
+    <li><strong>Filtres</strong> : affichez tous les albums, uniquement les photos, ou uniquement les videos</li>
+    <li><strong>Lightbox</strong> : cliquez sur une image pour l'agrandir en plein ecran avec navigation</li>
+    <li><strong>Compteur</strong> : chaque album affiche le nombre de medias qu'il contient</li>
+  </ul>
+
+  <!-- SECTION 11 — CONTACT -->
+  <h1 class="section-title section-break">
+    <span class="section-number">11</span> Contact et formulaires publics
+  </h1>
+
+  <p>La page <strong>Contact</strong> (<code>/contact</code>) permet aux visiteurs de contacter la DGIE.</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/09-contact.png" alt="Page Contact">
+    <div class="screenshot-caption">Page Contact — Formulaire de contact et coordonnees</div>
+  </div>
+
+  <h3>Contenu de la page :</h3>
+  <ul>
+    <li><strong>Coordonnees officielles</strong> : adresse, telephones, e-mail</li>
+    <li><strong>Formulaire de contact</strong> : nom, email, telephone, sujet, message</li>
+    <li><strong>Carte</strong> : localisation des bureaux</li>
+  </ul>
+
+  <div class="info-box">
+    <strong>Limitation anti-spam :</strong> Les formulaires publics sont proteges par un limiteur de requetes. Un visiteur ne peut soumettre que 3 messages de contact par tranche de 10 minutes, et 5 commentaires/votes par tranche de 10 minutes.
+  </div>
+
+  <h3>Autres formulaires du site public :</h3>
+  <table>
+    <thead>
+      <tr><th>Formulaire</th><th>Emplacement</th><th>Limite</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Contact</td><td>Page Contact</td><td>3 envois / 10 min</td></tr>
+      <tr><td>Newsletter</td><td>Pied de page (toutes pages)</td><td>3 inscriptions / 10 min</td></tr>
+      <tr><td>Commentaire</td><td>Page article</td><td>5 envois / 10 min</td></tr>
+      <tr><td>Vote sondage</td><td>Coin des Diasporas</td><td>5 votes / 10 min</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Recherche</h3>
+  <p>Une <strong>barre de recherche</strong> est disponible dans le menu principal de chaque page. Elle permet de chercher parmi les articles, evenements et dossiers. La recherche necessite un minimum de 3 caracteres.</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART II — BACK OFFICE -->
+<!-- ============================================================ -->
+<div class="content section-break">
+  <h1 class="section-title" style="color: var(--orange-dark); border-color: var(--orange);">
+    PARTIE II — L'ADMINISTRATION (Back-Office)
+  </h1>
+
+  <p>Le panneau d'administration permet de gerer l'ensemble du contenu affiche sur le site public. Il est accessible a l'adresse <code>https://ivoiriendelexterieur.com/admin/login</code>.</p>
+
+  <!-- SECTION 12 — CONNEXION -->
+  <h1 class="section-title" style="margin-top: 40px;">
+    <span class="section-number">12</span> Connexion et securite
+  </h1>
+
+  <h2>Se connecter</h2>
+
+  <ol class="steps">
+    <li>Rendez-vous sur <code>https://ivoiriendelexterieur.com/admin/login</code></li>
+    <li>Saisissez votre <strong>adresse e-mail</strong> et votre <strong>mot de passe</strong></li>
+    <li>Cochez <strong>"Se souvenir de moi"</strong> si vous le souhaitez</li>
+    <li>Cliquez sur <strong>"Se connecter"</strong></li>
+  </ol>
+
+  <div class="info-box">
+    <strong>Astuce :</strong> L'icone en forme d'oeil a droite du champ mot de passe permet d'afficher ou masquer le mot de passe saisi.
+  </div>
+
+  <h2>Premiere connexion — Changement obligatoire</h2>
+
+  <p>Lors de votre premiere connexion (ou apres la creation de votre compte par un administrateur), vous serez automatiquement redirige vers une page de changement de mot de passe.</p>
+
+  <ol class="steps">
+    <li>Saisissez un <strong>nouveau mot de passe</strong> (minimum 8 caracteres)</li>
+    <li><strong>Confirmez</strong> en le saisissant une seconde fois</li>
+    <li>Cliquez sur <strong>"Enregistrer le nouveau mot de passe"</strong></li>
+  </ol>
+
+  <div class="warning-box">
+    <strong>Important :</strong> Le mot de passe temporaire communique lors de la creation de votre compte ne sera plus valide apres ce changement. Conservez votre nouveau mot de passe en lieu sur.
+  </div>
+
+  <h2>Se deconnecter</h2>
+  <p>Cliquez sur votre <strong>avatar/nom</strong> en haut a droite de l'interface, puis sur <strong>"Deconnexion"</strong>.</p>
+
+  <!-- SECTION 13 — DASHBOARD -->
+  <h1 class="section-title section-break">
+    <span class="section-number">13</span> Tableau de bord
+  </h1>
+
+  <p>Le tableau de bord est la page d'accueil de l'administration. Il offre une vue d'ensemble de toute la plateforme.</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/11-dashboard.png" alt="Tableau de bord">
+    <div class="screenshot-caption">Tableau de bord — Statistiques et acces rapides</div>
+  </div>
+
+  <h2>Statistiques rapides</h2>
+
+  <p>Quatre cartes affichent les compteurs principaux en temps reel :</p>
+
+  <table>
+    <thead>
+      <tr><th>Carte</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Articles</strong></td><td>Nombre total d'articles publies sur le site</td></tr>
+      <tr><td><strong>Dossiers</strong></td><td>Nombre de dossiers thematiques actifs</td></tr>
+      <tr><td><strong>Evenements</strong></td><td>Nombre d'evenements programmes</td></tr>
+      <tr><td><strong>Utilisateurs</strong></td><td>Nombre d'utilisateurs du panneau admin</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Banniere Hero</h2>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/12-dashboard-hero.png" alt="Tableau de bord — banniere hero">
+    <div class="screenshot-caption">Tableau de bord — Gestion de la banniere hero et de l'organigramme</div>
+  </div>
+
+  <p>La banniere hero est l'image principale affichee en haut de la page d'accueil du site public.</p>
+
+  <ol class="steps">
+    <li>Cliquez sur le bouton <strong>"Modifier"</strong> dans la section "Banniere Hero"</li>
+    <li>Telechargez une nouvelle image (format recommande : <strong>2400 x 800 px</strong>)</li>
+    <li>Ajoutez un lien optionnel de redirection</li>
+    <li>Enregistrez</li>
+  </ol>
+
+  <h2>Organigramme officiel</h2>
+  <p>Les portraits du Ministre et du Directeur General sont editables directement depuis le tableau de bord.</p>
+
+  <h2>Espaces publicitaires</h2>
+  <p>Trois emplacements de bannieres sont disponibles pour des communications institutionnelles (dimensions : 728x90 ou 300x250 px).</p>
+
+  <h2>Alertes et contenu recent</h2>
+  <p>Le tableau de bord affiche des <strong>alertes</strong> pour les commentaires en attente et les messages non lus, ainsi que deux tableaux de contenu recent (articles et evenements).</p>
+
+  <!-- SECTION 14 — ARTICLES -->
+  <h1 class="section-title section-break">
+    <span class="section-number">14</span> Gestion des Articles
+  </h1>
+
+  <p>Les articles constituent le contenu editorial principal du site. Ils alimentent la page d'accueil, la page Actualites, et les sections thematiques.</p>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/13-admin-articles.png" alt="Gestion des articles">
+    <div class="screenshot-caption">Administration — Liste des articles avec filtres et recherche</div>
+  </div>
+
+  <h2>Creer un article</h2>
+
+  <ol class="steps">
+    <li>Cliquez sur le bouton vert <strong>"Nouvel article"</strong> en haut a droite</li>
+    <li>Remplissez les champs du formulaire (voir tableau ci-dessous)</li>
+    <li>Cliquez sur <strong>"Enregistrer"</strong></li>
+  </ol>
+
+  <table>
+    <thead>
+      <tr><th>Champ</th><th>Obligatoire</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Titre</td><td><span class="badge badge-green">Oui</span></td><td>Titre de l'article</td></tr>
+      <tr><td>Resume</td><td><span class="badge badge-gray">Non</span></td><td>Court extrait affiche dans les listes d'articles</td></tr>
+      <tr><td>Contenu</td><td><span class="badge badge-green">Oui</span></td><td>Corps de l'article (editeur de texte enrichi)</td></tr>
+      <tr><td>Image a la une</td><td><span class="badge badge-gray">Non</span></td><td>Image principale — format 16:9 recommande, max 2 Mo</td></tr>
+      <tr><td>Credit image</td><td><span class="badge badge-gray">Non</span></td><td>Source ou credit de l'image</td></tr>
+      <tr><td>Categorie</td><td><span class="badge badge-green">Oui</span></td><td>Classification thematique de l'article</td></tr>
+      <tr><td>Section</td><td><span class="badge badge-green">Oui</span></td><td>Retour et Reintegration / Investir et Contribuer / Actions Sociales</td></tr>
+      <tr><td>Dossier</td><td><span class="badge badge-gray">Non</span></td><td>Rattachement optionnel a un dossier thematique</td></tr>
+      <tr><td>Statut</td><td><span class="badge badge-green">Oui</span></td><td>Brouillon / Publie / Archive</td></tr>
+      <tr><td>Date de publication</td><td><span class="badge badge-gray">Non</span></td><td>Date de publication (defaut : aujourd'hui)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Statuts des articles</h2>
+
+  <table>
+    <thead>
+      <tr><th>Statut</th><th>Badge</th><th>Effet sur le site public</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Brouillon</td><td><span class="badge badge-gray">Brouillon</span></td><td>Non visible sur le site — en cours de redaction</td></tr>
+      <tr><td>Publie</td><td><span class="badge badge-green">Publie</span></td><td>Visible sur le site public</td></tr>
+      <tr><td>Archive</td><td><span class="badge badge-red">Archive</span></td><td>Retire du site public mais conserve en base</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Actions disponibles</h2>
+  <ul>
+    <li><strong>Rechercher</strong> : par titre ou resume via la barre de recherche</li>
+    <li><strong>Filtrer</strong> : par categorie, statut, ou section</li>
+    <li><strong>Voir</strong> (icone oeil) : pre-visualisation du contenu</li>
+    <li><strong>Modifier</strong> (icone crayon) : edition du contenu</li>
+    <li><strong>Supprimer</strong> (icone corbeille) : suppression avec confirmation</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>Suppression douce :</strong> Les articles supprimes ne sont pas effaces definitivement. Ils sont marques comme supprimes et peuvent etre restaures par un administrateur technique si necessaire.
+  </div>
+
+  <!-- SECTION 15 — CATEGORIES ET FLASH -->
+  <h1 class="section-title section-break">
+    <span class="section-number">15</span> Categories et Flash Infos
+  </h1>
+
+  <h2>Categories</h2>
+  <p>Les categories servent a classer les articles par thematique. Le slug (identifiant URL) est genere automatiquement a partir du nom.</p>
+
+  <table>
+    <thead>
+      <tr><th>Champ</th><th>Obligatoire</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Nom</td><td><span class="badge badge-green">Oui</span></td><td>Nom de la categorie</td></tr>
+      <tr><td>Couleur</td><td><span class="badge badge-gray">Non</span></td><td>Couleur du badge d'affichage</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Flash Infos</h2>
+  <p>Les flash infos sont des messages courts qui defilent dans la barre d'information en haut du site public.</p>
+
+  <table>
+    <thead>
+      <tr><th>Champ</th><th>Obligatoire</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Message</td><td><span class="badge badge-green">Oui</span></td><td>Texte court et percutant</td></tr>
+      <tr><td>Ordre</td><td><span class="badge badge-gray">Non</span></td><td>Ordre d'affichage (le plus bas en premier)</td></tr>
+      <tr><td>Actif</td><td><span class="badge badge-gray">Non</span></td><td>Seuls les flash infos actifs sont affiches</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 16 — EVENEMENTS -->
+  <h1 class="section-title section-break">
+    <span class="section-number">16</span> Evenements
+  </h1>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/14-admin-evenements.png" alt="Gestion des evenements">
+    <div class="screenshot-caption">Administration — Gestion des evenements avec compte a rebours</div>
+  </div>
+
+  <h2>Creer un evenement</h2>
+
+  <table>
+    <thead>
+      <tr><th>Champ</th><th>Obligatoire</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Titre</td><td><span class="badge badge-green">Oui</span></td><td>Nom de l'evenement</td></tr>
+      <tr><td>Type</td><td><span class="badge badge-green">Oui</span></td><td><span class="badge badge-green">General (DGIE)</span> ou <span class="badge badge-orange">Diaspora</span></td></tr>
+      <tr><td>Lieu</td><td><span class="badge badge-gray">Non</span></td><td>Lieu de l'evenement</td></tr>
+      <tr><td>Description</td><td><span class="badge badge-gray">Non</span></td><td>Details et programme</td></tr>
+      <tr><td>Date de debut</td><td><span class="badge badge-green">Oui</span></td><td>Date et heure de debut</td></tr>
+      <tr><td>Date de fin</td><td><span class="badge badge-gray">Non</span></td><td>Date et heure de fin</td></tr>
+      <tr><td>Image</td><td><span class="badge badge-gray">Non</span></td><td>Affiche (format 16:9, max 2 Mo)</td></tr>
+      <tr><td>Statut</td><td><span class="badge badge-green">Oui</span></td><td>Brouillon / Publie / Archive</td></tr>
+      <tr><td>Mis en avant</td><td><span class="badge badge-gray">Non</span></td><td>Cochez pour afficher dans la popup d'accueil</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <strong>Compte a rebours :</strong> Un compteur automatique s'affiche sur le site public pour le prochain evenement a venir.
+  </div>
+
+  <!-- SECTION 17 — PERSONNEL ET PARTENAIRES -->
+  <h1 class="section-title section-break">
+    <span class="section-number">17</span> Personnel et Partenaires
+  </h1>
+
+  <h2>Personnel (Organigramme)</h2>
+  <p>Ce module gere les fiches du personnel affichees sur la page "La DGIE" et dans l'organigramme du tableau de bord.</p>
+
+  <table>
+    <thead>
+      <tr><th>Champ</th><th>Obligatoire</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Nom</td><td><span class="badge badge-green">Oui</span></td><td>Nom complet</td></tr>
+      <tr><td>Titre</td><td><span class="badge badge-gray">Non</span></td><td>Ex : "Ministre d'Etat"</td></tr>
+      <tr><td>Fonction</td><td><span class="badge badge-gray">Non</span></td><td>Ex : "Directeur de la DAOSAR"</td></tr>
+      <tr><td>Type</td><td><span class="badge badge-green">Oui</span></td><td>Ministre / Directeur General / Directeur / Autre</td></tr>
+      <tr><td>Citation</td><td><span class="badge badge-gray">Non</span></td><td>Citation ou mot de la personne</td></tr>
+      <tr><td>Biographie</td><td><span class="badge badge-gray">Non</span></td><td>Parcours et informations</td></tr>
+      <tr><td>Photo</td><td><span class="badge badge-gray">Non</span></td><td>Photo portrait</td></tr>
+      <tr><td>Ordre d'affichage</td><td><span class="badge badge-gray">Non</span></td><td>0 = en premier</td></tr>
+      <tr><td>Actif</td><td><span class="badge badge-gray">Non</span></td><td>Active/desactive l'affichage</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Partenaires</h2>
+  <p>Les logos des partenaires institutionnels s'affichent sur la page d'accueil du site.</p>
+
+  <table>
+    <thead>
+      <tr><th>Champ</th><th>Obligatoire</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Nom</td><td><span class="badge badge-green">Oui</span></td><td>Nom complet du partenaire</td></tr>
+      <tr><td>Abreviation</td><td><span class="badge badge-gray">Non</span></td><td>Ex : "OIM", "HCR"</td></tr>
+      <tr><td>Site web</td><td><span class="badge badge-gray">Non</span></td><td>URL du site du partenaire</td></tr>
+      <tr><td>Logo</td><td><span class="badge badge-gray">Non</span></td><td>Format carre recommande, max 2 Mo</td></tr>
+      <tr><td>Ordre / Actif</td><td><span class="badge badge-gray">Non</span></td><td>Ordre d'affichage et activation</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 18 — COIN DES DIASPOS ADMIN -->
+  <h1 class="section-title section-break">
+    <span class="section-number">18</span> Coin des Diasporas (admin)
+  </h1>
+
+  <p>Ce groupe de modules alimente la page "Coin des Diasporas" du site public.</p>
+
+  <h2>Temoignages</h2>
+  <table>
+    <thead>
+      <tr><th>Champ</th><th>Obligatoire</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Nom</td><td><span class="badge badge-green">Oui</span></td><td>Nom du temoin</td></tr>
+      <tr><td>Type</td><td><span class="badge badge-green">Oui</span></td><td>General / Retour / Investissement / Competence</td></tr>
+      <tr><td>Temoignage</td><td><span class="badge badge-green">Oui</span></td><td>Le recit complet</td></tr>
+      <tr><td>Contexte</td><td><span class="badge badge-gray">Non</span></td><td>Ex : "Ivoirien de retour de France"</td></tr>
+      <tr><td>Parcours</td><td><span class="badge badge-gray">Non</span></td><td>Ex : "France — Abidjan"</td></tr>
+      <tr><td>Annee de retour</td><td><span class="badge badge-gray">Non</span></td><td>Annee de retour au pays</td></tr>
+      <tr><td>Photo / Dossier / Ordre / Actif</td><td><span class="badge badge-gray">Non</span></td><td>Options complementaires</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Pays</h2>
+  <p>Liste des pays de concentration de la diaspora ivoirienne (nom, drapeau emoji, estimation de population).</p>
+
+  <h2>Coups de coeur culturels</h2>
+  <p>Recommandations culturelles classees par type : Musique, Livre, Film, Gastronomie.</p>
+
+  <h2>Sondages</h2>
+  <p>Creez des sondages avec une question et plusieurs options de reponse. Un seul sondage actif a la fois est affiche sur le site.</p>
+
+  <h2>Boite a outils</h2>
+  <p>Ressources et liens utiles pour la diaspora (titre, description, lien URL).</p>
+
+  <!-- SECTION 19 — NOS SERVICES ADMIN -->
+  <h1 class="section-title section-break">
+    <span class="section-number">19</span> Nos Services et La DGIE (admin)
+  </h1>
+
+  <h2>FAQ (Foire aux questions)</h2>
+  <p>Questions/reponses organisees par thematique et associables a des dossiers specifiques.</p>
+
+  <h2>Directions (Sous-directions)</h2>
+  <p>Gestion des 3 sous-directions : <strong>DAOSAR</strong>, <strong>DMCRIE</strong>, <strong>DAS</strong> (acronyme, nom complet, description, icone).</p>
+
+  <h2>Dossiers</h2>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/19-admin-dossiers.png" alt="Gestion des dossiers">
+    <div class="screenshot-caption">Administration — Gestion des dossiers thematiques</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Champ</th><th>Obligatoire</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Titre</td><td><span class="badge badge-green">Oui</span></td><td>Titre du dossier</td></tr>
+      <tr><td>Description</td><td><span class="badge badge-green">Oui</span></td><td>Resume du dossier</td></tr>
+      <tr><td>Contenu</td><td><span class="badge badge-green">Oui</span></td><td>Corps du dossier (editeur enrichi)</td></tr>
+      <tr><td>Sous-direction</td><td><span class="badge badge-gray">Non</span></td><td>Direction associee</td></tr>
+      <tr><td>Image</td><td><span class="badge badge-gray">Non</span></td><td>Image a la une (16:9, max 2 Mo)</td></tr>
+      <tr><td>Statut</td><td><span class="badge badge-green">Oui</span></td><td>Brouillon / Publie / Archive</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <strong>Contenu interconnecte :</strong> Les dossiers peuvent etre associes a des articles, des temoignages et des FAQ pour creer un ecosysteme de contenu riche.
+  </div>
+
+  <h2>Documents</h2>
+  <p>Gestion des documents telechargeables (PDF, rapports, textes juridiques). Type : Juridique / Rapport / Organigramme / Autre. La taille est calculee automatiquement.</p>
+
+  <!-- SECTION 20 — MEDIATHEQUE -->
+  <h1 class="section-title section-break">
+    <span class="section-number">20</span> Mediatheque (admin)
+  </h1>
+
+  <h2>Galerie et Videos</h2>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/15-admin-galerie.png" alt="Gestion de la galerie">
+    <div class="screenshot-caption">Administration — Gestion des albums de la galerie</div>
+  </div>
+
+  <p>La galerie organise les medias en <strong>albums</strong>. Chaque album peut contenir des photos et/ou des videos.</p>
+
+  <h3>Creer un album :</h3>
+  <ol class="steps">
+    <li>Cliquez sur <strong>"Nouvel album"</strong></li>
+    <li>Saisissez le titre et la description</li>
+    <li>Choisissez une image de couverture</li>
+    <li>Definissez le statut (Brouillon / Publie / Archive)</li>
+    <li>Enregistrez, puis ajoutez des medias a l'album</li>
+  </ol>
+
+  <div class="success-box">
+    <strong>Affichage automatique :</strong> Les 2 derniers albums publies apparaissent automatiquement dans la section "Galerie" de la page d'accueil. Tous les albums sont accessibles sur la page /galerie.
+  </div>
+
+  <h2>Bannieres</h2>
+  <p>Gestion des bannieres promotionnelles par position (Top / Sidebar / Popup). Dimensions recommandees : hero 2400x800, publicites 728x90 ou 300x250.</p>
+
+  <h2>Magazines</h2>
+  <p>Publication des editions du magazine DGIE (titre, couverture, PDF telechargeables). Les visiteurs peuvent telecharger chaque edition depuis le site.</p>
+
+  <!-- SECTION 21 — COMMUNICATION -->
+  <h1 class="section-title section-break">
+    <span class="section-number">21</span> Communication
+  </h1>
+
+  <h2>Messages de contact</h2>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/16-admin-messages.png" alt="Messages de contact">
+    <div class="screenshot-caption">Administration — Centre de messagerie et coordonnees</div>
+  </div>
+
+  <p>Ce module centralise les messages envoyes par les visiteurs via le formulaire de contact.</p>
+
+  <h3>Statistiques affichees :</h3>
+  <ul>
+    <li>Nombre de messages recus ce mois-ci</li>
+    <li>Nombre de messages <strong>non lus</strong></li>
+    <li>Temps de reponse moyen</li>
+  </ul>
+
+  <h3>Actions sur un message :</h3>
+  <table>
+    <thead>
+      <tr><th>Action</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Voir</strong></td><td>Lire le contenu complet du message</td></tr>
+      <tr><td><strong>Marquer comme lu</strong></td><td>Change le statut de "Non lu" a "Lu"</td></tr>
+      <tr><td><strong>Repondre</strong></td><td>Saisir et enregistrer une reponse</td></tr>
+      <tr><td><strong>Supprimer</strong></td><td>Supprimer definitivement le message</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Coordonnees de contact</h3>
+  <p>En bas de cette page, un formulaire permet de mettre a jour les <strong>coordonnees officielles</strong> affichees sur le site public : adresse, telephones, e-mail.</p>
+
+  <h2>Newsletter</h2>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/20-admin-newsletter.png" alt="Newsletter">
+    <div class="screenshot-caption">Administration — Gestion des abonnes a la newsletter</div>
+  </div>
+
+  <p>Ce module affiche la liste des abonnes a la newsletter (email, date d'inscription). Vous pouvez rechercher et supprimer des abonnes.</p>
+
+  <h2>Commentaires</h2>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/21-admin-comments.png" alt="Commentaires">
+    <div class="screenshot-caption">Administration — Moderation des commentaires</div>
+  </div>
+
+  <p>Les commentaires laisses par les visiteurs sur les articles sont soumis a <strong>moderation</strong>.</p>
+
+  <table>
+    <thead>
+      <tr><th>Statut</th><th>Badge</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>En attente</td><td><span class="badge badge-orange">En attente</span></td><td>Le commentaire attend validation</td></tr>
+      <tr><td>Approuve</td><td><span class="badge badge-green">Approuve</span></td><td>Visible sur le site public</td></tr>
+      <tr><td>Rejete</td><td><span class="badge badge-red">Rejete</span></td><td>Non publie</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warning-box">
+    <strong>Important :</strong> Les commentaires ne sont jamais publies automatiquement. Chaque commentaire doit etre approuve manuellement par un administrateur ou editeur.
+  </div>
+
+  <!-- SECTION 22 — ADMIN -->
+  <h1 class="section-title section-break">
+    <span class="section-number">22</span> Administration — Utilisateurs et Parametres
+  </h1>
+
+  <div class="warning-box">
+    <strong>Acces restreint :</strong> Cette section n'est visible et accessible que pour les utilisateurs ayant le role <strong>Super-Admin</strong>.
+  </div>
+
+  <h2>Gestion des utilisateurs</h2>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/17-admin-utilisateurs.png" alt="Gestion des utilisateurs">
+    <div class="screenshot-caption">Administration — Gestion des utilisateurs et roles</div>
+  </div>
+
+  <h3>Creer un utilisateur :</h3>
+  <ol class="steps">
+    <li>Cliquez sur <strong>"Nouvel utilisateur"</strong></li>
+    <li>Remplissez le <strong>nom</strong>, l'<strong>email</strong> et choisissez le <strong>role</strong></li>
+    <li>Enregistrez — un <strong>mot de passe temporaire</strong> est genere automatiquement</li>
+    <li>Communiquez le mot de passe temporaire de maniere securisee a l'utilisateur</li>
+  </ol>
+
+  <div class="info-box">
+    <strong>Premiere connexion :</strong> L'utilisateur sera oblige de changer son mot de passe lors de sa premiere connexion. Le mot de passe temporaire ne sera plus valide apres le changement.
+  </div>
+
+  <h2>Parametres du site</h2>
+
+  <div class="screenshot">
+    <img src="manuel-screenshots/18-admin-settings.png" alt="Parametres">
+    <div class="screenshot-caption">Administration — Configuration du pied de page et reseaux sociaux</div>
+  </div>
+
+  <p>Les parametres permettent de configurer le <strong>pied de page</strong> (footer) du site public, organise en 4 colonnes :</p>
+
+  <table>
+    <thead>
+      <tr><th>Colonne</th><th>Contenu</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>A propos</strong></td><td>Description + liens reseaux sociaux (Facebook, X, LinkedIn, YouTube)</td></tr>
+      <tr><td><strong>Liens rapides</strong></td><td>Liens internes vers les pages du site</td></tr>
+      <tr><td><strong>Liens utiles</strong></td><td>Liens vers des sites institutionnels externes</td></tr>
+      <tr><td><strong>Informations legales</strong></td><td>Mentions legales, politique de confidentialite, cookies</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- ANNEXES -->
+<!-- ============================================================ -->
+<div class="content section-break">
+  <h1 class="section-title" style="color: var(--bordeaux); border-color: var(--bordeaux);">
+    ANNEXES
+  </h1>
+
+  <!-- ANNEXE A — ROLES -->
+  <h1 class="section-title" style="margin-top: 30px;">
+    <span class="section-number" style="background: var(--bordeaux);">A</span> Roles et permissions
+  </h1>
+
+  <p>La plateforme dispose de trois niveaux d'acces :</p>
+
+  <div class="role-cards">
+    <div class="role-card role-super">
+      <h4>Super-Admin</h4>
+      <ul>
+        <li>Acces complet a tous les modules</li>
+        <li>Gestion des utilisateurs</li>
+        <li>Configuration des parametres</li>
+        <li>Creation et suppression</li>
+      </ul>
+    </div>
+    <div class="role-card role-editeur">
+      <h4>Editeur</h4>
+      <ul>
+        <li>Acces a tous les modules de contenu</li>
+        <li>Creation, modification, suppression</li>
+        <li><strong>Pas d'acces</strong> aux utilisateurs</li>
+        <li><strong>Pas d'acces</strong> aux parametres</li>
+      </ul>
+    </div>
+    <div class="role-card role-redacteur">
+      <h4>Redacteur</h4>
+      <ul>
+        <li>Acces aux articles uniquement</li>
+        <li>Creation et modification</li>
+        <li><strong>Pas de suppression</strong></li>
+        <li><strong>Pas d'acces</strong> aux autres modules</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ANNEXE B — CONVENTIONS -->
+  <h1 class="section-title" style="margin-top: 40px;">
+    <span class="section-number" style="background: var(--bordeaux);">B</span> Conventions et bonnes pratiques
+  </h1>
+
+  <h2>Redaction de contenu</h2>
+  <ul>
+    <li>Utilisez le <strong>vouvoiement</strong> dans tous les contenus publics</li>
+    <li>Privilegiez des phrases <strong>courtes</strong> (25 mots maximum)</li>
+    <li>Utilisez la <strong>voix active</strong></li>
+    <li>N'utilisez jamais "cliquez ici" — preferez des ancres descriptives</li>
+    <li>Maximum 2 appels a l'action (CTA) par page</li>
+  </ul>
+
+  <h2>Formats d'images</h2>
+  <table>
+    <thead>
+      <tr><th>Type de contenu</th><th>Format recommande</th><th>Taille max</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Article / Evenement</td><td>16:9 (paysage)</td><td>2 Mo</td></tr>
+      <tr><td>Personnel / Temoignage</td><td>Portrait</td><td>2 Mo</td></tr>
+      <tr><td>Logo partenaire</td><td>Carre</td><td>2 Mo</td></tr>
+      <tr><td>Banniere hero</td><td>2400 x 800 px</td><td>2 Mo</td></tr>
+      <tr><td>Banniere publicite</td><td>728 x 90 ou 300 x 250 px</td><td>2 Mo</td></tr>
+      <tr><td>Couverture magazine</td><td>Portrait</td><td>2 Mo</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Formats acceptes :</strong> JPG, PNG, WebP</p>
+
+  <h2>Champs automatiques</h2>
+  <ul>
+    <li>Les <strong>slugs</strong> (identifiants URL) sont generes automatiquement a partir des titres</li>
+    <li>Les <strong>dates</strong> de creation et modification sont enregistrees automatiquement</li>
+    <li>Le <strong>compteur</strong> d'elements des albums galerie se met a jour automatiquement</li>
+    <li>La <strong>taille des fichiers</strong> est calculee automatiquement pour les documents et magazines</li>
+  </ul>
+
+  <h2>Securite</h2>
+  <ul>
+    <li>Ne partagez <strong>jamais</strong> vos identifiants de connexion</li>
+    <li><strong>Deconnectez-vous</strong> apres chaque session sur un poste partage</li>
+    <li>Toutes les actions sensibles sont enregistrees dans un <strong>journal d'audit</strong></li>
+    <li>Les tentatives de connexion sont limitees a <strong>5 par minute</strong></li>
+  </ul>
+
+  <!-- ANNEXE C — PLAN DU SITE -->
+  <h1 class="section-title" style="margin-top: 40px;">
+    <span class="section-number" style="background: var(--bordeaux);">C</span> Plan du site complet
+  </h1>
+
+  <h2>Pages publiques</h2>
+  <table>
+    <thead>
+      <tr><th>Page</th><th>URL</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Accueil</td><td><code>https://ivoiriendelexterieur.com/</code></td></tr>
+      <tr><td>Actualites</td><td><code>https://ivoiriendelexterieur.com/actualites</code></td></tr>
+      <tr><td>Article (detail)</td><td><code>https://ivoiriendelexterieur.com/actualites/{slug}</code></td></tr>
+      <tr><td>La DGIE</td><td><code>https://ivoiriendelexterieur.com/la-dgie</code></td></tr>
+      <tr><td>Nos Services</td><td><code>https://ivoiriendelexterieur.com/nos-services</code></td></tr>
+      <tr><td>Retour et Reintegration</td><td><code>https://ivoiriendelexterieur.com/retour-reintegration</code></td></tr>
+      <tr><td>Investir et Contribuer</td><td><code>https://ivoiriendelexterieur.com/investir-contribuer</code></td></tr>
+      <tr><td>Coin des Diasporas</td><td><code>https://ivoiriendelexterieur.com/coin-des-diaspos</code></td></tr>
+      <tr><td>Dossiers</td><td><code>https://ivoiriendelexterieur.com/dossiers</code></td></tr>
+      <tr><td>Dossier (detail)</td><td><code>https://ivoiriendelexterieur.com/dossiers/{slug}</code></td></tr>
+      <tr><td>Galerie</td><td><code>https://ivoiriendelexterieur.com/galerie</code></td></tr>
+      <tr><td>Evenement (detail)</td><td><code>https://ivoiriendelexterieur.com/evenements/{slug}</code></td></tr>
+      <tr><td>Contact</td><td><code>https://ivoiriendelexterieur.com/contact</code></td></tr>
+      <tr><td>Recherche</td><td><code>https://ivoiriendelexterieur.com/recherche</code></td></tr>
+      <tr><td>Mentions legales</td><td><code>https://ivoiriendelexterieur.com/mentions-legales</code></td></tr>
+      <tr><td>Politique de confidentialite</td><td><code>https://ivoiriendelexterieur.com/politique-confidentialite</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Pages d'administration</h2>
+  <table>
+    <thead>
+      <tr><th>Module</th><th>URL</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Connexion</td><td><code>/admin/login</code></td></tr>
+      <tr><td>Tableau de bord</td><td><code>/admin/dashboard</code></td></tr>
+      <tr><td>Articles</td><td><code>/admin/articles</code></td></tr>
+      <tr><td>Categories</td><td><code>/admin/categories</code></td></tr>
+      <tr><td>Flash Infos</td><td><code>/admin/flash-infos</code></td></tr>
+      <tr><td>Evenements</td><td><code>/admin/evenements</code></td></tr>
+      <tr><td>Personnel</td><td><code>/admin/staff</code></td></tr>
+      <tr><td>Partenaires</td><td><code>/admin/partners</code></td></tr>
+      <tr><td>Temoignages</td><td><code>/admin/testimonials</code></td></tr>
+      <tr><td>Pays</td><td><code>/admin/countries</code></td></tr>
+      <tr><td>Coups de coeur</td><td><code>/admin/cultural-items</code></td></tr>
+      <tr><td>Sondages</td><td><code>/admin/polls</code></td></tr>
+      <tr><td>Boite a outils</td><td><code>/admin/toolkit-items</code></td></tr>
+      <tr><td>FAQ</td><td><code>/admin/faqs</code></td></tr>
+      <tr><td>Directions</td><td><code>/admin/departments</code></td></tr>
+      <tr><td>Dossiers</td><td><code>/admin/dossiers</code></td></tr>
+      <tr><td>Documents</td><td><code>/admin/documents</code></td></tr>
+      <tr><td>Galerie</td><td><code>/admin/galerie</code></td></tr>
+      <tr><td>Bannieres</td><td><code>/admin/banners</code></td></tr>
+      <tr><td>Magazines</td><td><code>/admin/magazines</code></td></tr>
+      <tr><td>Messages</td><td><code>/admin/contact-messages</code></td></tr>
+      <tr><td>Newsletter</td><td><code>/admin/newsletter</code></td></tr>
+      <tr><td>Commentaires</td><td><code>/admin/comments</code></td></tr>
+      <tr><td>Utilisateurs</td><td><code>/admin/utilisateurs</code></td></tr>
+      <tr><td>Parametres</td><td><code>/admin/settings</code></td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--slate-200); text-align: center; color: var(--slate-500); font-size: 9pt;">
+    <p><strong>Direction Generale des Ivoiriens de l'Exterieur</strong></p>
+    <p>Ministere des Affaires Etrangeres — Republique de Cote d'Ivoire</p>
+    <p style="margin-top: 8px;">https://ivoiriendelexterieur.com</p>
+    <p style="margin-top: 16px; color: var(--slate-400);">Document confidentiel — Version 1.0 — Fevrier 2026</p>
+  </div>
+</div>
+
+</body>
+</html>

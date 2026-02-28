@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hors connexion — DGIE</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --orange: #E8772A; --green: #1D8C4F; --slate-600: #475569; --slate-800: #1e293b; }
+    body {
+      font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+      color: var(--slate-800);
+      padding: 2rem;
+      text-align: center;
+    }
+    .offline-icon {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 2rem;
+      opacity: 0.8;
+    }
+    .offline-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+    h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      color: var(--orange);
+    }
+    p {
+      color: var(--slate-600);
+      max-width: 420px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #d06a22; }
+    .logo {
+      position: absolute;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--slate-800);
+    }
+    .logo svg { width: 36px; height: 36px; }
+    .logo span { font-weight: 700; font-size: 1.25rem; }
+    .tip {
+      margin-top: 2.5rem;
+      padding: 1rem 1.5rem;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      max-width: 420px;
+      font-size: 0.875rem;
+      color: var(--slate-600);
+      line-height: 1.5;
+    }
+    .tip strong { color: var(--green); }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <rect width="32" height="32" rx="6" fill="#E8772A"/>
+      <text x="16" y="23" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#fff" text-anchor="middle">DG</text>
+    </svg>
+    <span>DGIE</span>
+  </div>
+
+  <div class="offline-icon">
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="56" stroke="#E8772A" stroke-width="2" stroke-dasharray="6 4" opacity="0.3"/>
+      <path d="M60 30C43.4 30 28.6 37.8 19.6 50l8 6c7.2-9.8 18.8-16 32.4-16s25.2 6.2 32.4 16l8-6C91.4 37.8 76.6 30 60 30z" fill="#cbd5e1"/>
+      <path d="M60 46c-11 0-20.8 5-27.2 12.8l8 6C45.2 58.6 52.2 56 60 56s14.8 2.6 19.2 8.8l8-6C80.8 51 71 46 60 46z" fill="#94a3b8"/>
+      <path d="M60 62c-7.2 0-13.6 3.2-18 8.4l8 6c2.4-3.2 6-5.4 10-5.4s7.6 2.2 10 5.4l8-6C73.6 65.2 67.2 62 60 62z" fill="#64748b"/>
+      <circle cx="60" cy="86" r="6" fill="#E8772A"/>
+      <line x1="20" y1="95" x2="100" y2="25" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <h1>Vous êtes hors connexion</h1>
+  <p>
+    Il semble que votre appareil ne soit pas connecté à Internet.
+    Les pages que vous avez déjà visitées restent accessibles.
+  </p>
+  <button class="btn" onclick="window.location.reload()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+    Réessayer
+  </button>
+
+  <div class="tip">
+    <strong>Astuce :</strong> Naviguez sur le site lorsque vous êtes connecté.
+    Les pages visitées seront automatiquement disponibles hors connexion.
+  </div>
+</body>
+</html>

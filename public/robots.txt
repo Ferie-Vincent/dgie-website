@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /storage/
+
+Sitemap: https://www.dgie.gouv.ci/sitemap.xml
