@@ -10,7 +10,7 @@ class Staff extends Model
     use HasFactory;
 
     protected $table = 'staff';
-    protected $fillable = ['name', 'title', 'role', 'photo', 'quote', 'bio', 'type', 'order', 'is_active'];
+    protected $fillable = ['name', 'title', 'role', 'photo', 'photo_page', 'quote', 'bio', 'type', 'order', 'is_active'];
 
     protected function casts(): array
     {

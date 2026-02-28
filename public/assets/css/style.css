@@ -583,6 +583,17 @@ p {
 .top-bar__flag-stripe--white { background: var(--white); }
 .top-bar__flag-stripe--green { background: var(--green); }
 
+.top-bar__right .top-bar__admin-link {
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.75) !important;
+  margin-left: 10px;
+  transition: color 0.2s;
+}
+.top-bar__right .top-bar__admin-link:hover {
+  color: #fff !important;
+}
+
 /* ============================================
    FLASH INFOS — Ticker defilant
    ============================================ */
@@ -7808,6 +7819,7 @@ select:focus-visible {
   line-height: 1.2;
   margin: 0 0 20px;
   max-width: 700px;
+  color: #fff;
 }
 .event-hero__meta {
   display: flex;

@@ -40,6 +40,7 @@ class StaffController extends Controller
             'quote' => 'nullable|string|max:1000',
             'bio' => 'nullable|string',
             'photo' => 'nullable|image|max:2048',
+            'photo_page' => 'nullable|image|max:2048',
             'order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
         ]);
@@ -48,6 +49,9 @@ class StaffController extends Controller
 
         if ($request->hasFile('photo')) {
             $validated['photo'] = $request->file('photo')->store('staff', 'public');
+        }
+        if ($request->hasFile('photo_page')) {
+            $validated['photo_page'] = $request->file('photo_page')->store('staff', 'public');
         }
 
         Staff::create($validated);
@@ -71,6 +75,7 @@ class StaffController extends Controller
             'quote' => 'nullable|string|max:1000',
             'bio' => 'nullable|string',
             'photo' => 'nullable|image|max:2048',
+            'photo_page' => 'nullable|image|max:2048',
             'order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
         ]);
@@ -79,6 +84,9 @@ class StaffController extends Controller
 
         if ($request->hasFile('photo')) {
             $validated['photo'] = $request->file('photo')->store('staff', 'public');
+        }
+        if ($request->hasFile('photo_page')) {
+            $validated['photo_page'] = $request->file('photo_page')->store('staff', 'public');
         }
 
         $staff->update($validated);

@@ -64,15 +64,27 @@
             </div>
 
             <div class="form-group">
-                <label for="photo">Photo</label>
+                <label for="photo">Photo (accueil / sidebar)</label>
                 @if($staff->photo)
                     <div class="file-upload-preview" style="margin-bottom: 8px;">
                         <img src="{{ asset('storage/' . $staff->photo) }}" alt="">
                     </div>
                 @endif
                 <input type="file" id="photo" name="photo" class="form-input" accept="image/*">
-                <span class="form-help">Laisser vide pour conserver la photo actuelle.</span>
+                <span class="form-help">Photo affichée sur la page d'accueil. Laisser vide pour conserver.</span>
                 @error('photo') <span class="form-error">{{ $message }}</span> @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="photo_page">Photo (page La DGIE)</label>
+                @if($staff->photo_page)
+                    <div class="file-upload-preview" style="margin-bottom: 8px;">
+                        <img src="{{ asset('storage/' . $staff->photo_page) }}" alt="">
+                    </div>
+                @endif
+                <input type="file" id="photo_page" name="photo_page" class="form-input" accept="image/*">
+                <span class="form-help">Photo affichée sur la page "Mot du DG". Laisser vide pour conserver.</span>
+                @error('photo_page') <span class="form-error">{{ $message }}</span> @enderror
             </div>
 
             <div class="form-group">

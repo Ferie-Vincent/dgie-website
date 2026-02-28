@@ -109,7 +109,8 @@
                                 data-bio="{{ $member->bio }}"
                                 data-order="{{ $member->order }}"
                                 data-is_active="{{ $member->is_active ? '1' : '0' }}"
-                                data-image-url="{{ $member->photo ? asset('storage/' . $member->photo) : '' }}">
+                                data-image-url="{{ $member->photo ? asset('storage/' . $member->photo) : '' }}"
+                                data-image-page-url="{{ $member->photo_page ? asset('storage/' . $member->photo_page) : '' }}">
                                 <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                             </button>
                             <form id="delete-staff-{{ $member->id }}" action="{{ route('admin.staff.destroy', $member) }}" method="POST" style="display:none;">
@@ -213,16 +214,29 @@
                     {{-- Sidebar column --}}
                     <div class="modal-fp-sidebar">
                         <div class="modal-fp-section">
-                            <div class="modal-fp-section-title"><span class="dot orange"></span> PHOTO</div>
+                            <div class="modal-fp-section-title"><span class="dot orange"></span> PHOTO (ACCUEIL)</div>
                             <label for="create-photo" class="fp-image-upload">
                                 <div class="fp-image-placeholder" id="create-photo-placeholder">
                                     <span>Aucune photo selectionnee</span>
-                                    <small>Format portrait recommande</small>
+                                    <small>Affichée sur la page d'accueil</small>
                                 </div>
                             </label>
                             <input type="file" id="create-photo" name="photo" accept="image/*" style="display:none" onchange="previewImage(this, 'create-photo-placeholder')">
                             <span class="form-help">Formats : JPG, PNG, WebP — Taille max : 2 Mo</span>
                             @if(old('_modal') == 'create') @error('photo') <span class="form-error">{{ $message }}</span> @enderror @endif
+                        </div>
+
+                        <div class="modal-fp-section">
+                            <div class="modal-fp-section-title"><span class="dot orange"></span> PHOTO (PAGE LA DGIE)</div>
+                            <label for="create-photo-page" class="fp-image-upload">
+                                <div class="fp-image-placeholder" id="create-photo-page-placeholder">
+                                    <span>Aucune photo selectionnee</span>
+                                    <small>Affichée sur la page "Mot du DG"</small>
+                                </div>
+                            </label>
+                            <input type="file" id="create-photo-page" name="photo_page" accept="image/*" style="display:none" onchange="previewImage(this, 'create-photo-page-placeholder')">
+                            <span class="form-help">Optionnel — si vide, la photo accueil sera utilisée.</span>
+                            @if(old('_modal') == 'create') @error('photo_page') <span class="form-error">{{ $message }}</span> @enderror @endif
                         </div>
 
                         <div class="modal-fp-section">
@@ -321,18 +335,33 @@
                     {{-- Sidebar column --}}
                     <div class="modal-fp-sidebar">
                         <div class="modal-fp-section">
-                            <div class="modal-fp-section-title"><span class="dot orange"></span> PHOTO</div>
+                            <div class="modal-fp-section-title"><span class="dot orange"></span> PHOTO (ACCUEIL)</div>
                             <label for="edit-photo" class="fp-image-upload">
                                 <div id="edit-photo-placeholder">
                                     <div class="fp-image-placeholder">
                                         <span>Aucune photo selectionnee</span>
-                                        <small>Format portrait recommande</small>
+                                        <small>Affichée sur la page d'accueil</small>
                                     </div>
                                 </div>
                             </label>
                             <input type="file" id="edit-photo" name="photo" accept="image/*" style="display:none" onchange="previewImage(this, 'edit-photo-placeholder')">
                             <span class="form-help" style="margin-top: 8px;">Laisser vide pour conserver la photo actuelle.</span>
                             @if(old('_modal') == 'edit') @error('photo') <span class="form-error">{{ $message }}</span> @enderror @endif
+                        </div>
+
+                        <div class="modal-fp-section">
+                            <div class="modal-fp-section-title"><span class="dot orange"></span> PHOTO (PAGE LA DGIE)</div>
+                            <label for="edit-photo-page" class="fp-image-upload">
+                                <div id="edit-photo-page-placeholder">
+                                    <div class="fp-image-placeholder">
+                                        <span>Aucune photo selectionnee</span>
+                                        <small>Affichée sur la page "Mot du DG"</small>
+                                    </div>
+                                </div>
+                            </label>
+                            <input type="file" id="edit-photo-page" name="photo_page" accept="image/*" style="display:none" onchange="previewImage(this, 'edit-photo-page-placeholder')">
+                            <span class="form-help" style="margin-top: 8px;">Laisser vide pour conserver la photo actuelle.</span>
+                            @if(old('_modal') == 'edit') @error('photo_page') <span class="form-error">{{ $message }}</span> @enderror @endif
                         </div>
 
                         <div class="modal-fp-section">
@@ -390,7 +419,15 @@
             if (btn.dataset.imageUrl) {
                 placeholder.innerHTML = '<div class="fp-image-preview"><img src="' + btn.dataset.imageUrl + '" alt=""></div>';
             } else {
-                placeholder.innerHTML = '<div class="fp-image-placeholder"><span>Aucune photo selectionnee</span><small>Format portrait recommande</small></div>';
+                placeholder.innerHTML = '<div class="fp-image-placeholder"><span>Aucune photo selectionnee</span><small>Affichée sur la page d\'accueil</small></div>';
+            }
+
+            // Photo page preview
+            var placeholderPage = document.getElementById('edit-photo-page-placeholder');
+            if (btn.dataset.imagePageUrl) {
+                placeholderPage.innerHTML = '<div class="fp-image-preview"><img src="' + btn.dataset.imagePageUrl + '" alt=""></div>';
+            } else {
+                placeholderPage.innerHTML = '<div class="fp-image-placeholder"><span>Aucune photo selectionnee</span><small>Affichée sur la page "Mot du DG"</small></div>';
             }
         }
     });
