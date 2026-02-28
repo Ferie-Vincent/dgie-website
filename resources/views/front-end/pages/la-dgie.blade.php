@@ -58,7 +58,9 @@
             <div class="dg-hero">
               <div class="dg-hero__photo">
                 <div class="dg-hero__photo-img">
-                  @if($dg && $dg->photo)
+                  @if($dg && $dg->photo_page)
+                  <img src="{{ asset('storage/' . $dg->photo_page) }}" alt="{{ $dg->name }}, {{ $dg->title }}">
+                  @elseif($dg && $dg->photo)
                   <img src="{{ asset('storage/' . $dg->photo) }}" alt="{{ $dg->name }}, {{ $dg->title }}">
                   @else
                   <img src="{{ asset('assets/images/person/gaoussou_karamoko.jpg') }}" alt="Directeur Général des Ivoiriens de l'Extérieur">
