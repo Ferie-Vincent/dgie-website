@@ -164,7 +164,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="create-answer">Reponse <span class="required">*</span></label>
-                                <textarea id="create-answer" name="answer" class="form-textarea" rows="6" required placeholder="Saisissez la reponse">{{ old('_modal') == 'create' ? old('answer') : '' }}</textarea>
+                                <textarea id="create-answer" name="answer" class="form-textarea wysiwyg" rows="6" required placeholder="Saisissez la reponse">{{ old('_modal') == 'create' ? old('answer') : '' }}</textarea>
                                 @if(old('_modal') == 'create') @error('answer') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                         </div>
@@ -242,7 +242,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="edit-answer">Reponse <span class="required">*</span></label>
-                                <textarea id="edit-answer" name="answer" class="form-textarea" rows="6" required>{{ old('_modal') == 'edit' ? old('answer') : '' }}</textarea>
+                                <textarea id="edit-answer" name="answer" class="form-textarea wysiwyg" rows="6" required>{{ old('_modal') == 'edit' ? old('answer') : '' }}</textarea>
                                 @if(old('_modal') == 'edit') @error('answer') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                         </div>

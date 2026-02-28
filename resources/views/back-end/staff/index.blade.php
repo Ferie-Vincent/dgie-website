@@ -204,7 +204,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="create-bio">Biographie <span class="label-hint">Optionnel</span></label>
-                                <textarea id="create-bio" name="bio" class="form-textarea" rows="5" placeholder="Biographie du membre">{{ old('_modal') == 'create' ? old('bio') : '' }}</textarea>
+                                <textarea id="create-bio" name="bio" class="form-textarea wysiwyg" rows="5" placeholder="Biographie du membre">{{ old('_modal') == 'create' ? old('bio') : '' }}</textarea>
                                 @if(old('_modal') == 'create') @error('bio') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                         </div>
@@ -312,7 +312,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="edit-bio">Biographie <span class="label-hint">Optionnel</span></label>
-                                <textarea id="edit-bio" name="bio" class="form-textarea" rows="5">{{ old('_modal') == 'edit' ? old('bio') : '' }}</textarea>
+                                <textarea id="edit-bio" name="bio" class="form-textarea wysiwyg" rows="5">{{ old('_modal') == 'edit' ? old('bio') : '' }}</textarea>
                                 @if(old('_modal') == 'edit') @error('bio') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                         </div>

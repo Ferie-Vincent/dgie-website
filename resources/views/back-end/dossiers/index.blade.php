@@ -151,7 +151,7 @@
                             <div class="modal-fp-section-title"><span class="dot blue"></span> CONTENU DETAILLE</div>
                             <div class="form-group">
                                 <label for="create-content">Contenu <span class="required">*</span></label>
-                                <textarea id="create-content" name="content" class="form-textarea" rows="16" required placeholder="Contenu complet du dossier">{{ old('_modal') == 'create' ? old('content') : '' }}</textarea>
+                                <textarea id="create-content" name="content" class="form-textarea wysiwyg" rows="16" required placeholder="Contenu complet du dossier">{{ old('_modal') == 'create' ? old('content') : '' }}</textarea>
                                 @if(old('_modal') == 'create') @error('content') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                         </div>
@@ -252,7 +252,7 @@
                             <div class="modal-fp-section-title"><span class="dot blue"></span> CONTENU DETAILLE</div>
                             <div class="form-group">
                                 <label for="edit-content">Contenu <span class="required">*</span></label>
-                                <textarea id="edit-content" name="content" class="form-textarea" rows="16" required>{{ old('_modal') == 'edit' ? old('content') : '' }}</textarea>
+                                <textarea id="edit-content" name="content" class="form-textarea wysiwyg" rows="16" required>{{ old('_modal') == 'edit' ? old('content') : '' }}</textarea>
                                 @if(old('_modal') == 'edit') @error('content') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                         </div>

@@ -54,7 +54,7 @@
             </div>
             <div class="form-group full-width">
                 <label for="description">Description</label>
-                <textarea id="description" name="description" class="form-textarea" rows="6">{{ old('description') }}</textarea>
+                <textarea id="description" name="description" class="form-textarea wysiwyg" rows="6">{{ old('description') }}</textarea>
                 @error('description') <span class="form-error">{{ $message }}</span> @enderror
             </div>
             <div class="form-group">

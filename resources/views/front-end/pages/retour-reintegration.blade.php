@@ -108,7 +108,7 @@
           <!-- 5. Témoignage -->
           @forelse($testimonials as $testimonial)
           <div class="testimonial">
-            <p class="testimonial__quote">{{ $testimonial->quote }}</p>
+            <p class="testimonial__quote">{!! $testimonial->quote !!}</p>
             <p class="testimonial__author">{{ $testimonial->name }}, {{ $testimonial->context }}</p>
           </div>
           @empty
@@ -126,7 +126,7 @@
             <div class="faq__item">
               <button class="faq__question">{{ $faq->question }}</button>
               <div class="faq__answer">
-                <div class="faq__answer-inner">{!! nl2br(e($faq->answer)) !!}</div>
+                <div class="faq__answer-inner">{!! $faq->answer !!}</div>
               </div>
             </div>
             @empty

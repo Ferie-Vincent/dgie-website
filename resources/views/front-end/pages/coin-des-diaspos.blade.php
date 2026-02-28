@@ -122,7 +122,7 @@
             </div>
           </div>
           @if($nextDiaspoEvent->description)
-          <p class="diaspo-event-hero__desc">{{ Str::limit($nextDiaspoEvent->description, 220) }}</p>
+          <p class="diaspo-event-hero__desc">{{ Str::limit(strip_tags($nextDiaspoEvent->description), 220) }}</p>
           @endif
           <div class="diaspo-event-hero__cta">
             <a href="{{ route('actualites') }}" class="btn btn--outline">En savoir plus</a>
@@ -196,7 +196,7 @@
                 <span class="news-card-img__date">{{ $upEvt->event_date->locale('fr')->isoFormat('D MMM YYYY') }}</span>
               </div>
               <h3 class="news-card-img__title">{{ $upEvt->title }}</h3>
-              <p class="news-card-img__excerpt">{{ Str::limit($upEvt->description, 120) }}</p>
+              <p class="news-card-img__excerpt">{{ Str::limit(strip_tags($upEvt->description), 120) }}</p>
             </div>
           </a>
         </article>
@@ -290,7 +290,7 @@
             </div>
           </div>
           <blockquote class="return-card__quote">
-            « {{ Str::limit($testimonial->quote, 250) }} »
+            « {{ Str::limit(strip_tags($testimonial->quote), 250) }} »
           </blockquote>
           @if($testimonial->tags && count($testimonial->tags) > 0)
           <div class="return-card__tags">

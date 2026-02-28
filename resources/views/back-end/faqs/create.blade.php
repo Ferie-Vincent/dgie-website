@@ -54,7 +54,7 @@
 
             <div class="form-group full-width">
                 <label for="answer">Réponse <span class="required">*</span></label>
-                <textarea id="answer" name="answer" class="form-textarea" rows="5" required placeholder="Saisissez la réponse">{{ old('answer') }}</textarea>
+                <textarea id="answer" name="answer" class="form-textarea wysiwyg" rows="5" required placeholder="Saisissez la réponse">{{ old('answer') }}</textarea>
                 @error('answer') <span class="form-error">{{ $message }}</span> @enderror
             </div>
         </div>

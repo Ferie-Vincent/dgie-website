@@ -58,7 +58,7 @@
 
             <div class="form-group full-width">
                 <label for="bio">Biographie</label>
-                <textarea id="bio" name="bio" class="form-textarea" rows="6" placeholder="Biographie du membre">{{ old('bio') }}</textarea>
+                <textarea id="bio" name="bio" class="form-textarea wysiwyg" rows="6" placeholder="Biographie du membre">{{ old('bio') }}</textarea>
                 @error('bio') <span class="form-error">{{ $message }}</span> @enderror
             </div>
 
