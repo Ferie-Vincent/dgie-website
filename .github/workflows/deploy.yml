@@ -1,0 +1,74 @@
+name: Deploy to Plesk via FTP
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, xml, ctype, json, bcmath, curl, gd, intl, zip, pdo_mysql
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+      - name: Generate .env file
+        run: |
+          cat > .env << 'EOF'
+          APP_NAME="DGIE"
+          APP_ENV=production
+          APP_DEBUG=false
+          APP_TIMEZONE=Africa/Abidjan
+          APP_URL=https://ivoiriendelexterieur.com
+          APP_KEY=base64:185bn4b5ZriqWhP0Go4g5zobf5ANTthvL1MXyR5AEfs=
+          DEPLOY_TOKEN=dgie-deploy-secure-2026
+
+          LOG_CHANNEL=single
+          LOG_LEVEL=error
+
+          DB_CONNECTION=mysql
+          DB_HOST=localhost
+          DB_PORT=3306
+          DB_DATABASE=db_dgie
+          DB_USERNAME=dgie
+          DB_PASSWORD=Azertyuiop1234.
+
+          SESSION_DRIVER=file
+          CACHE_STORE=file
+          QUEUE_CONNECTION=sync
+
+          MAIL_MAILER=log
+          EOF
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 51.15.161.204
+          username: ivoirien
+          password: Azertyuiop1234.
+          local-dir: ./
+          server-dir: /httpdocs/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.env.example
+            **/tests/**
+            **/.editorconfig
+            **/.styleci.yml
+            **/phpunit.xml
+            **/_bmad/**
+            **/CLAUDE.md
+            **/SPEC-DGIE.md
