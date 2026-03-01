@@ -460,7 +460,7 @@
 
         <!-- Chaîne WhatsApp QR -->
         <div class="sidebar-whatsapp">
-          <a href="https://whatsapp.com/channel/dgie" target="_blank" rel="noopener">
+          <a href="https://whatsapp.com/channel/0029VajlgosEgGfHcqyRBQ17" target="_blank" rel="noopener">
             <img src="{{ asset('assets/images/whatsapp-qr.png') }}" alt="Scannez le QR code pour rejoindre la chaîne WhatsApp DGIE" class="sidebar-whatsapp__img">
           </a>
         </div>
