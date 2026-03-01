@@ -353,17 +353,10 @@
 
         <!-- Médiathèque -->
         @if(isset($videos) && $videos->count() > 0)
-        <div class="section-title section-title--orange">
+        <div class="section-title section-title--orange" style="margin-top: 48px;">
           <h2>Médiathèque</h2>
           <span class="section-title__line"></span>
-          <div class="mediatheque-nav">
-            <button class="mediatheque-nav__btn" id="mediaPrev" aria-label="Précédent">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button class="mediatheque-nav__btn" id="mediaNext" aria-label="Suivant">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
-            </button>
-          </div>
+          <a href="{{ route('mediatheque') }}" class="section-title__link">Voir tout →</a>
         </div>
 
         <div class="mediatheque-section">
