@@ -12,11 +12,7 @@ class Article extends Model
     use HasFactory, SoftDeletes;
     use \App\Traits\Auditable;
 
-    protected static function booted(): void
-    {
-        static::creating(fn ($model) => $model->slug = $model->slug ?: Str::slug($model->title));
-        static::updating(fn ($model) => $model->slug = Str::slug($model->title));
-    }
+    // Slug generation handled by ArticleController (with uniqueness check)
 
     protected $fillable = ['title', 'slug', 'excerpt', 'content', 'image', 'category_id', 'dossier_id', 'author_id', 'status', 'section', 'published_at', 'read_time', 'is_featured', 'featured_position'];
 
