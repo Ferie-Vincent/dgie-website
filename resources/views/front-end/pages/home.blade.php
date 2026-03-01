@@ -356,26 +356,46 @@
         <div class="section-title section-title--orange" style="margin-top: 48px;">
           <h2>Médiathèque</h2>
           <span class="section-title__line"></span>
-          <a href="{{ route('mediatheque') }}" class="section-title__link">Voir tout →</a>
+          <a href="{{ route('mediatheque') }}" class="section-title__link">Voir tout</a>
         </div>
 
         <div class="mediatheque-section">
           @php $featured = $videos->first(); @endphp
-          <div class="mediatheque-featured">
-            <iframe src="{{ $featured->embed_url }}" title="{{ $featured->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
+          <a href="#" class="mediatheque-featured home-video-trigger" data-embed="{{ $featured->embed_url }}" data-title="{{ $featured->title }}">
+            <img src="{{ $featured->thumbnail }}" alt="{{ $featured->title }}" loading="lazy">
+            <div class="mediatheque-featured__play">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </a>
 
           @if($videos->count() > 1)
           <div class="mediatheque-grid" id="mediaGrid">
             @foreach($videos->skip(1) as $video)
-            <div class="mediatheque-card">
+            <a href="#" class="mediatheque-card home-video-trigger" data-embed="{{ $video->embed_url }}" data-title="{{ $video->title }}">
               <div class="mediatheque-card__thumb">
-                <iframe src="{{ $video->embed_url }}" title="{{ $video->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}" loading="lazy">
+                <div class="mediatheque-card__play">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
               </div>
-            </div>
+            </a>
             @endforeach
           </div>
           @endif
+        </div>
+
+        <!-- VIDEO PLAYER MODAL (homepage) -->
+        <div class="video-modal" id="homeVideoModal">
+          <div class="video-modal__backdrop"></div>
+          <div class="video-modal__container">
+            <button class="video-modal__close" aria-label="Fermer">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div class="video-modal__player">
+              <iframe id="homeVideoFrame" src="" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <h3 class="video-modal__title" id="homeVideoTitle"></h3>
+          </div>
         </div>
         @endif
 
@@ -668,4 +688,37 @@
 })();
 </script>
 @endif
+
+<!-- Homepage video modal -->
+<script>
+(function() {
+  var modal = document.getElementById('homeVideoModal');
+  var frame = document.getElementById('homeVideoFrame');
+  var title = document.getElementById('homeVideoTitle');
+  if (!modal) return;
+
+  document.querySelectorAll('.home-video-trigger').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      e.preventDefault();
+      frame.src = this.dataset.embed + '?autoplay=1';
+      frame.title = this.dataset.title;
+      title.textContent = this.dataset.title;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeModal() {
+    modal.classList.remove('active');
+    frame.src = '';
+    document.body.style.overflow = '';
+  }
+
+  modal.querySelector('.video-modal__close').addEventListener('click', closeModal);
+  modal.querySelector('.video-modal__backdrop').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+})();
+</script>
 @endpush
