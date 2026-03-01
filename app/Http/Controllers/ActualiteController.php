@@ -37,6 +37,7 @@ class ActualiteController extends Controller
             ->with([
                 'category',
                 'author',
+                'images',
                 'comments' => fn($q) => $q->approved()->whereNull('parent_id')->with(['replies' => fn($r) => $r->approved()]),
             ])
             ->firstOrFail();

@@ -86,6 +86,7 @@ Route::prefix('admin')->middleware(['admin', 'force-password-change'])->name('ad
 
     // CRUD Resources
     Route::resource('articles', ArticleController::class);
+    Route::delete('article-images/{image}', [ArticleController::class, 'destroyImage'])->name('article-images.destroy');
     Route::resource('categories', CategoryController::class);
     Route::resource('dossiers', DossierController::class);
     Route::resource('evenements', EvenementController::class);

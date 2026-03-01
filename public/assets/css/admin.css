@@ -2279,6 +2279,48 @@ input, select, textarea { font-family: inherit; }
     gap: 20px;
 }
 
+/* Article existing images grid */
+.article-existing-images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.article-existing-images:empty {
+    display: none;
+}
+.article-existing-img {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.article-existing-img img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+}
+.article-existing-img__delete {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.9);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.article-existing-img:hover .article-existing-img__delete {
+    opacity: 1;
+}
+
 /* ============================================
    ORGANIGRAMME OFFICIEL (Dashboard)
    ============================================ */

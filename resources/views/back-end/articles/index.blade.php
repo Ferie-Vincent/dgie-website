@@ -123,8 +123,10 @@
                                 data-status="{{ $article->status }}"
                                 data-excerpt="{{ $article->excerpt }}"
                                 data-content="{{ $article->content }}"
+                                data-section="{{ $article->section }}"
                                 data-read_time="{{ $article->read_time }}"
-                                data-image-url="{{ $article->image ? asset('storage/'.$article->image) : '' }}">
+                                data-image-url="{{ $article->image ? asset('storage/'.$article->image) : '' }}"
+                                data-images='@json($article->images->map(fn($img) => ["id" => $img->id, "url" => asset("storage/".$img->image_path)]))'>
                                 <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                             </button>
                             <form id="delete-article-{{ $article->id }}" action="{{ route('admin.articles.destroy', $article) }}" method="POST" style="display:none;">
@@ -227,6 +229,20 @@
                             </div>
                             <span class="form-help">Formats : JPG, PNG, WebP — Taille max : 2 Mo</span>
                             @if(old('_modal') == 'create') @error('image') <span class="form-error">{{ $message }}</span> @enderror @endif
+                        </div>
+
+                        <div class="modal-fp-section">
+                            <div class="modal-fp-section-title"><span class="dot orange"></span> IMAGES SUPPLEMENTAIRES</div>
+                            <div class="fp-dropzone" id="create-article-dropzone">
+                                <div class="fp-dropzone-icon">
+                                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                </div>
+                                <div class="fp-dropzone-text">Glissez vos images ici</div>
+                                <div class="fp-dropzone-text">ou <span class="link">selectionnez des fichiers</span></div>
+                                <div class="fp-dropzone-hint">JPG, PNG, WebP — max 5 Mo par image — 10 images max</div>
+                            </div>
+                            <input type="file" id="create-article-photos" name="additional_images[]" accept="image/*" multiple style="display:none">
+                            <div class="fp-photos-preview" id="create-article-photos-preview"></div>
                         </div>
 
                         <div class="modal-fp-section">
@@ -352,6 +368,21 @@
                         </div>
 
                         <div class="modal-fp-section">
+                            <div class="modal-fp-section-title"><span class="dot orange"></span> IMAGES SUPPLEMENTAIRES</div>
+                            <div class="article-existing-images" id="edit-existing-images"></div>
+                            <div class="fp-dropzone" id="edit-article-dropzone">
+                                <div class="fp-dropzone-icon">
+                                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                </div>
+                                <div class="fp-dropzone-text">Ajouter des images</div>
+                                <div class="fp-dropzone-text">ou <span class="link">selectionnez des fichiers</span></div>
+                                <div class="fp-dropzone-hint">JPG, PNG, WebP — max 5 Mo par image</div>
+                            </div>
+                            <input type="file" id="edit-article-photos" name="additional_images[]" accept="image/*" multiple style="display:none">
+                            <div class="fp-photos-preview" id="edit-article-photos-preview"></div>
+                        </div>
+
+                        <div class="modal-fp-section">
                             <div class="modal-fp-section-title"><span class="dot green"></span> METADONNEES</div>
                             <div class="form-group">
                                 <label for="edit-status">Statut de publication</label>
@@ -411,6 +442,44 @@
 
 @section('scripts')
 <script>
+    // Dropzone setup for additional images
+    function setupArticleDropzone(dropzoneId, fileInputId, previewId) {
+        var dropzone = document.getElementById(dropzoneId);
+        var fileInput = document.getElementById(fileInputId);
+        var preview = document.getElementById(previewId);
+        if (!dropzone || !fileInput) return;
+
+        dropzone.addEventListener('click', function() { fileInput.click(); });
+        dropzone.addEventListener('dragover', function(e) { e.preventDefault(); dropzone.classList.add('dragover'); });
+        dropzone.addEventListener('dragleave', function() { dropzone.classList.remove('dragover'); });
+        dropzone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            fileInput.files = e.dataTransfer.files;
+            showArticlePhotoPreviews(fileInput.files, preview);
+        });
+        fileInput.addEventListener('change', function() { showArticlePhotoPreviews(this.files, preview); });
+    }
+
+    function showArticlePhotoPreviews(files, container) {
+        container.innerHTML = '';
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            if (!file.type.startsWith('image/')) continue;
+            var thumb = document.createElement('div');
+            thumb.className = 'fp-thumb';
+            var img = document.createElement('img');
+            var reader = new FileReader();
+            reader.onload = (function(img) { return function(e) { img.src = e.target.result; }; })(img);
+            reader.readAsDataURL(file);
+            thumb.appendChild(img);
+            container.appendChild(thumb);
+        }
+    }
+
+    setupArticleDropzone('create-article-dropzone', 'create-article-photos', 'create-article-photos-preview');
+    setupArticleDropzone('edit-article-dropzone', 'edit-article-photos', 'edit-article-photos-preview');
+
     // Set _edit_id hidden field and populate edit form when opening edit modal
     document.addEventListener('click', function(e) {
         const btn = e.target.closest('[data-edit-btn]');
@@ -422,7 +491,7 @@
             document.getElementById('edit-category_id').value = btn.dataset.category_id || '';
             document.getElementById('edit-dossier_id').value = btn.dataset.dossier_id || '';
             document.getElementById('edit-status').value = btn.dataset.status || 'brouillon';
-            document.getElementById('edit-section').value = btn.dataset.section || 'general';
+            document.getElementById('edit-section').value = btn.dataset.section || 'retour';
             document.getElementById('edit-excerpt').value = btn.dataset.excerpt || '';
             document.getElementById('edit-content').value = btn.dataset.content || '';
 
@@ -433,7 +502,40 @@
             } else {
                 placeholder.innerHTML = '<div class="fp-image-placeholder"><span>Aucune image selectionnee</span><small>Format 16:9 recommande</small></div>';
             }
+
+            // Existing additional images
+            var container = document.getElementById('edit-existing-images');
+            container.innerHTML = '';
+            var images = [];
+            try { images = JSON.parse(btn.dataset.images || '[]'); } catch(e) {}
+            images.forEach(function(img) {
+                var div = document.createElement('div');
+                div.className = 'article-existing-img';
+                div.innerHTML = '<img src="' + img.url + '" alt="">'
+                    + '<button type="button" class="article-existing-img__delete" data-image-id="' + img.id + '" title="Supprimer">'
+                    + '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+                    + '</button>';
+                container.appendChild(div);
+            });
+
+            // Clear new image previews
+            document.getElementById('edit-article-photos-preview').innerHTML = '';
         }
+    });
+
+    // AJAX delete for existing additional images
+    document.addEventListener('click', function(e) {
+        var btn = e.target.closest('.article-existing-img__delete');
+        if (!btn) return;
+        if (!confirm('Supprimer cette image ?')) return;
+        var imageId = btn.dataset.imageId;
+        var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        fetch('/admin/article-images/' + imageId, {
+            method: 'DELETE',
+            headers: { 'X-CSRF-TOKEN': token, 'Accept': 'application/json' }
+        }).then(function(res) {
+            if (res.ok) btn.closest('.article-existing-img').remove();
+        });
     });
 
     // View detail modal — BNC-style rich preview

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\ArticleImage;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -30,7 +32,7 @@ class ArticleController extends Controller
             $query->where('section', $request->section);
         }
 
-        $articles = $query->latest()->paginate(15)->withQueryString();
+        $articles = $query->with('images')->latest()->paginate(15)->withQueryString();
         $categories = Category::orderBy('name')->get();
         $dossiers = \App\Models\Dossier::orderBy('title')->get();
 
@@ -55,11 +57,20 @@ class ArticleController extends Controller
             'section' => 'required|in:retour,investir,action-sociale',
             'image' => 'nullable|image|max:2048',
             'published_at' => 'nullable|date',
+            'additional_images' => 'nullable|array|max:10',
+            'additional_images.*' => 'image|max:5120',
         ]);
 
-        $validated['slug'] = Str::slug($validated['title']);
+        $slug = Str::slug($validated['title']);
+        $originalSlug = $slug;
+        $counter = 1;
+        while (Article::withTrashed()->where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter++;
+        }
+        $validated['slug'] = $slug;
+
         $validated['author_id'] = auth()->id();
-                $validated['read_time'] = max(1, (int) ceil(str_word_count(strip_tags($validated['content'])) / 200));
+        $validated['read_time'] = max(1, (int) ceil(str_word_count(strip_tags($validated['content'])) / 200));
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('articles', 'public');
@@ -69,7 +80,20 @@ class ArticleController extends Controller
             $validated['published_at'] = now();
         }
 
-        Article::create($validated);
+        unset($validated['additional_images']);
+        $article = Article::create($validated);
+
+        if ($request->hasFile('additional_images')) {
+            $order = 0;
+            foreach ($request->file('additional_images') as $file) {
+                $path = $file->store('articles/gallery', 'public');
+                ArticleImage::create([
+                    'article_id' => $article->id,
+                    'image_path' => $path,
+                    'order' => $order++,
+                ]);
+            }
+        }
 
         return redirect()->route('admin.articles.index')
             ->with('success', 'Article créé avec succès.');
@@ -99,10 +123,19 @@ class ArticleController extends Controller
             'section' => 'required|in:retour,investir,action-sociale',
             'image' => 'nullable|image|max:2048',
             'published_at' => 'nullable|date',
+            'additional_images' => 'nullable|array|max:10',
+            'additional_images.*' => 'image|max:5120',
         ]);
 
-        $validated['slug'] = Str::slug($validated['title']);
-                $validated['read_time'] = max(1, (int) ceil(str_word_count(strip_tags($validated['content'])) / 200));
+        $slug = Str::slug($validated['title']);
+        $originalSlug = $slug;
+        $counter = 1;
+        while (Article::withTrashed()->where('slug', $slug)->where('id', '!=', $article->id)->exists()) {
+            $slug = $originalSlug . '-' . $counter++;
+        }
+        $validated['slug'] = $slug;
+
+        $validated['read_time'] = max(1, (int) ceil(str_word_count(strip_tags($validated['content'])) / 200));
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('articles', 'public');
@@ -112,14 +145,39 @@ class ArticleController extends Controller
             $validated['published_at'] = now();
         }
 
+        unset($validated['additional_images']);
         $article->update($validated);
+
+        if ($request->hasFile('additional_images')) {
+            $maxOrder = $article->images()->max('order') ?? -1;
+            foreach ($request->file('additional_images') as $file) {
+                $path = $file->store('articles/gallery', 'public');
+                ArticleImage::create([
+                    'article_id' => $article->id,
+                    'image_path' => $path,
+                    'order' => ++$maxOrder,
+                ]);
+            }
+        }
 
         return redirect()->route('admin.articles.index')
             ->with('success', 'Article mis à jour avec succès.');
     }
 
+    public function destroyImage(ArticleImage $image)
+    {
+        Storage::disk('public')->delete($image->image_path);
+        $image->delete();
+
+        return response()->json(['success' => true]);
+    }
+
     public function destroy(Article $article)
     {
+        foreach ($article->images as $img) {
+            Storage::disk('public')->delete($img->image_path);
+        }
+        $article->images()->delete();
         $article->delete();
 
         return redirect()->route('admin.articles.index')

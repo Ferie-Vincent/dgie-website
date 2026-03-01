@@ -108,6 +108,40 @@
             {!! $article->content !!}
           </div>
 
+          <!-- Galerie photos -->
+          @if($article->images->count())
+          <div class="article-gallery">
+            <h3 class="article-gallery__title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Galerie photos
+            </h3>
+            <div class="article-gallery__grid">
+              @foreach($article->images as $index => $img)
+              <figure class="article-gallery__item" data-lightbox="{{ $index }}">
+                <img src="{{ asset('storage/' . $img->image_path) }}" alt="{{ $img->caption ?? $article->title }}" loading="lazy">
+                @if($img->caption)
+                <figcaption>{{ $img->caption }}</figcaption>
+                @endif
+              </figure>
+              @endforeach
+            </div>
+          </div>
+
+          <!-- Lightbox -->
+          <div class="article-lightbox" id="articleLightbox">
+            <button class="article-lightbox__close" aria-label="Fermer">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <button class="article-lightbox__nav article-lightbox__prev" aria-label="Image precedente">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <img class="article-lightbox__img" src="" alt="">
+            <button class="article-lightbox__nav article-lightbox__next" aria-label="Image suivante">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+          @endif
+
           <!-- Auteur -->
           <div class="article-author">
             <div class="article-author__avatar">
@@ -265,3 +299,48 @@
     </div>
   </section>
 @endsection
+
+@push('scripts')
+<script>
+(function() {
+  var lightbox = document.getElementById('articleLightbox');
+  if (!lightbox) return;
+  var items = document.querySelectorAll('.article-gallery__item');
+  var lbImg = lightbox.querySelector('.article-lightbox__img');
+  var current = 0;
+  var images = [];
+  items.forEach(function(item) {
+    images.push(item.querySelector('img').src);
+  });
+
+  function openLightbox(index) {
+    current = index;
+    lbImg.src = images[current];
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function navigate(dir) {
+    current = (current + dir + images.length) % images.length;
+    lbImg.src = images[current];
+  }
+
+  items.forEach(function(item, i) {
+    item.addEventListener('click', function() { openLightbox(i); });
+  });
+  lightbox.querySelector('.article-lightbox__close').addEventListener('click', closeLightbox);
+  lightbox.querySelector('.article-lightbox__prev').addEventListener('click', function() { navigate(-1); });
+  lightbox.querySelector('.article-lightbox__next').addEventListener('click', function() { navigate(1); });
+  lightbox.addEventListener('click', function(e) { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function(e) {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navigate(-1);
+    if (e.key === 'ArrowRight') navigate(1);
+  });
+})();
+</script>
+@endpush
