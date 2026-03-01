@@ -30,6 +30,7 @@ class Article extends Model
     public function author() { return $this->belongsTo(User::class, 'author_id'); }
     public function comments() { return $this->hasMany(Comment::class); }
     public function faqs() { return $this->morphMany(FaqItem::class, 'faqable'); }
+    public function images() { return $this->hasMany(ArticleImage::class)->orderBy('order'); }
 
     public function scopePublished($query) { return $query->where('status', 'publie'); }
     public function scopeFeatured($query) { return $query->where('is_featured', true); }
