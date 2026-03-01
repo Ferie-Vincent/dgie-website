@@ -46,6 +46,11 @@ class BannerController extends Controller
 
         Banner::create($validated);
 
+        if ($request->input('_redirect') === 'dashboard') {
+            return redirect()->route('admin.dashboard')
+                ->with('success', 'Bannière publicitaire créée avec succès.');
+        }
+
         return redirect()->route('admin.banners.index')
             ->with('success', 'Bannière créée avec succès.');
     }
