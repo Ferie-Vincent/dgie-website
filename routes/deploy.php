@@ -123,6 +123,49 @@ Route::prefix('deploy/{token}')->group(function () {
             }
         });
 
+        Route::get('/test-login', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            try {
+                $user = \App\Models\User::where('email', 'admin@dgie.gouv.ci')->first();
+                if (!$user) {
+                    return '<pre style="color:red">Utilisateur admin@dgie.gouv.ci introuvable en base</pre>';
+                }
+                $passwordOk = \Illuminate\Support\Facades\Hash::check('Dgie@2026!', $user->password);
+                return '<pre>' .
+                    'User trouvé: ' . $user->email . "\n" .
+                    'Role: ' . $user->role . "\n" .
+                    'Password hash match: ' . ($passwordOk ? 'OUI ✓' : 'NON ✗') . "\n" .
+                    'ID: ' . $user->id . "\n" .
+                    '</pre>';
+            } catch (\Throwable $e) {
+                return '<pre style="color:red">ERREUR: ' . $e->getMessage() . "\n\n" . $e->getTraceAsString() . '</pre>';
+            }
+        });
+
+        Route::get('/check-files', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            $files = [
+                'resources/views/front-end/partials/banner-pub.blade.php',
+                'resources/views/front-end/partials/header.blade.php',
+                'resources/views/front-end/partials/footer.blade.php',
+                'resources/views/front-end/layouts/app.blade.php',
+                'resources/views/back-end/layouts/admin.blade.php',
+                'resources/views/back-end/dashboard.blade.php',
+                'app/Http/Middleware/SecurityHeadersMiddleware.php',
+                'app/Http/Middleware/AdminMiddleware.php',
+            ];
+            $output = '';
+            foreach ($files as $f) {
+                $exists = file_exists(base_path($f)) ? '✓' : '✗ MISSING';
+                $output .= "$exists  $f\n";
+            }
+            return '<pre>' . $output . '</pre>';
+        });
+
         Route::get('/check-logs', function (string $token) {
             if ($token !== config('app.deploy_token')) {
                 abort(404);
