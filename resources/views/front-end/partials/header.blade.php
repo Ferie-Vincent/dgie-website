@@ -12,6 +12,7 @@
       <a href="{{ route('coin-des-diaspos') }}" class="nav__link {{ request()->routeIs('coin-des-diaspos') ? 'nav__link--active' : '' }}">Le Coin des Diasporas</a>
       <a href="{{ route('dossiers') }}" class="nav__link {{ request()->routeIs('dossiers', 'dossier.show') ? 'nav__link--active' : '' }}">Dossiers</a>
       <a href="{{ route('galerie') }}" class="nav__link {{ request()->routeIs('galerie') ? 'nav__link--active' : '' }}">Galerie</a>
+      <a href="{{ route('mediatheque') }}" class="nav__link {{ request()->routeIs('mediatheque') ? 'nav__link--active' : '' }}">Médiathèque</a>
       <a href="{{ route('contact') }}" class="nav__link {{ request()->routeIs('contact') ? 'nav__link--active' : '' }}">Contact</a>
     </nav>
     <div class="header__search">

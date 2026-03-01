@@ -41,6 +41,7 @@ Route::get('/la-dgie', [\App\Http\Controllers\InstitutionController::class, 'laD
 Route::get('/retour-reintegration', [\App\Http\Controllers\InstitutionController::class, 'retourReintegration'])->name('retour-reintegration');
 Route::get('/investir-contribuer', [\App\Http\Controllers\InstitutionController::class, 'investirContribuer'])->name('investir-contribuer');
 Route::get('/galerie', [\App\Http\Controllers\GalerieFrontController::class, 'index'])->name('galerie');
+Route::get('/mediatheque', [\App\Http\Controllers\MediathequeController::class, 'index'])->name('mediatheque');
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::get('/evenements/{slug}', [\App\Http\Controllers\EvenementFrontController::class, 'show'])->name('event.show');
 
