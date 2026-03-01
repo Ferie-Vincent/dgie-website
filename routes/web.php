@@ -99,7 +99,7 @@ Route::prefix('admin')->middleware(['admin', 'force-password-change'])->name('ad
     Route::resource('testimonials', TestimonialController::class);
     Route::resource('cultural-items', CulturalItemController::class);
     Route::resource('toolkit-items', ToolkitItemController::class);
-    Route::resource('banners', BannerController::class);
+    Route::resource('visuels', BannerController::class)->names('banners')->parameters(['visuels' => 'banner']);
     Route::resource('faqs', FaqItemController::class)->except(['create', 'show']);
     Route::resource('magazines', MagazineController::class)->except(['create', 'show']);
 

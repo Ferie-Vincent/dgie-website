@@ -239,7 +239,7 @@
 </div>
 
 {{-- Edit Modal (Fullpage) --}}
-<div class="admin-modal-overlay" id="editModal" data-route-base="{{ url('admin/banners') }}">
+<div class="admin-modal-overlay" id="editModal" data-route-base="{{ url('admin/visuels') }}">
     <div class="admin-modal modal-fullpage">
         <form id="editForm" method="POST" action="" enctype="multipart/form-data">
             @csrf @method('PUT')
