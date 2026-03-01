@@ -57,7 +57,8 @@ jobs:
         with:
           server: 51.15.161.204
           username: ivoirien
-          password: Azertyuiop1234.
+          password: "Azertyuiop1234."
+          protocol: ftps
           local-dir: ./
           server-dir: /httpdocs/
           exclude: |
