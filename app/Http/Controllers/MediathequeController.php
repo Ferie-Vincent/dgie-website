@@ -21,7 +21,8 @@ class MediathequeController extends Controller
                     'video_id' => $videoId,
                     'embed_url' => $videoId ? "https://www.youtube.com/embed/{$videoId}" : '',
                     'thumbnail' => $videoId ? "https://img.youtube.com/vi/{$videoId}/hqdefault.jpg" : '',
-                    'date' => $album->created_at,
+                    'date' => $album->event_date ?? $album->created_at,
+                    'location' => $album->location,
                 ];
             })
             ->filter(fn($v) => $v->video_id);

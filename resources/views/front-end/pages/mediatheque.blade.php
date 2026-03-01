@@ -47,9 +47,20 @@
             <div class="video-card__play">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </div>
-            <div class="video-card__overlay">
-              <h3 class="video-card__title">{{ $video->title }}</h3>
-              <span class="video-card__date">{{ $video->date->translatedFormat('d F Y') }}</span>
+          </div>
+          <div class="video-card__info">
+            <h3 class="video-card__title">{{ $video->title }}</h3>
+            <div class="video-card__meta">
+              <span class="video-card__date">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                {{ $video->date->translatedFormat('d F Y') }}
+              </span>
+              @if($video->location)
+              <span class="video-card__location">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                {{ $video->location }}
+              </span>
+              @endif
             </div>
           </div>
         </a>

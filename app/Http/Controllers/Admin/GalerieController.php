@@ -33,6 +33,8 @@ class GalerieController extends Controller
             'type' => 'required|in:photo,video',
             'status' => 'required|in:brouillon,publie,archive',
             'description' => 'nullable|string|max:1000',
+            'event_date' => 'nullable|date',
+            'location' => 'nullable|string|max:255',
             'cover_image' => 'nullable|image|max:2048',
             'photos' => 'nullable|array',
             'photos.*' => 'file|max:51200|mimes:jpg,jpeg,png,gif,webp,mp4,mov,webm',
@@ -45,6 +47,8 @@ class GalerieController extends Controller
             'type' => $validated['type'],
             'status' => $validated['status'],
             'description' => $validated['description'] ?? null,
+            'event_date' => $validated['event_date'] ?? null,
+            'location' => $validated['location'] ?? null,
         ];
 
         if ($request->hasFile('cover_image')) {
@@ -93,6 +97,8 @@ class GalerieController extends Controller
             'title' => 'required|string|max:255',
             'status' => 'required|in:brouillon,publie,archive',
             'description' => 'nullable|string|max:1000',
+            'event_date' => 'nullable|date',
+            'location' => 'nullable|string|max:255',
             'cover_image' => 'nullable|image|max:2048',
             'photos' => 'nullable|array',
             'photos.*' => 'file|max:51200|mimes:jpg,jpeg,png,gif,webp,mp4,mov,webm',
@@ -104,6 +110,8 @@ class GalerieController extends Controller
             'slug' => Str::slug($validated['title']),
             'status' => $validated['status'],
             'description' => $validated['description'] ?? null,
+            'event_date' => $validated['event_date'] ?? null,
+            'location' => $validated['location'] ?? null,
         ];
 
         if ($request->hasFile('cover_image')) {

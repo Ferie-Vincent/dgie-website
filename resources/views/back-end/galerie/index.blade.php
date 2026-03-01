@@ -126,6 +126,7 @@
         <thead>
             <tr>
                 <th>Titre</th>
+                <th>Date / Lieu</th>
                 <th>Mise à jour</th>
                 <th style="text-align: right;">Actions</th>
             </tr>
@@ -139,6 +140,10 @@
                         <small>YouTube</small>
                     </div>
                 </td>
+                <td style="font-size: 13px; color: var(--text-400);">
+                    @if($video->event_date){{ $video->event_date->format('d/m/Y') }}@endif
+                    @if($video->location)<br><small>{{ $video->location }}</small>@endif
+                </td>
                 <td style="font-size: 13px; color: var(--text-400);">{{ $video->updated_at->format('d M Y') }}</td>
                 <td>
                     <div class="table-actions" style="justify-content: flex-end;">
@@ -147,6 +152,8 @@
                             data-id="{{ $video->id }}"
                             data-title="{{ $video->title }}"
                             data-status="{{ $video->status }}"
+                            data-event-date="{{ $video->event_date?->format('Y-m-d') }}"
+                            data-location="{{ $video->location }}"
                             data-video-url="{{ $video->items->first()?->file_path ?? '' }}">
                             <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                         </button>
@@ -350,6 +357,16 @@
                                 <label for="edit-video_url">URL YouTube <span class="required">*</span></label>
                                 <input type="url" id="edit-video_url" name="video_url" class="form-input" placeholder="https://www.youtube.com/watch?v=...">
                             </div>
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label for="edit-event_date">Date de l'activité</label>
+                                    <input type="date" id="edit-event_date" name="event_date" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="edit-location">Lieu</label>
+                                    <input type="text" id="edit-location" name="location" class="form-input" placeholder="Ex. Abidjan, Côte d'Ivoire">
+                                </div>
+                            </div>
                         </div>
 
                         {{-- DESCRIPTION --}}
@@ -408,6 +425,16 @@
                             <div class="form-group">
                                 <label>URL YouTube <span class="required">*</span></label>
                                 <input type="url" name="video_url" class="form-input" required placeholder="https://www.youtube.com/watch?v=...">
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label>Date de l'activité</label>
+                                    <input type="date" name="event_date" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Lieu</label>
+                                    <input type="text" name="location" class="form-input" placeholder="Ex. Abidjan, Côte d'Ivoire">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -553,6 +580,8 @@
         document.getElementById('edit-photos-section').style.display = 'none';
         document.getElementById('edit-video-section').style.display = '';
         document.getElementById('edit-video_url').value = btn.dataset.videoUrl || '';
+        document.getElementById('edit-event_date').value = btn.dataset.eventDate || '';
+        document.getElementById('edit-location').value = btn.dataset.location || '';
 
         // Clear image placeholder
         var placeholder = document.getElementById('edit-image-placeholder');

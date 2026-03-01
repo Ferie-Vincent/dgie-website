@@ -18,7 +18,11 @@ class GalerieAlbum extends Model
         static::updating(fn ($model) => $model->slug = Str::slug($model->title));
     }
 
-    protected $fillable = ['title', 'slug', 'type', 'cover_image', 'description', 'items_count', 'status'];
+    protected $fillable = ['title', 'slug', 'type', 'cover_image', 'description', 'event_date', 'location', 'items_count', 'status'];
+
+    protected $casts = [
+        'event_date' => 'date',
+    ];
 
     public function items() { return $this->hasMany(GalerieItem::class, 'album_id'); }
     public function scopePublished($query) { return $query->where('status', 'publie'); }
