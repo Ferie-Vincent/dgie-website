@@ -102,3 +102,6 @@ jobs:
             put vendor/autoload.php -o /httpdocs/vendor/autoload.php;
             quit;
           "
+
+      - name: Clear server caches
+        run: curl -sf "https://ivoiriendelexterieur.com/deploy/dgie-deploy-secure-2026/cache-clear" || true
