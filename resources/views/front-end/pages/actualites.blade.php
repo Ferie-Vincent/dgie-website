@@ -43,11 +43,46 @@
   <section class="section">
     <div class="container">
 
+      <!-- Recherche multicritère -->
+      <form action="{{ route('actualites') }}" method="GET" class="search-zone">
+        @if(request('section'))
+          <input type="hidden" name="section" value="{{ request('section') }}">
+        @endif
+        <div class="search-zone__row">
+          <div class="search-zone__field search-zone__field--keyword">
+            <label for="search-q" class="search-zone__label">Rechercher</label>
+            <div class="search-zone__input-wrap">
+              <svg class="search-zone__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" id="search-q" name="q" value="{{ request('q') }}" placeholder="Titre, mot-clé…" class="search-zone__input">
+            </div>
+          </div>
+          <div class="search-zone__field">
+            <label for="search-date-from" class="search-zone__label">Du</label>
+            <input type="date" id="search-date-from" name="date_from" value="{{ request('date_from') }}" class="search-zone__input">
+          </div>
+          <div class="search-zone__field">
+            <label for="search-date-to" class="search-zone__label">Au</label>
+            <input type="date" id="search-date-to" name="date_to" value="{{ request('date_to') }}" class="search-zone__input">
+          </div>
+          <div class="search-zone__actions">
+            <button type="submit" class="btn btn--primary btn--sm">Rechercher</button>
+            @if(request('q') || request('date_from') || request('date_to'))
+              <a href="{{ route('actualites', request('section') ? ['section' => request('section')] : []) }}" class="search-zone__reset">Effacer</a>
+            @endif
+          </div>
+        </div>
+        @if(request('q') || request('date_from') || request('date_to'))
+        <p class="search-zone__result-count">{{ $articles->total() }} résultat{{ $articles->total() > 1 ? 's' : '' }} trouvé{{ $articles->total() > 1 ? 's' : '' }}
+          @if(request('q')) pour « {{ request('q') }} »@endif
+        </p>
+        @endif
+      </form>
+
       <!-- Filtres -->
       <div class="filters">
-        <a href="{{ route('actualites') }}" class="filter-btn {{ !request('categorie') ? 'active' : '' }}">Tous <span class="filter-btn__count">{{ $articles->total() }}</span></a>
+        <a href="{{ route('actualites', array_filter(['q' => request('q'), 'date_from' => request('date_from'), 'date_to' => request('date_to')])) }}" class="filter-btn {{ !request('categorie') ? 'active' : '' }}">Tous <span class="filter-btn__count">{{ $articles->total() }}</span></a>
         @foreach($categories as $category)
-        <a href="{{ route('actualites', ['categorie' => $category->slug]) }}" class="filter-btn {{ request('categorie') == $category->slug ? 'active' : '' }}">{{ $category->name }} <span class="filter-btn__count">{{ $category->articles_count }}</span></a>
+        <a href="{{ route('actualites', array_filter(['categorie' => $category->slug, 'q' => request('q'), 'date_from' => request('date_from'), 'date_to' => request('date_to')])) }}" class="filter-btn {{ request('categorie') == $category->slug ? 'active' : '' }}">{{ $category->name }} <span class="filter-btn__count">{{ $category->articles_count }}</span></a>
         @endforeach
       </div>
 

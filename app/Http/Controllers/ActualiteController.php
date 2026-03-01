@@ -16,6 +16,15 @@ class ActualiteController extends Controller
             ->with('category')
             ->when($request->categorie, fn($q, $cat) => $q->whereHas('category', fn($c) => $c->where('slug', $cat)))
             ->when($request->section, fn($q, $section) => $q->where('section', $section))
+            ->when($request->q, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                      ->orWhere('excerpt', 'like', "%{$search}%")
+                      ->orWhere('content', 'like', "%{$search}%");
+                });
+            })
+            ->when($request->date_from, fn($q, $date) => $q->whereDate('published_at', '>=', $date))
+            ->when($request->date_to, fn($q, $date) => $q->whereDate('published_at', '<=', $date))
             ->latest('published_at')
             ->paginate(12);
 
