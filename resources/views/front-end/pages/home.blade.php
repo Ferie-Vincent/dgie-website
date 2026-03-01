@@ -106,7 +106,7 @@
             <h1 class="featured-card__title">{{ $mainArticle->title }}</h1>
             <div class="featured-card__meta">
               <span>{{ $mainArticle->author->name ?? 'DGIE' }}</span>
-              <span>{{ $mainArticle->published_at->isoFormat('D MMMM YYYY') }}</span>
+              <span>{{ ($mainArticle->published_at ?? $mainArticle->created_at)->isoFormat('D MMMM YYYY') }}</span>
               @if($mainArticle->read_time)
               <span>{{ $mainArticle->read_time }} min de lecture</span>
               @endif
@@ -127,7 +127,7 @@
               <h3 class="featured-card__title">{{ $sideArticle->title }}</h3>
               <div class="featured-card__meta">
                 <span>{{ $sideArticle->author->name ?? 'DGIE' }}</span>
-                <span>{{ $sideArticle->published_at->isoFormat('D MMMM YYYY') }}</span>
+                <span>{{ ($sideArticle->published_at ?? $sideArticle->created_at)->isoFormat('D MMMM YYYY') }}</span>
               </div>
             </div>
           </a>
@@ -174,7 +174,7 @@
               @endif
               <h3 class="article-card__title"><a href="{{ route('article.show', $article->slug) }}">{{ $article->title }}</a></h3>
               <p class="article-card__excerpt">{{ Str::limit($article->excerpt ?? strip_tags($article->content), 150) }}</p>
-              <div class="article-card__meta"><span>{{ $article->author->name ?? 'DGIE' }}</span><span>{{ $article->published_at->isoFormat('D MMMM YYYY') }}</span></div>
+              <div class="article-card__meta"><span>{{ $article->author->name ?? 'DGIE' }}</span><span>{{ ($article->published_at ?? $article->created_at)->isoFormat('D MMMM YYYY') }}</span></div>
             </div>
           </article>
           @empty
@@ -217,7 +217,7 @@
               @endif
               <h3 class="article-card__title"><a href="{{ route('article.show', $article->slug) }}">{{ $article->title }}</a></h3>
               <p class="article-card__excerpt">{{ Str::limit($article->excerpt ?? strip_tags($article->content), 150) }}</p>
-              <div class="article-card__meta"><span>{{ $article->author->name ?? 'DGIE' }}</span><span>{{ $article->published_at->isoFormat('D MMMM YYYY') }}</span></div>
+              <div class="article-card__meta"><span>{{ $article->author->name ?? 'DGIE' }}</span><span>{{ ($article->published_at ?? $article->created_at)->isoFormat('D MMMM YYYY') }}</span></div>
             </div>
           </article>
           @empty
@@ -260,7 +260,7 @@
               @endif
               <h3 class="article-card__title"><a href="{{ route('article.show', $article->slug) }}">{{ $article->title }}</a></h3>
               <p class="article-card__excerpt">{{ Str::limit($article->excerpt ?? strip_tags($article->content), 150) }}</p>
-              <div class="article-card__meta"><span>{{ $article->author->name ?? 'DGIE' }}</span><span>{{ $article->published_at->isoFormat('D MMMM YYYY') }}</span></div>
+              <div class="article-card__meta"><span>{{ $article->author->name ?? 'DGIE' }}</span><span>{{ ($article->published_at ?? $article->created_at)->isoFormat('D MMMM YYYY') }}</span></div>
             </div>
           </article>
           @empty
@@ -303,7 +303,7 @@
               @endif
               <h3 class="article-card__title"><a href="{{ route('article.show', $article->slug) }}">{{ $article->title }}</a></h3>
               <p class="article-card__excerpt">{{ Str::limit($article->excerpt ?? strip_tags($article->content), 150) }}</p>
-              <div class="article-card__meta"><span>{{ $article->author->name ?? 'DGIE' }}</span><span>{{ $article->published_at->isoFormat('D MMMM YYYY') }}</span></div>
+              <div class="article-card__meta"><span>{{ $article->author->name ?? 'DGIE' }}</span><span>{{ ($article->published_at ?? $article->created_at)->isoFormat('D MMMM YYYY') }}</span></div>
             </div>
           </article>
           @empty
