@@ -58,7 +58,7 @@
 
             <div class="form-group full-width">
                 <label for="excerpt">Résumé</label>
-                <textarea id="excerpt" name="excerpt" class="form-textarea" rows="3">{{ old('excerpt', $article->excerpt) }}</textarea>
+                <textarea id="excerpt" name="excerpt" class="form-textarea" rows="3" maxlength="500">{{ old('excerpt', $article->excerpt) }}</textarea>
                 @error('excerpt') <span class="form-error">{{ $message }}</span> @enderror
             </div>
 

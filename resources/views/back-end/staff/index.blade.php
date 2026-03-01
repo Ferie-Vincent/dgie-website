@@ -200,7 +200,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="create-quote">Citation <span class="label-hint">Optionnel</span></label>
-                                <textarea id="create-quote" name="quote" class="form-textarea" rows="3" placeholder="Citation ou message du membre">{{ old('_modal') == 'create' ? old('quote') : '' }}</textarea>
+                                <textarea id="create-quote" name="quote" class="form-textarea" rows="3" maxlength="1000" placeholder="Citation ou message du membre">{{ old('_modal') == 'create' ? old('quote') : '' }}</textarea>
                                 @if(old('_modal') == 'create') @error('quote') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                             <div class="form-group">
@@ -321,7 +321,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="edit-quote">Citation <span class="label-hint">Optionnel</span></label>
-                                <textarea id="edit-quote" name="quote" class="form-textarea" rows="3">{{ old('_modal') == 'edit' ? old('quote') : '' }}</textarea>
+                                <textarea id="edit-quote" name="quote" class="form-textarea" rows="3" maxlength="1000">{{ old('_modal') == 'edit' ? old('quote') : '' }}</textarea>
                                 @if(old('_modal') == 'edit') @error('quote') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                             <div class="form-group">

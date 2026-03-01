@@ -113,8 +113,7 @@
                             <div class="modal-fp-section-title"><span class="dot orange"></span> CONTENU</div>
                             <div class="form-group">
                                 <label for="create-content">Contenu <span class="required">*</span></label>
-                                <textarea id="create-content" name="content" class="form-textarea" rows="3" required maxlength="500" placeholder="Message du flash info..." oninput="updateCounter(this, 'create-counter')">{{ old('_modal') == 'create' ? old('content') : '' }}</textarea>
-                                <span class="form-hint" id="create-counter"><span>0</span>/500 caractères</span>
+                                <textarea id="create-content" name="content" class="form-textarea" rows="3" required maxlength="500" placeholder="Message du flash info...">{{ old('_modal') == 'create' ? old('content') : '' }}</textarea>
                                 @if(old('_modal') == 'create') @error('content') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                         </div>
@@ -172,8 +171,7 @@
                             <div class="modal-fp-section-title"><span class="dot orange"></span> CONTENU</div>
                             <div class="form-group">
                                 <label for="edit-content">Contenu <span class="required">*</span></label>
-                                <textarea id="edit-content" name="content" class="form-textarea" rows="3" required maxlength="500" oninput="updateCounter(this, 'edit-counter')">{{ old('_modal') == 'edit' ? old('content') : '' }}</textarea>
-                                <span class="form-hint" id="edit-counter"><span>0</span>/500 caractères</span>
+                                <textarea id="edit-content" name="content" class="form-textarea" rows="3" required maxlength="500">{{ old('_modal') == 'edit' ? old('content') : '' }}</textarea>
                                 @if(old('_modal') == 'edit') @error('content') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                         </div>
@@ -208,33 +206,12 @@
 
 @section('scripts')
 <script>
-    // Compteur de caractères
-    function updateCounter(textarea, counterId) {
-        const counter = document.getElementById(counterId);
-        if (!counter) return;
-        const span = counter.querySelector('span');
-        const len = textarea.value.length;
-        span.textContent = len;
-        counter.style.color = len > 450 ? (len >= 500 ? '#ef4444' : '#f59e0b') : '';
-    }
-
-    // Init counters on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        const createTA = document.getElementById('create-content');
-        if (createTA && createTA.value) updateCounter(createTA, 'create-counter');
-    });
-
-    // Set _edit_id hidden field when opening edit modal + update counter
+    // Set _edit_id hidden field when opening edit modal
     document.addEventListener('click', function(e) {
         const btn = e.target.closest('[data-edit-btn]');
         if (btn) {
             const editIdField = document.querySelector('#editModal input[name="_edit_id"]');
             if (editIdField) editIdField.value = btn.dataset.id;
-            // Update edit counter after content is populated
-            setTimeout(function() {
-                const editTA = document.getElementById('edit-content');
-                if (editTA) updateCounter(editTA, 'edit-counter');
-            }, 50);
         }
     });
 

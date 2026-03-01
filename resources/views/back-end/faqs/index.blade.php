@@ -159,7 +159,7 @@
                             <div class="modal-fp-section-title"><span class="dot blue"></span> QUESTION / REPONSE</div>
                             <div class="form-group">
                                 <label for="create-question">Question <span class="required">*</span></label>
-                                <textarea id="create-question" name="question" class="form-textarea" rows="3" required placeholder="Saisissez la question">{{ old('_modal') == 'create' ? old('question') : '' }}</textarea>
+                                <textarea id="create-question" name="question" class="form-textarea" rows="3" required maxlength="500" placeholder="Saisissez la question">{{ old('_modal') == 'create' ? old('question') : '' }}</textarea>
                                 @if(old('_modal') == 'create') @error('question') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                             <div class="form-group">
@@ -237,7 +237,7 @@
                             <div class="modal-fp-section-title"><span class="dot blue"></span> QUESTION / REPONSE</div>
                             <div class="form-group">
                                 <label for="edit-question">Question <span class="required">*</span></label>
-                                <textarea id="edit-question" name="question" class="form-textarea" rows="3" required>{{ old('_modal') == 'edit' ? old('question') : '' }}</textarea>
+                                <textarea id="edit-question" name="question" class="form-textarea" rows="3" required maxlength="500">{{ old('_modal') == 'edit' ? old('question') : '' }}</textarea>
                                 @if(old('_modal') == 'edit') @error('question') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                             <div class="form-group">

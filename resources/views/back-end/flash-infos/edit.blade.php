@@ -17,8 +17,7 @@
     <div class="admin-card">
         <div class="form-group">
             <label for="content">Contenu <span class="required">*</span></label>
-            <textarea id="content" name="content" class="form-textarea" rows="3" required maxlength="500" oninput="updateCounter(this)">{{ old('content', $flash_info->content) }}</textarea>
-            <span class="form-hint" id="content-counter"><span>{{ strlen(old('content', $flash_info->content)) }}</span>/500 caractères</span>
+            <textarea id="content" name="content" class="form-textarea" rows="3" required maxlength="500">{{ old('content', $flash_info->content) }}</textarea>
             @error('content') <span class="form-error">{{ $message }}</span> @enderror
         </div>
         <div class="form-grid">
@@ -39,17 +38,4 @@
         </div>
     </div>
 </form>
-@endsection
-
-@section('scripts')
-<script>
-function updateCounter(textarea) {
-    const counter = document.getElementById('content-counter');
-    if (!counter) return;
-    const span = counter.querySelector('span');
-    const len = textarea.value.length;
-    span.textContent = len;
-    counter.style.color = len > 450 ? (len >= 500 ? '#ef4444' : '#f59e0b') : '';
-}
-</script>
 @endsection

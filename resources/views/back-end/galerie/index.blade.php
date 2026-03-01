@@ -248,7 +248,7 @@
                         <div class="modal-fp-section">
                             <div class="modal-fp-section-title"><span class="dot orange"></span> DESCRIPTION DE L'ALBUM</div>
                             <div class="form-group">
-                                <textarea name="description" class="form-textarea" rows="4" placeholder="Décrivez brièvement le contexte de l'événement, les moments forts, les personnalités présentes...">{{ old('_modal') == 'create' ? old('description') : '' }}</textarea>
+                                <textarea name="description" class="form-textarea" rows="4" maxlength="1000" placeholder="Décrivez brièvement le contexte de l'événement, les moments forts, les personnalités présentes...">{{ old('_modal') == 'create' ? old('description') : '' }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -356,7 +356,7 @@
                         <div class="modal-fp-section">
                             <div class="modal-fp-section-title"><span class="dot orange"></span> DESCRIPTION DE L'ALBUM</div>
                             <div class="form-group">
-                                <textarea id="edit-description" name="description" class="form-textarea" rows="4" placeholder="Décrivez brièvement le contexte...">{{ old('_modal') == 'edit' ? old('description') : '' }}</textarea>
+                                <textarea id="edit-description" name="description" class="form-textarea" rows="4" maxlength="1000" placeholder="Décrivez brièvement le contexte...">{{ old('_modal') == 'edit' ? old('description') : '' }}</textarea>
                             </div>
                         </div>
                     </div>
