@@ -27,6 +27,18 @@ Route::prefix('deploy/{token}')->group(function () {
             }
         });
 
+        Route::get('/migrate-fresh', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            try {
+                Artisan::call('migrate:fresh', ['--force' => true]);
+                return '<pre>Migrate fresh exécuté ✓ (toutes les tables recréées)' . "\n\n" . Artisan::output() . '</pre>';
+            } catch (\Throwable $e) {
+                return '<pre style="color:red">ERREUR: ' . $e->getMessage() . "\n\n" . $e->getTraceAsString() . '</pre>';
+            }
+        });
+
         Route::get('/seed', function (string $token) {
             if ($token !== config('app.deploy_token')) {
                 abort(404);
