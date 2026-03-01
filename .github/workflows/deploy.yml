@@ -59,6 +59,7 @@ jobs:
           username: ivoirien
           password: "Azertyuiop1234."
           protocol: ftps
+          security: loose
           local-dir: ./
           server-dir: /httpdocs/
           exclude: |
