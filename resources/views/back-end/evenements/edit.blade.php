@@ -32,7 +32,7 @@
                 <input type="text" id="location" name="location" class="form-input" value="{{ old('location', $evenement->location) }}">
             </div>
             <div class="form-group">
-                <label for="status">Statut</label>
+                <label for="status">Statut <span class="required">*</span></label>
                 <select id="status" name="status" class="form-select">
                     <option value="brouillon" {{ old('status', $evenement->status) == 'brouillon' ? 'selected' : '' }}>Brouillon</option>
                     <option value="publie" {{ old('status', $evenement->status) == 'publie' ? 'selected' : '' }}>Publié</option>
@@ -40,7 +40,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="section">Section</label>
+                <label for="section">Section <span class="required">*</span></label>
                 <select id="section" name="section" class="form-select">
                     <option value="general" {{ old('section', $evenement->section) == 'general' ? 'selected' : '' }}>Général (Accueil)</option>
                     <option value="diaspora" {{ old('section', $evenement->section) == 'diaspora' ? 'selected' : '' }}>Diaspora (Coin des Diasporas)</option>

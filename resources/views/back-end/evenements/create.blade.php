@@ -31,7 +31,7 @@
                 <input type="text" id="location" name="location" class="form-input" value="{{ old('location') }}" placeholder="Ex: Abidjan, Plateau">
             </div>
             <div class="form-group">
-                <label for="status">Statut</label>
+                <label for="status">Statut <span class="required">*</span></label>
                 <select id="status" name="status" class="form-select">
                     <option value="brouillon">Brouillon</option>
                     <option value="publie">Publié</option>
@@ -39,7 +39,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="section">Section</label>
+                <label for="section">Section <span class="required">*</span></label>
                 <select id="section" name="section" class="form-select">
                     <option value="general" {{ old('section') == 'general' ? 'selected' : '' }}>Général (Accueil)</option>
                     <option value="diaspora" {{ old('section') == 'diaspora' ? 'selected' : '' }}>Diaspora (Coin des Diasporas)</option>

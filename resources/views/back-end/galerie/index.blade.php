@@ -203,7 +203,7 @@
                             </div>
                             <div class="form-grid-2">
                                 <div class="form-group">
-                                    <label for="create-status">Statut</label>
+                                    <label for="create-status">Statut <span class="required">*</span></label>
                                     <select id="create-status" name="status" class="form-select">
                                         <option value="publie" {{ old('_modal') == 'create' && old('status') == 'publie' ? 'selected' : '' }}>Publié</option>
                                         <option value="brouillon" {{ old('_modal') == 'create' && old('status') == 'brouillon' ? 'selected' : '' }}>Brouillon</option>
@@ -300,7 +300,7 @@
                             </div>
                             <div class="form-grid-2">
                                 <div class="form-group">
-                                    <label for="edit-status">Statut</label>
+                                    <label for="edit-status">Statut <span class="required">*</span></label>
                                     <select id="edit-status" name="status" class="form-select">
                                         <option value="publie">Publié</option>
                                         <option value="brouillon">Brouillon</option>
