@@ -238,6 +238,32 @@ Route::prefix('deploy/{token}')->group(function () {
             return '<pre>' . $output . '</pre>';
         });
 
+        Route::get('/check-views', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            $output = "base_path: " . base_path() . "\n\n";
+
+            $viewsPath = resource_path('views');
+            $output .= "views path: $viewsPath\n";
+            $output .= "exists: " . (is_dir($viewsPath) ? 'YES' : 'NO') . "\n\n";
+
+            // List all blade files recursively
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($viewsPath, \RecursiveDirectoryIterator::SKIP_DOTS)
+            );
+            $count = 0;
+            foreach ($iterator as $file) {
+                if ($file->getExtension() === 'php') {
+                    $relative = str_replace($viewsPath . '/', '', $file->getPathname());
+                    $output .= $relative . "\n";
+                    $count++;
+                }
+            }
+            $output .= "\nTotal: $count blade files";
+            return '<pre>' . $output . '</pre>';
+        });
+
         Route::get('/check-logs', function (string $token) {
             if ($token !== config('app.deploy_token')) {
                 abort(404);
