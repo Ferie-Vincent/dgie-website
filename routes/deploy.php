@@ -206,6 +206,38 @@ Route::prefix('deploy/{token}')->group(function () {
             return '<pre>' . $output . '</pre>';
         });
 
+        Route::get('/fix-opcache', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            $output = '';
+            if (function_exists('opcache_reset')) {
+                opcache_reset();
+                $output .= "OPcache reset ✓\n";
+            } else {
+                $output .= "OPcache not available\n";
+            }
+            // Also clear Laravel caches
+            Artisan::call('config:clear');
+            Artisan::call('route:clear');
+            Artisan::call('view:clear');
+            Artisan::call('cache:clear');
+            $output .= "All Laravel caches cleared ✓\n";
+
+            // Test route resolution
+            try {
+                $route = app('router')->getRoutes()->match(
+                    \Illuminate\Http\Request::create('/admin/dashboard', 'GET')
+                );
+                $output .= "\nRoute /admin/dashboard resolved to: " . $route->getActionName() . "\n";
+                $output .= "Middleware: " . implode(', ', $route->gatherMiddleware()) . "\n";
+            } catch (\Throwable $e) {
+                $output .= "\nRoute resolution error: " . $e->getMessage() . "\n";
+            }
+
+            return '<pre>' . $output . '</pre>';
+        });
+
         Route::get('/check-logs', function (string $token) {
             if ($token !== config('app.deploy_token')) {
                 abort(404);
