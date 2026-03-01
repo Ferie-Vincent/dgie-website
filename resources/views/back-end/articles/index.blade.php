@@ -125,6 +125,7 @@
                                 data-content="{{ $article->content }}"
                                 data-section="{{ $article->section }}"
                                 data-read_time="{{ $article->read_time }}"
+                                data-published_at="{{ $article->published_at ? $article->published_at->format('Y-m-d') : '' }}"
                                 data-image-url="{{ $article->image ? asset('storage/'.$article->image) : '' }}"
                                 data-images='@json($article->images->map(fn($img) => ["id" => $img->id, "url" => asset("storage/".$img->image_path)]))'>
                                 <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -492,6 +493,7 @@
             document.getElementById('edit-dossier_id').value = btn.dataset.dossier_id || '';
             document.getElementById('edit-status').value = btn.dataset.status || 'brouillon';
             document.getElementById('edit-section').value = btn.dataset.section || 'retour';
+            document.getElementById('edit-published_at').value = btn.dataset.published_at || '';
             document.getElementById('edit-excerpt').value = btn.dataset.excerpt || '';
             document.getElementById('edit-content').value = btn.dataset.content || '';
 
