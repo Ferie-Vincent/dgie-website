@@ -238,6 +238,26 @@ Route::prefix('deploy/{token}')->group(function () {
             return '<pre>' . $output . '</pre>';
         });
 
+        Route::get('/test-dashboard', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            try {
+                // Login as admin
+                $user = \App\Models\User::where('email', 'admin@dgie.gouv.ci')->first();
+                \Illuminate\Support\Facades\Auth::login($user);
+
+                // Try to render dashboard
+                $controller = app()->make(\App\Http\Controllers\Admin\DashboardController::class);
+                $request = \Illuminate\Http\Request::create('/admin/dashboard', 'GET');
+                $response = $controller->index($request);
+
+                return '<pre>Dashboard OK ✓ - Status: 200</pre>';
+            } catch (\Throwable $e) {
+                return '<pre style="color:red">ERREUR: ' . $e->getMessage() . "\n\nFile: " . $e->getFile() . ':' . $e->getLine() . "\n\n" . $e->getTraceAsString() . '</pre>';
+            }
+        });
+
         Route::get('/check-views', function (string $token) {
             if ($token !== config('app.deploy_token')) {
                 abort(404);
