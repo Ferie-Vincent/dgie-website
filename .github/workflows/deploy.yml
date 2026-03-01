@@ -52,25 +52,30 @@ jobs:
           MAIL_MAILER=log
           EOF
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: 51.15.161.204
-          username: ivoirien
-          password: "Azertyuiop1234."
-          protocol: ftp
-          local-dir: ./
-          server-dir: /httpdocs/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/vendor/**
-            **/.env.example
-            **/tests/**
-            **/.editorconfig
-            **/.styleci.yml
-            **/phpunit.xml
-            **/_bmad/**
-            **/CLAUDE.md
-            **/SPEC-DGIE.md
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
+      - name: Deploy via lftp
+        run: |
+          lftp -e "
+            set ssl:verify-certificate no;
+            set ftp:ssl-protect-data yes;
+            set ftp:passive-mode yes;
+            set net:max-retries 3;
+            set net:reconnect-interval-base 5;
+            open ftp://ivoirien:Azertyuiop1234.@51.15.161.204;
+            mirror --reverse --delete --verbose \
+              --exclude ^\.git/ \
+              --exclude ^node_modules/ \
+              --exclude ^vendor/ \
+              --exclude ^tests/ \
+              --exclude ^_bmad/ \
+              --exclude ^\.env\.example$ \
+              --exclude ^\.editorconfig$ \
+              --exclude ^\.styleci\.yml$ \
+              --exclude ^phpunit\.xml$ \
+              --exclude ^CLAUDE\.md$ \
+              --exclude ^SPEC-DGIE\.md$ \
+              ./ /httpdocs/;
+            quit;
+          "
