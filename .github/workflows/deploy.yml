@@ -77,7 +77,6 @@ jobs:
             echo 'Syncing autoloader...';
             mirror --reverse --verbose --parallel=5 \
               vendor/composer/ /httpdocs/vendor/composer/;
-            mirror --reverse --verbose \
-              vendor/autoload.php /httpdocs/vendor/autoload.php;
+            put vendor/autoload.php -o /httpdocs/vendor/autoload.php;
             quit;
           "
