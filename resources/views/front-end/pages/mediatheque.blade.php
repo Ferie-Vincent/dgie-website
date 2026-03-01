@@ -37,20 +37,20 @@
     <div class="container">
 
       @if($videos->count() > 0)
-      <p class="mediatheque-page__count">{{ $videos->count() }} vidéo{{ $videos->count() > 1 ? 's' : '' }}</p>
+      <p class="mediatheque-page__count">{{ $videos->count() }} vidéo{{ $videos->count() > 1 ? 's' : '' }} disponible{{ $videos->count() > 1 ? 's' : '' }}</p>
 
       <div class="mediatheque-page__grid">
         @foreach($videos as $video)
         <a href="#" class="video-card" data-embed="{{ $video->embed_url }}" data-title="{{ $video->title }}">
           <div class="video-card__thumb">
-            <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}" loading="lazy">
+            <img src="https://img.youtube.com/vi/{{ $video->video_id }}/mqdefault.jpg" alt="{{ $video->title }}" loading="lazy">
             <div class="video-card__play">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </div>
-          </div>
-          <div class="video-card__info">
-            <h3 class="video-card__title">{{ $video->title }}</h3>
-            <span class="video-card__date">{{ $video->date->translatedFormat('d F Y') }}</span>
+            <div class="video-card__overlay">
+              <h3 class="video-card__title">{{ $video->title }}</h3>
+              <span class="video-card__date">{{ $video->date->translatedFormat('d F Y') }}</span>
+            </div>
           </div>
         </a>
         @endforeach
