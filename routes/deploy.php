@@ -111,6 +111,40 @@ Route::prefix('deploy/{token}')->group(function () {
             }
         });
 
+        Route::get('/check-logs', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            $logFile = storage_path('logs/laravel.log');
+            if (!file_exists($logFile)) {
+                return '<pre>Aucun fichier log trouvé.</pre>';
+            }
+            $lines = file($logFile);
+            $last = array_slice($lines, -80);
+            return '<pre>' . htmlspecialchars(implode('', $last)) . '</pre>';
+        });
+
+        Route::get('/check-permissions', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            $paths = [
+                'storage' => storage_path(),
+                'storage/logs' => storage_path('logs'),
+                'storage/framework/sessions' => storage_path('framework/sessions'),
+                'storage/framework/cache' => storage_path('framework/cache'),
+                'storage/framework/views' => storage_path('framework/views'),
+                'bootstrap/cache' => base_path('bootstrap/cache'),
+            ];
+            $output = '';
+            foreach ($paths as $name => $path) {
+                $exists = file_exists($path) ? 'EXISTS' : 'MISSING';
+                $writable = is_writable($path) ? 'WRITABLE' : 'NOT WRITABLE';
+                $output .= "$name: $exists / $writable\n";
+            }
+            return '<pre>' . $output . '</pre>';
+        });
+
         Route::get('/status', function (string $token) {
             if ($token !== config('app.deploy_token')) {
                 abort(404);
