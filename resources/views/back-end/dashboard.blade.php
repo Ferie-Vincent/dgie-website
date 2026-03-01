@@ -191,34 +191,37 @@
         <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-400);">Gestion des bannières</span>
     </div>
     <div class="ad-banners-grid">
-        @forelse($adBanners as $index => $ad)
-        <div class="ad-banner-slot group">
-            @if($ad->image)
-                <img src="{{ asset('storage/' . $ad->image) }}" alt="{{ $ad->title }}" class="ad-banner-slot__img">
-            @else
-                <div class="ad-banner-slot__empty">
-                    <svg viewBox="0 0 24 24" width="28" height="28" stroke="#94a3b8" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                    <span>Aucune image</span>
-                </div>
-            @endif
-            <div class="ad-banner-slot__overlay">
-                <button type="button" class="ad-banner-slot__btn" onclick="openAdModal({{ $ad->id }}, '{{ $ad->url }}', '{{ $ad->image ? asset('storage/' . $ad->image) : '' }}')">
-                    <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                    Remplacer
-                </button>
+        @for($i = 0; $i < 3; $i++)
+            @php $ad = $adBanners[$i] ?? null; @endphp
+            <div class="ad-banner-slot group">
+                @if($ad && $ad->image)
+                    <img src="{{ asset('storage/' . $ad->image) }}" alt="{{ $ad->title }}" class="ad-banner-slot__img">
+                    <div class="ad-banner-slot__overlay">
+                        <button type="button" class="ad-banner-slot__btn" onclick="openAdModal({{ $ad->id }}, '{{ $ad->url }}', '{{ asset('storage/' . $ad->image) }}')">
+                            <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            Remplacer
+                        </button>
+                    </div>
+                @elseif($ad)
+                    <div class="ad-banner-slot__empty">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="#94a3b8" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>Aucune image</span>
+                    </div>
+                    <div class="ad-banner-slot__overlay">
+                        <button type="button" class="ad-banner-slot__btn" onclick="openAdModal({{ $ad->id }}, '{{ $ad->url }}', '')">
+                            <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            Remplacer
+                        </button>
+                    </div>
+                @else
+                    <div class="ad-banner-slot__empty" style="cursor: pointer;" onclick="createAdModal()">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="#94a3b8" fill="none" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        <span>Ajouter une pub</span>
+                    </div>
+                @endif
+                <span class="ad-banner-slot__badge">Position #{{ $i + 1 }}</span>
             </div>
-            <span class="ad-banner-slot__badge">Position #{{ $index + 1 }}</span>
-        </div>
-        @empty
-        <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
-            <svg viewBox="0 0 24 24" width="40" height="40" stroke="#cbd5e1" fill="none" stroke-width="1.5" style="margin-bottom: 12px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <p style="color: var(--text-400); font-size: 13px; margin-bottom: 16px;">Aucun espace publicitaire pour le moment</p>
-            <button type="button" class="btn btn-primary btn-sm" onclick="createAdModal()">
-                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2" style="margin-right: 4px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Créer une publicité
-            </button>
-        </div>
-        @endforelse
+        @endfor
     </div>
 </div>
 
