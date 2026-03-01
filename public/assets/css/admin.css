@@ -1046,6 +1046,14 @@ input, select, textarea { font-family: inherit; }
     margin-top: 4px;
 }
 
+.form-hint {
+    display: block;
+    font-size: 11px;
+    color: var(--text-400);
+    margin-top: 4px;
+    transition: color 0.2s;
+}
+
 .form-error {
     font-size: 11px;
     color: var(--danger);
