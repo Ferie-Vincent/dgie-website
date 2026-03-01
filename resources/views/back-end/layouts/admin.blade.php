@@ -116,6 +116,10 @@
                 ClassicEditor.create(textarea, ckEditorConfig)
                     .then(function(editor) {
                         window.ckInstances[textarea.id] = editor;
+                        // Real-time sync: keep hidden textarea in sync so HTML5 required validation works
+                        editor.model.document.on('change:data', function() {
+                            textarea.value = editor.getData();
+                        });
                     })
                     .catch(function(err) { console.error('CKEditor init error:', err); });
             });
