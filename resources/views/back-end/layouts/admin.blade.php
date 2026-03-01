@@ -202,15 +202,40 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', function() { enhanceFileInputs(document); });
+        document.addEventListener('DOMContentLoaded', function() { enhanceFileInputs(document); initCharCounters(document); });
+
+        // ========== Character Counters (auto on textarea[maxlength]) ==========
+        function initCharCounters(container) {
+            container.querySelectorAll('textarea[maxlength]').forEach(function(ta) {
+                if (ta.dataset.counterInit) return;
+                ta.dataset.counterInit = '1';
+                var max = parseInt(ta.getAttribute('maxlength'));
+                var hint = document.createElement('span');
+                hint.className = 'form-hint char-counter';
+                hint.innerHTML = '<span>' + ta.value.length + '</span>/' + max + ' caractères';
+                ta.parentNode.insertBefore(hint, ta.nextSibling);
+                ta.addEventListener('input', function() {
+                    var len = ta.value.length;
+                    hint.querySelector('span').textContent = len;
+                    hint.style.color = len > max * 0.9 ? (len >= max ? '#ef4444' : '#f59e0b') : '';
+                });
+            });
+        }
+
+        function refreshCharCounters(container) {
+            container.querySelectorAll('textarea[maxlength]').forEach(function(ta) {
+                var hint = ta.parentNode.querySelector('.char-counter');
+                if (hint) hint.querySelector('span').textContent = ta.value.length;
+            });
+        }
 
         // ========== Modal System ==========
         function openModal(id) {
             const modal = document.getElementById(id);
             if (modal) {
                 modal.classList.add('active');
-                // Init CKEditor + file uploads in modal after it becomes visible
-                setTimeout(function() { initWysiwyg(modal); enhanceFileInputs(modal); }, 100);
+                // Init CKEditor + file uploads + char counters in modal after it becomes visible
+                setTimeout(function() { initWysiwyg(modal); enhanceFileInputs(modal); initCharCounters(modal); }, 100);
             }
         }
 
@@ -351,12 +376,13 @@
 
             openModal('editModal');
 
-            // Update CKEditor instances with populated data
+            // Update CKEditor instances and char counters with populated data
             setTimeout(function() {
                 editModal.querySelectorAll('textarea.wysiwyg').forEach(function(textarea) {
                     var editor = window.ckInstances[textarea.id];
                     if (editor) editor.setData(textarea.value || '');
                 });
+                refreshCharCounters(editModal);
             }, 200);
         });
 

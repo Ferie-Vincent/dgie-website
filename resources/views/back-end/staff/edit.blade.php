@@ -53,7 +53,7 @@
 
             <div class="form-group full-width">
                 <label for="quote">Citation</label>
-                <textarea id="quote" name="quote" class="form-textarea" rows="3">{{ old('quote', $staff->quote) }}</textarea>
+                <textarea id="quote" name="quote" class="form-textarea" rows="3" maxlength="1000">{{ old('quote', $staff->quote) }}</textarea>
                 @error('quote') <span class="form-error">{{ $message }}</span> @enderror
             </div>
 

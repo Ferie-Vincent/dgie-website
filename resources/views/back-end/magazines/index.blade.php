@@ -153,7 +153,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="create-description">Description</label>
-                                <textarea id="create-description" name="description" class="form-input" rows="4" placeholder="Bref descriptif du contenu du magazine...">{{ old('_modal') == 'create' ? old('description') : '' }}</textarea>
+                                <textarea id="create-description" name="description" class="form-input" rows="4" maxlength="1000" placeholder="Bref descriptif du contenu du magazine...">{{ old('_modal') == 'create' ? old('description') : '' }}</textarea>
                                 @if(old('_modal') == 'create') @error('description') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="edit-description">Description</label>
-                                <textarea id="edit-description" name="description" class="form-input" rows="4">{{ old('_modal') == 'edit' ? old('description') : '' }}</textarea>
+                                <textarea id="edit-description" name="description" class="form-input" rows="4" maxlength="1000">{{ old('_modal') == 'edit' ? old('description') : '' }}</textarea>
                                 @if(old('_modal') == 'edit') @error('description') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                         </div>

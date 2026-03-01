@@ -52,7 +52,7 @@
 
             <div class="form-group full-width">
                 <label for="quote">Citation</label>
-                <textarea id="quote" name="quote" class="form-textarea" rows="3" placeholder="Citation ou message du membre">{{ old('quote') }}</textarea>
+                <textarea id="quote" name="quote" class="form-textarea" rows="3" maxlength="1000" placeholder="Citation ou message du membre">{{ old('quote') }}</textarea>
                 @error('quote') <span class="form-error">{{ $message }}</span> @enderror
             </div>
 

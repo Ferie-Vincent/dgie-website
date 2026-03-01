@@ -194,7 +194,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Resume (chapeau) <span class="label-hint">Optionnel</span></label>
-                                <textarea id="create-excerpt" name="excerpt" class="form-textarea" rows="3" placeholder="Bref resume de l'article pour les listes et les aperçus...">{{ old('_modal') == 'create' ? old('excerpt') : '' }}</textarea>
+                                <textarea id="create-excerpt" name="excerpt" class="form-textarea" rows="3" maxlength="500" placeholder="Bref resume de l'article pour les listes et les aperçus...">{{ old('_modal') == 'create' ? old('excerpt') : '' }}</textarea>
                                 <span class="form-help">Ce resume apparaitra dans les listes d'articles et les aperçus.</span>
                                 @if(old('_modal') == 'create') @error('excerpt') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
@@ -319,7 +319,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Resume (chapeau) <span class="label-hint">Optionnel</span></label>
-                                <textarea id="edit-excerpt" name="excerpt" class="form-textarea" rows="3" placeholder="Bref resume de l'article...">{{ old('_modal') == 'edit' ? old('excerpt') : '' }}</textarea>
+                                <textarea id="edit-excerpt" name="excerpt" class="form-textarea" rows="3" maxlength="500" placeholder="Bref resume de l'article...">{{ old('_modal') == 'edit' ? old('excerpt') : '' }}</textarea>
                                 @if(old('_modal') == 'edit') @error('excerpt') <span class="form-error">{{ $message }}</span> @enderror @endif
                             </div>
                         </div>
