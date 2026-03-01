@@ -22,7 +22,7 @@
                 @error('title') <span class="form-error">{{ $message }}</span> @enderror
             </div>
             <div class="form-group">
-                <label for="status">Statut</label>
+                <label for="status">Statut <span class="required">*</span></label>
                 <select id="status" name="status" class="form-select">
                     <option value="brouillon" {{ old('status') == 'brouillon' ? 'selected' : '' }}>Brouillon</option>
                     <option value="publie" {{ old('status') == 'publie' ? 'selected' : '' }}>Publié</option>

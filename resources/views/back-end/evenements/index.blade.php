@@ -362,7 +362,7 @@
                         <div class="modal-fp-section">
                             <div class="modal-fp-section-title"><span class="dot bordeaux"></span> PARAMETRES</div>
                             <div class="form-group">
-                                <label for="create-status">Statut</label>
+                                <label for="create-status">Statut <span class="required">*</span></label>
                                 <select id="create-status" name="status" class="form-select">
                                     <option value="brouillon" {{ old('_modal') == 'create' && old('status') == 'brouillon' ? 'selected' : '' }}>Brouillon</option>
                                     <option value="publie" {{ old('_modal') == 'create' && old('status') == 'publie' ? 'selected' : '' }}>Publie</option>
@@ -474,7 +474,7 @@
                         <div class="modal-fp-section">
                             <div class="modal-fp-section-title"><span class="dot bordeaux"></span> PARAMETRES</div>
                             <div class="form-group">
-                                <label for="edit-status">Statut</label>
+                                <label for="edit-status">Statut <span class="required">*</span></label>
                                 <select id="edit-status" name="status" class="form-select">
                                     <option value="brouillon" {{ old('_modal') == 'edit' && old('status') == 'brouillon' ? 'selected' : '' }}>Brouillon</option>
                                     <option value="publie" {{ old('_modal') == 'edit' && old('status') == 'publie' ? 'selected' : '' }}>Publie</option>
