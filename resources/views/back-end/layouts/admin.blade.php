@@ -132,13 +132,16 @@
             });
         }
 
-        // Sync all CKEditor data to textareas before form submit
-        document.addEventListener('submit', function(e) {
-            var form = e.target;
-            if (!form.matches || !form.matches('form')) return;
+        // Sync all CKEditor data to textareas before native validation
+        // Must run on click (before submit event) so the textarea has content for HTML5 required check
+        document.addEventListener('click', function(e) {
+            var btn = e.target.closest('button[type="submit"]');
+            if (!btn) return;
+            var form = btn.closest('form');
+            if (!form) return;
             form.querySelectorAll('textarea.wysiwyg').forEach(function(textarea) {
                 var editor = window.ckInstances[textarea.id];
-                if (editor) editor.updateSourceElement();
+                if (editor) textarea.value = editor.getData();
             });
         }, true);
 
