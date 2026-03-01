@@ -5795,18 +5795,109 @@ p {
 }
 
 .mediatheque-featured {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: var(--radius-lg);
   overflow: hidden;
   margin-bottom: 16px;
   background: #000;
+  display: block;
 }
 
 .mediatheque-featured iframe {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+.mediatheque-featured img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mediatheque-featured:hover img {
+  transform: scale(1.04);
+}
+
+.mediatheque-featured__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.25);
+  transition: background 0.3s;
+}
+
+.mediatheque-featured:hover .mediatheque-featured__play {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.mediatheque-featured__play svg {
+  width: 64px;
+  height: 64px;
+  padding: 16px;
+  background: rgba(232, 119, 42, 0.9);
+  border-radius: 50%;
+  color: var(--white);
+  transition: transform 0.3s, background 0.3s;
+}
+
+.mediatheque-featured:hover .mediatheque-featured__play svg {
+  transform: scale(1.1);
+  background: var(--orange);
+}
+
+.mediatheque-card {
+  text-decoration: none;
+  display: block;
+}
+
+.mediatheque-card__thumb {
+  position: relative;
+}
+
+.mediatheque-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mediatheque-card:hover .mediatheque-card__thumb img {
+  transform: scale(1.06);
+}
+
+.mediatheque-card__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.25);
+  transition: background 0.3s;
+}
+
+.mediatheque-card:hover .mediatheque-card__play {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.mediatheque-card__play svg {
+  width: 44px;
+  height: 44px;
+  padding: 11px;
+  background: rgba(232, 119, 42, 0.9);
+  border-radius: 50%;
+  color: var(--white);
+  transition: transform 0.3s, background 0.3s;
+}
+
+.mediatheque-card:hover .mediatheque-card__play svg {
+  transform: scale(1.1);
+  background: var(--orange);
 }
 
 .mediatheque-grid {
