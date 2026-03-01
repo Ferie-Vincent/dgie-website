@@ -5973,7 +5973,7 @@ p {
   transform: scale(1.08);
 }
 
-/* Play button — centered */
+/* Play button — centered with dark filter */
 .video-card__play {
   position: absolute;
   inset: 0;
@@ -5981,13 +5981,13 @@ p {
   align-items: center;
   justify-content: center;
   z-index: 2;
-  background: rgba(0, 0, 0, 0.15);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.18) 50%, rgba(0, 0, 0, 0.12) 100%);
   transition: background 0.3s;
   pointer-events: none;
 }
 
 .video-card:hover .video-card__play {
-  background: rgba(0, 0, 0, 0.35);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.2) 100%);
 }
 
 .video-card__play svg {
