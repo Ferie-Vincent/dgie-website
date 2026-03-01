@@ -2972,8 +2972,8 @@ p {
 }
 
 .pagination__btn:hover {
-  background: var(--primary);
-  border-color: var(--primary);
+  background: var(--orange);
+  border-color: var(--orange);
   color: #fff;
 }
 
@@ -3005,8 +3005,8 @@ p {
 }
 
 .pagination__num--active {
-  background: var(--primary);
-  border-color: var(--primary);
+  background: var(--orange);
+  border-color: var(--orange);
   color: #fff;
 }
 
