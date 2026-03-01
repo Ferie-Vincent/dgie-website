@@ -92,9 +92,9 @@
 {{-- Modal Bannière Héro --}}
 <div class="admin-modal-overlay" id="heroOverlay">
     <div class="admin-modal modal-fullpage modal-sm">
-        <form method="POST" id="heroForm" action="{{ $heroBanner ? '/admin/banners/' . $heroBanner->id : '' }}" enctype="multipart/form-data">
+        <form method="POST" id="heroForm" action="{{ $heroBanner ? route('admin.banners.update', $heroBanner) : route('admin.banners.store') }}" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
+            @if($heroBanner) @method('PUT') @endif
             <input type="hidden" name="position" value="top">
             <input type="hidden" name="is_active" value="1">
             <input type="hidden" name="_redirect" value="dashboard">
@@ -510,7 +510,7 @@ document.getElementById('portraitOverlay')?.addEventListener('click', function(e
 function openAdModal(id, url, imageUrl) {
     const overlay = document.getElementById('adOverlay');
     const form = document.getElementById('adForm');
-    form.action = '/admin/banners/' + id;
+    form.action = '/admin/visuels/' + id;
     document.getElementById('ad_url').value = url || '';
 
     const previewBlock = document.getElementById('adPreviewBlock');
