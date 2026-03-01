@@ -166,6 +166,46 @@ Route::prefix('deploy/{token}')->group(function () {
             return '<pre>' . $output . '</pre>';
         });
 
+        Route::get('/fix-autoloader', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            $output = '';
+
+            // Delete all cached files
+            $cacheDir = base_path('bootstrap/cache');
+            foreach (glob($cacheDir . '/*.php') as $file) {
+                if (basename($file) !== '.gitignore') {
+                    $output .= 'Deleted: ' . basename($file) . "\n";
+                    @unlink($file);
+                }
+            }
+
+            // Check if SecurityHeadersMiddleware is in classmap
+            $classmap = base_path('vendor/composer/autoload_classmap.php');
+            if (file_exists($classmap)) {
+                $content = file_get_contents($classmap);
+                if (strpos($content, 'SecurityHeadersMiddleware') !== false) {
+                    $output .= "\nSecurityHeadersMiddleware: FOUND in classmap ✓\n";
+                } else {
+                    $output .= "\nSecurityHeadersMiddleware: NOT in classmap ✗\n";
+                    // Try to fix by adding it
+                    $middlewarePath = base_path('app/Http/Middleware/SecurityHeadersMiddleware.php');
+                    if (file_exists($middlewarePath)) {
+                        $output .= "File exists at: $middlewarePath\n";
+                    }
+                }
+            }
+
+            // Check autoload type
+            $output .= "\nAutoloader files in vendor/composer/:\n";
+            foreach (glob(base_path('vendor/composer/autoload_*.php')) as $f) {
+                $output .= '  ' . basename($f) . ' (' . filesize($f) . ' bytes)' . "\n";
+            }
+
+            return '<pre>' . $output . '</pre>';
+        });
+
         Route::get('/check-logs', function (string $token) {
             if ($token !== config('app.deploy_token')) {
                 abort(404);
