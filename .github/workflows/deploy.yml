@@ -64,7 +64,7 @@ jobs:
             set net:max-retries 3;
             set net:reconnect-interval-base 5;
             open ftp://ivoirien:Azertyuiop1234.@51.15.161.204;
-            mirror --reverse --delete --verbose \
+            mirror --reverse --verbose --parallel=5 \
               --exclude ^\.git/ \
               --exclude ^node_modules/ \
               --exclude ^vendor/ \
