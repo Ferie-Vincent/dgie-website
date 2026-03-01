@@ -49,13 +49,15 @@ class ActualiteController extends Controller
             ->take(4)
             ->get();
 
+        $date = $article->published_at ?? $article->created_at;
+
         $previousArticle = Article::published()
-            ->where('published_at', '<', $article->published_at)
+            ->where('published_at', '<', $date)
             ->latest('published_at')
             ->first();
 
         $nextArticle = Article::published()
-            ->where('published_at', '>', $article->published_at)
+            ->where('published_at', '>', $date)
             ->oldest('published_at')
             ->first();
 
