@@ -191,7 +191,7 @@
         <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-400);">Gestion des bannières</span>
     </div>
     <div class="ad-banners-grid">
-        @foreach($adBanners as $index => $ad)
+        @forelse($adBanners as $index => $ad)
         <div class="ad-banner-slot group">
             @if($ad->image)
                 <img src="{{ asset('storage/' . $ad->image) }}" alt="{{ $ad->title }}" class="ad-banner-slot__img">
@@ -209,22 +209,31 @@
             </div>
             <span class="ad-banner-slot__badge">Position #{{ $index + 1 }}</span>
         </div>
-        @endforeach
+        @empty
+        <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+            <svg viewBox="0 0 24 24" width="40" height="40" stroke="#cbd5e1" fill="none" stroke-width="1.5" style="margin-bottom: 12px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <p style="color: var(--text-400); font-size: 13px; margin-bottom: 16px;">Aucun espace publicitaire pour le moment</p>
+            <button type="button" class="btn btn-primary btn-sm" onclick="createAdModal()">
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2" style="margin-right: 4px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Créer une publicité
+            </button>
+        </div>
+        @endforelse
     </div>
 </div>
 
-{{-- Modal édition pub --}}
+{{-- Modal édition/création pub --}}
 <div class="admin-modal-overlay" id="adOverlay">
     <div class="admin-modal modal-fullpage modal-sm">
         <form method="POST" id="adForm" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
+            <input type="hidden" id="adMethodField" name="_method" value="PUT">
             <input type="hidden" name="position" value="pub">
             <input type="hidden" name="is_active" value="1">
             <input type="hidden" name="_redirect" value="dashboard">
             <div class="modal-fp-header">
                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="m3 11 18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
-                <h3>Modifier la publicité</h3>
+                <h3 id="adModalTitle">Modifier la publicité</h3>
                 <button type="button" class="modal-fp-close" onclick="closeAdModal()">
                     <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
@@ -511,6 +520,8 @@ function openAdModal(id, url, imageUrl) {
     const overlay = document.getElementById('adOverlay');
     const form = document.getElementById('adForm');
     form.action = '/admin/visuels/' + id;
+    document.getElementById('adMethodField').value = 'PUT';
+    document.getElementById('adModalTitle').textContent = 'Modifier la publicité';
     document.getElementById('ad_url').value = url || '';
 
     const previewBlock = document.getElementById('adPreviewBlock');
@@ -521,6 +532,20 @@ function openAdModal(id, url, imageUrl) {
     } else {
         previewBlock.style.display = 'none';
     }
+
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function createAdModal() {
+    const overlay = document.getElementById('adOverlay');
+    const form = document.getElementById('adForm');
+    form.action = '/admin/visuels';
+    document.getElementById('adMethodField').value = 'POST';
+    document.getElementById('adModalTitle').textContent = 'Créer une publicité';
+    document.getElementById('ad_url').value = '';
+    document.getElementById('adPreviewBlock').style.display = 'none';
+    document.getElementById('adImageInput').value = '';
 
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
