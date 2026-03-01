@@ -2522,6 +2522,111 @@ p {
 }
 
 /* ============================================
+   SEARCH ZONE (actualités multicritère)
+   ============================================ */
+.search-zone {
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.search-zone__row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+}
+.search-zone__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.search-zone__field--keyword {
+  flex: 1;
+}
+.search-zone__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--slate-500);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.search-zone__input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-zone__icon {
+  position: absolute;
+  left: 12px;
+  color: var(--slate-400);
+  pointer-events: none;
+}
+.search-zone__input-wrap .search-zone__input {
+  padding-left: 38px;
+}
+.search-zone__input {
+  padding: 10px 14px;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  font-family: var(--font);
+  color: var(--slate-800);
+  background: var(--slate-50);
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.search-zone__input:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(232, 119, 42, 0.1);
+}
+.search-zone__input[type="date"] {
+  width: 160px;
+}
+.search-zone__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.btn--sm {
+  padding: 10px 20px;
+  font-size: 0.88rem;
+}
+.search-zone__reset {
+  font-size: 0.85rem;
+  color: var(--slate-500);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+.search-zone__reset:hover {
+  color: var(--orange);
+}
+.search-zone__result-count {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: var(--slate-600);
+}
+
+@media (max-width: 768px) {
+  .search-zone__row {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .search-zone__input[type="date"] {
+    width: 100%;
+  }
+  .search-zone__actions {
+    width: 100%;
+  }
+  .search-zone__actions .btn {
+    flex: 1;
+  }
+}
+
+/* ============================================
    FILTERS
    ============================================ */
 .filters {
