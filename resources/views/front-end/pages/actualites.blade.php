@@ -79,7 +79,9 @@
 
       <!-- Pagination -->
       @if($articles->hasPages())
-      {{ $articles->appends(request()->query())->links() }}
+      <div style="margin-top: 40px;">
+        {{ $articles->appends(request()->query())->links('vendor.pagination.front') }}
+      </div>
       @endif
 
     </div>
