@@ -92,6 +92,25 @@ Route::prefix('deploy/{token}')->group(function () {
             }
         });
 
+        Route::get('/create-admin', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            try {
+                $user = \App\Models\User::firstOrCreate(
+                    ['email' => 'admin@dgie.gouv.ci'],
+                    [
+                        'name' => 'Super Admin DGIE',
+                        'password' => \Illuminate\Support\Facades\Hash::make('Dgie@2026!'),
+                        'role' => 'super-admin',
+                    ]
+                );
+                return '<pre>Admin créé ✓' . "\n\nEmail: admin@dgie.gouv.ci\nMot de passe: Dgie@2026!\nRôle: super-admin</pre>";
+            } catch (\Throwable $e) {
+                return '<pre style="color:red">ERREUR: ' . $e->getMessage() . "\n\n" . $e->getTraceAsString() . '</pre>';
+            }
+        });
+
         Route::get('/status', function (string $token) {
             if ($token !== config('app.deploy_token')) {
                 abort(404);
