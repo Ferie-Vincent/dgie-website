@@ -155,9 +155,9 @@
             </button>
         </div>
         <div style="padding: 20px;">
-            <div class="usr-info-notice">
+            <div class="usr-info-notice" id="invite-notice">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                <span>Le mot de passe temporaire est <strong>"password"</strong>. L'utilisateur devra le changer à la première connexion.</span>
+                <span>Un email d'invitation sera envoyé avec les identifiants de connexion. L'utilisateur devra modifier son mot de passe à la première connexion.</span>
             </div>
             <div class="form-group" style="margin-top: 16px;">
                 <label class="usr-label">Nom complet *</label>
@@ -216,6 +216,7 @@ function openInviteModal() {
     document.getElementById('input-role').value = '';
     document.getElementById('modal-invite-title').textContent = 'Inviter un utilisateur';
     document.getElementById('invite-btn').textContent = "Envoyer l'invitation";
+    document.getElementById('invite-notice').style.display = '';
     document.getElementById('inviteModal').classList.add('active');
 }
 
@@ -230,6 +231,7 @@ function editUser(id, name, email, role) {
     document.getElementById('input-role').value = role;
     document.getElementById('modal-invite-title').textContent = "Modifier l'utilisateur";
     document.getElementById('invite-btn').textContent = 'Enregistrer';
+    document.getElementById('invite-notice').style.display = 'none';
     document.getElementById('inviteModal').classList.add('active');
 }
 

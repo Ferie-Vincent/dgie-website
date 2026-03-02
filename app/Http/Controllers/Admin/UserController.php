@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserInvitation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -41,17 +43,29 @@ class UserController extends Controller
         $validated['password'] = Hash::make($tempPassword);
         $validated['must_change_password'] = true;
 
-        User::create($validated);
+        $user = User::create($validated);
+
+        // Envoyer l'invitation par email
+        try {
+            Mail::to($user->email)->send(new UserInvitation($user, $tempPassword));
+            $mailSent = true;
+        } catch (\Exception $e) {
+            $mailSent = false;
+        }
+
+        $message = $mailSent
+            ? 'Invitation envoyée par email à ' . $user->email
+            : 'Utilisateur créé mais l\'email n\'a pas pu être envoyé. Mot de passe temporaire : ' . $tempPassword;
 
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Utilisateur créé. Mot de passe temporaire : ' . $tempPassword,
+                'message' => $message,
             ]);
         }
 
         return redirect()->route('admin.utilisateurs.index')
-            ->with('success', 'Utilisateur créé avec succès.');
+            ->with('success', $message);
     }
 
     public function update(Request $request, User $utilisateur)
