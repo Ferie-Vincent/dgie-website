@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\PasswordReset;
 use App\Mail\UserInvitation;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -54,13 +55,15 @@ class UserController extends Controller
         }
 
         $message = $mailSent
-            ? 'Invitation envoyée par email à ' . $user->email
-            : 'Utilisateur créé mais l\'email n\'a pas pu être envoyé. Mot de passe temporaire : ' . $tempPassword;
+            ? 'Invitation envoyée par email à ' . $user->email . '.'
+            : 'Utilisateur créé mais l\'email n\'a pas pu être envoyé.';
 
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
                 'message' => $message,
+                'password' => $tempPassword,
+                'mail_sent' => $mailSent,
             ]);
         }
 
@@ -113,5 +116,32 @@ class UserController extends Controller
 
         return redirect()->route('admin.utilisateurs.index')
             ->with('success', 'Utilisateur supprimé avec succès.');
+    }
+
+    public function resetPassword(User $utilisateur)
+    {
+        $tempPassword = Str::random(12);
+        $utilisateur->update([
+            'password' => Hash::make($tempPassword),
+            'must_change_password' => true,
+        ]);
+
+        try {
+            Mail::to($utilisateur->email)->send(new PasswordReset($utilisateur, $tempPassword));
+            $mailSent = true;
+        } catch (\Exception $e) {
+            $mailSent = false;
+        }
+
+        $message = $mailSent
+            ? 'Nouveau mot de passe envoyé par email à ' . $utilisateur->email . '.'
+            : 'Mot de passe réinitialisé mais l\'email n\'a pas pu être envoyé.';
+
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'password' => $tempPassword,
+            'mail_sent' => $mailSent,
+        ]);
     }
 }
