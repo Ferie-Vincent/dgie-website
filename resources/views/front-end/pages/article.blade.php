@@ -9,6 +9,9 @@
   <meta property="og:type" content="article">
   <meta property="og:url" content="{{ route('article.show', $article->slug) }}">
   <meta property="og:image" content="{{ $article->image ? asset('storage/' . $article->image) : asset('assets/images/logo-dgie.png') }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:locale" content="fr_CI">
   <meta property="og:site_name" content="DGIE — Direction Générale des Ivoiriens de l'Extérieur">
   <meta property="article:published_time" content="{{ $article->published_at?->toIso8601String() }}">
