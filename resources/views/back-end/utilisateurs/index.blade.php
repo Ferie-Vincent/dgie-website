@@ -113,6 +113,10 @@
                                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>
                             </button>
                             @if($user->id !== auth()->id())
+                            <button class="usr-action-btn" title="Réinitialiser le mot de passe" aria-label="Réinitialiser le mot de passe" style="color: var(--admin-warning, #f59e0b);"
+                                onclick="resetPassword({{ $user->id }}, '{{ addslashes($user->name) }}')">
+                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+                            </button>
                             <button class="usr-action-btn delete" title="Supprimer" aria-label="Supprimer"
                                 onclick="confirmDeleteUser({{ $user->id }}, '{{ addslashes($user->name) }}')">
                                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
@@ -180,6 +184,59 @@
         <div class="usr-modal-footer">
             <button type="button" class="btn btn-outline" onclick="closeInviteModal()">Annuler</button>
             <button type="button" id="invite-btn" class="btn btn-primary" onclick="inviteUser()">Envoyer l'invitation</button>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Mot de passe généré --}}
+<div class="admin-modal-overlay" id="passwordModal">
+    <div class="admin-modal" style="max-width: 480px;">
+        <div class="modal-fp-header" style="padding: 16px 20px;">
+            <div>
+                <h3 id="password-modal-title">Mot de passe généré</h3>
+            </div>
+            <button type="button" class="modal-fp-close" onclick="closePasswordModal()">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div style="padding: 20px;">
+            <p id="password-modal-message" style="font-size: 13px; color: var(--admin-text-light); margin-bottom: 16px;"></p>
+            <div style="background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 8px; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                <div>
+                    <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--admin-text-light); font-weight: 600;">Mot de passe temporaire</span>
+                    <div id="password-modal-value" style="font-family: monospace; font-size: 18px; font-weight: 700; color: var(--admin-text); letter-spacing: 1px; margin-top: 4px;"></div>
+                </div>
+                <button type="button" class="btn btn-outline btn-sm" onclick="copyPassword()" id="copy-pwd-btn" style="white-space: nowrap;">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copier
+                </button>
+            </div>
+            <div class="usr-info-notice" style="margin-top: 16px; background: #fef3c7; border-color: #f59e0b;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#92400e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18l-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4m0 4h.01"/></svg>
+                <span style="color: #92400e;" id="password-modal-mail-status"></span>
+            </div>
+        </div>
+        <div class="usr-modal-footer">
+            <button type="button" class="btn btn-primary" onclick="closePasswordModal()">Compris</button>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Confirmer Réinitialisation --}}
+<div class="admin-modal-overlay" id="resetModal">
+    <div class="admin-modal" style="max-width: 400px;">
+        <div style="padding: 32px; text-align: center;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: #fef3c7; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+            </div>
+            <h3 style="font-size: 15px; font-weight: 600; color: var(--admin-text); margin-bottom: 8px;">Réinitialiser le mot de passe</h3>
+            <p style="font-size: 13px; color: var(--admin-text-light); margin-bottom: 24px;">
+                Un nouveau mot de passe sera généré pour <strong id="reset-user-name"></strong> et envoyé par email. L'utilisateur devra le changer à sa prochaine connexion.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 12px;">
+                <button type="button" class="btn btn-outline" onclick="closeResetModal()">Annuler</button>
+                <button type="button" class="btn" style="background: #f59e0b; color: #fff; border-color: #d97706;" id="confirm-reset-btn" onclick="confirmReset()">Réinitialiser</button>
+            </div>
         </div>
     </div>
 </div>
@@ -268,8 +325,12 @@ function inviteUser() {
     .then(data => {
         if (data.success) {
             closeInviteModal();
-            showToast('success', data.message);
-            setTimeout(() => location.reload(), 1500);
+            if (data.password) {
+                showPasswordModal('Utilisateur créé avec succès', data.message, data.password, data.mail_sent);
+            } else {
+                showToast('success', data.message);
+                setTimeout(() => location.reload(), 1500);
+            }
         } else {
             showToast('error', data.message || 'Une erreur est survenue.');
             btn.disabled = false;
@@ -334,6 +395,80 @@ function liveSearch(input) {
 
 function toggleSelectAll(cb) {
     document.querySelectorAll('#users-table-body .usr-checkbox').forEach(c => c.checked = cb.checked);
+}
+
+// --- Password modal ---
+function showPasswordModal(title, message, password, mailSent) {
+    document.getElementById('password-modal-title').textContent = title;
+    document.getElementById('password-modal-message').textContent = message;
+    document.getElementById('password-modal-value').textContent = password;
+    document.getElementById('password-modal-mail-status').textContent = mailSent
+        ? 'Ce mot de passe a aussi été envoyé par email. Vous pouvez le copier pour le transmettre manuellement si besoin.'
+        : 'L\'email n\'a pas pu être envoyé. Copiez ce mot de passe et transmettez-le manuellement à l\'utilisateur.';
+    document.getElementById('copy-pwd-btn').textContent = 'Copier';
+    document.getElementById('passwordModal').classList.add('active');
+}
+
+function closePasswordModal() {
+    document.getElementById('passwordModal').classList.remove('active');
+    location.reload();
+}
+
+function copyPassword() {
+    const pwd = document.getElementById('password-modal-value').textContent;
+    navigator.clipboard.writeText(pwd).then(() => {
+        const btn = document.getElementById('copy-pwd-btn');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px;"><path d="M20 6L9 17l-5-5"/></svg> Copié !';
+        setTimeout(() => { btn.textContent = 'Copier'; }, 2000);
+    });
+}
+
+// --- Reset password ---
+let currentResetUserId = null;
+
+function resetPassword(id, name) {
+    currentResetUserId = id;
+    document.getElementById('reset-user-name').textContent = name;
+    document.getElementById('resetModal').classList.add('active');
+}
+
+function closeResetModal() {
+    document.getElementById('resetModal').classList.remove('active');
+}
+
+function confirmReset() {
+    if (!currentResetUserId) return;
+
+    const btn = document.getElementById('confirm-reset-btn');
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours...';
+
+    fetch('/admin/utilisateurs/' + currentResetUserId + '/reset-password', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(r => r.json())
+    .then(data => {
+        closeResetModal();
+        btn.disabled = false;
+        btn.textContent = 'Réinitialiser';
+        if (data.success) {
+            showPasswordModal('Mot de passe réinitialisé', data.message, data.password, data.mail_sent);
+        } else {
+            showToast('error', data.message || 'Une erreur est survenue.');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        btn.disabled = false;
+        btn.textContent = 'Réinitialiser';
+        showToast('error', 'Une erreur est survenue.');
+    });
 }
 </script>
 @endsection

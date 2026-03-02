@@ -128,4 +128,5 @@ Route::prefix('admin')->middleware(['admin', 'force-password-change'])->name('ad
 
     // Utilisateurs (super-admin uniquement)
     Route::resource('utilisateurs', UserController::class)->except(['create', 'show', 'edit'])->middleware('superadmin');
+    Route::post('utilisateurs/{utilisateur}/reset-password', [UserController::class, 'resetPassword'])->name('utilisateurs.reset-password')->middleware('superadmin');
 });
