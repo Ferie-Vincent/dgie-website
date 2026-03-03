@@ -4,86 +4,132 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f1f5f9; padding: 40px 0;">
+<body style="margin: 0; padding: 0; background-color: #f0f2f5; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f0f2f5; padding: 48px 16px;">
     <tr>
       <td align="center">
-        <table width="560" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-          {{-- Header --}}
+
+        {{-- Logo --}}
+        <table width="520" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
           <tr>
-            <td style="background: linear-gradient(135deg, #E8772A 0%, #c25e15 100%); padding: 32px 40px; text-align: center;">
-              <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="DGIE" width="60" style="margin-bottom: 12px;">
-              <h1 style="color: #ffffff; font-size: 20px; font-weight: 700; margin: 0;">Bienvenue sur la plateforme DGIE</h1>
+            <td align="center">
+              <table cellpadding="0" cellspacing="0" style="background: #1e293b; border-radius: 14px; padding: 14px 24px;">
+                <tr>
+                  <td style="vertical-align: middle; padding-right: 12px;">
+                    <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="DGIE" width="36" height="36" style="display: block;">
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <span style="font-size: 16px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px;">DGIE</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        {{-- Main card --}}
+        <table width="520" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);">
+
+          {{-- Greeting --}}
+          <tr>
+            <td style="padding: 40px 40px 0;">
+              <p style="font-size: 14px; color: #94a3b8; margin: 0 0 6px; font-weight: 500;">Nouvelle invitation</p>
+              <h1 style="font-size: 22px; font-weight: 700; color: #1e293b; margin: 0 0 20px; line-height: 1.3;">Bienvenue {{ $user->name }} !</h1>
+              <p style="font-size: 15px; color: #475569; line-height: 1.65; margin: 0;">
+                Vous avez été invité(e) à rejoindre la plateforme d'administration de la Direction Générale des Ivoiriens de l'Extérieur en tant que :
+              </p>
             </td>
           </tr>
 
-          {{-- Body --}}
+          {{-- Role badge --}}
           <tr>
-            <td style="padding: 36px 40px;">
-              <p style="font-size: 15px; color: #334155; line-height: 1.6; margin: 0 0 20px;">
-                Bonjour <strong>{{ $user->name }}</strong>,
-              </p>
-              <p style="font-size: 15px; color: #334155; line-height: 1.6; margin: 0 0 20px;">
-                Vous avez été invité(e) à rejoindre la plateforme d'administration de la <strong>Direction Générale des Ivoiriens de l'Extérieur</strong> en tant que <strong>{{ $user->getRoleLabel() }}</strong>.
-              </p>
+            <td style="padding: 16px 40px 0;">
+              <table cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 10px 20px;">
+                    <span style="font-size: 14px; font-weight: 600; color: #c2410c;">{{ $user->getRoleLabel() }}</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-              {{-- Credentials box --}}
-              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; margin: 24px 0;">
+          {{-- Divider --}}
+          <tr>
+            <td style="padding: 28px 40px 0;">
+              <div style="border-top: 1px solid #e2e8f0;"></div>
+            </td>
+          </tr>
+
+          {{-- Credentials card --}}
+          <tr>
+            <td style="padding: 28px 40px 0;">
+              <p style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700; margin: 0 0 16px;">Vos identifiants de connexion</p>
+              <table width="100%" cellpadding="0" cellspacing="0" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;">
                 <tr>
                   <td style="padding: 20px 24px;">
-                    <p style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; font-weight: 600; margin: 0 0 12px;">Vos identifiants de connexion</p>
-                    <table cellpadding="0" cellspacing="0">
+                    <table width="100%" cellpadding="0" cellspacing="0">
                       <tr>
-                        <td style="font-size: 14px; color: #64748b; padding: 4px 0; width: 120px;">Email :</td>
-                        <td style="font-size: 14px; color: #1e293b; font-weight: 600; padding: 4px 0;">{{ $user->email }}</td>
+                        <td style="padding: 6px 0;">
+                          <span style="font-size: 12px; color: #94a3b8; font-weight: 500;">Email</span><br>
+                          <span style="font-size: 15px; color: #1e293b; font-weight: 600;">{{ $user->email }}</span>
+                        </td>
                       </tr>
                       <tr>
-                        <td style="font-size: 14px; color: #64748b; padding: 4px 0;">Mot de passe :</td>
-                        <td style="font-size: 14px; color: #1e293b; font-weight: 600; padding: 4px 0; font-family: monospace; letter-spacing: 0.5px;">{{ $password }}</td>
+                        <td style="padding: 14px 0 6px; border-top: 1px dashed #e2e8f0;">
+                          <span style="font-size: 12px; color: #94a3b8; font-weight: 500;">Mot de passe</span><br>
+                          <span style="font-size: 18px; color: #1e293b; font-weight: 700; font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; letter-spacing: 1.5px;">{{ $password }}</span>
+                        </td>
                       </tr>
                     </table>
                   </td>
                 </tr>
               </table>
+            </td>
+          </tr>
 
-              {{-- Warning --}}
-              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 4px; margin: 20px 0;">
+          {{-- Warning --}}
+          <tr>
+            <td style="padding: 20px 40px 0;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background: #fffbeb; border-radius: 10px;">
                 <tr>
-                  <td style="padding: 14px 16px;">
+                  <td style="padding: 14px 18px; vertical-align: top; width: 24px;">
+                    <span style="font-size: 16px;">&#9888;&#65039;</span>
+                  </td>
+                  <td style="padding: 14px 18px 14px 0;">
                     <p style="font-size: 13px; color: #92400e; margin: 0; line-height: 1.5;">
-                      <strong>Important :</strong> Pour des raisons de sécurité, vous serez invité(e) à modifier votre mot de passe lors de votre première connexion.
+                      Vous devrez modifier ce mot de passe lors de votre première connexion.
                     </p>
                   </td>
                 </tr>
               </table>
-
-              {{-- CTA Button --}}
-              <table width="100%" cellpadding="0" cellspacing="0" style="margin: 28px 0;">
-                <tr>
-                  <td align="center">
-                    <a href="{{ url('/admin/login') }}" style="display: inline-block; background: #E8772A; color: #ffffff; text-decoration: none; padding: 14px 36px; border-radius: 8px; font-size: 15px; font-weight: 600;">
-                      Se connecter
-                    </a>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="font-size: 14px; color: #64748b; line-height: 1.6; margin: 0;">
-                Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer cet email.
-              </p>
             </td>
           </tr>
 
-          {{-- Footer --}}
+          {{-- CTA Button --}}
           <tr>
-            <td style="background-color: #f8fafc; padding: 20px 40px; border-top: 1px solid #e2e8f0; text-align: center;">
-              <p style="font-size: 12px; color: #94a3b8; margin: 0;">
-                DGIE — Direction Générale des Ivoiriens de l'Extérieur<br>
+            <td style="padding: 32px 40px;" align="center">
+              <a href="{{ url('/admin/login') }}" style="display: inline-block; background: #E8772A; color: #ffffff; text-decoration: none; padding: 14px 48px; border-radius: 10px; font-size: 15px; font-weight: 600; box-shadow: 0 2px 8px rgba(232, 119, 42, 0.3);">
+                Se connecter
+              </a>
+            </td>
+          </tr>
+        </table>
+
+        {{-- Footer --}}
+        <table width="520" cellpadding="0" cellspacing="0" style="margin-top: 28px;">
+          <tr>
+            <td align="center">
+              <p style="font-size: 12px; color: #94a3b8; margin: 0 0 4px;">
+                DGIE — Direction Générale des Ivoiriens de l'Extérieur
+              </p>
+              <p style="font-size: 11px; color: #cbd5e1; margin: 0;">
                 Ministère des Affaires Étrangères — République de Côte d'Ivoire
               </p>
             </td>
           </tr>
         </table>
+
       </td>
     </tr>
   </table>
