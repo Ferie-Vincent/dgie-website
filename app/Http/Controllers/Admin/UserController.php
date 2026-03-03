@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -142,6 +143,47 @@ class UserController extends Controller
             'message' => $message,
             'password' => $tempPassword,
             'mail_sent' => $mailSent,
+        ]);
+    }
+
+    public function updateAvatar(Request $request, User $utilisateur)
+    {
+        if (!auth()->user()->isSuperAdmin() && $utilisateur->id !== auth()->id()) {
+            return response()->json(['success' => false, 'message' => 'Non autorisé.'], 403);
+        }
+
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        if ($utilisateur->avatar) {
+            Storage::disk('public')->delete($utilisateur->avatar);
+        }
+
+        $path = $request->file('avatar')->store('avatars', 'public');
+        $utilisateur->update(['avatar' => $path]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Avatar mis à jour avec succès.',
+            'avatar_url' => asset('storage/' . $path),
+        ]);
+    }
+
+    public function removeAvatar(User $utilisateur)
+    {
+        if (!auth()->user()->isSuperAdmin() && $utilisateur->id !== auth()->id()) {
+            return response()->json(['success' => false, 'message' => 'Non autorisé.'], 403);
+        }
+
+        if ($utilisateur->avatar) {
+            Storage::disk('public')->delete($utilisateur->avatar);
+            $utilisateur->update(['avatar' => null]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Avatar supprimé.',
         ]);
     }
 }

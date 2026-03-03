@@ -39,4 +39,17 @@ class User extends Authenticatable
     }
 
     public function articles() { return $this->hasMany(Article::class, 'author_id'); }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        return $this->avatar ? asset('storage/' . $this->avatar) : null;
+    }
+
+    public function getInitialsAttribute(): string
+    {
+        $parts = explode(' ', trim($this->name));
+        return count($parts) >= 2
+            ? strtoupper(mb_substr($parts[0], 0, 1) . mb_substr($parts[1], 0, 1))
+            : strtoupper(mb_substr($this->name, 0, 2));
+    }
 }
