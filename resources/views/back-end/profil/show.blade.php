@@ -30,7 +30,15 @@
             @endif
         </div>
         <div class="profil-hero__info">
-            <h1 class="profil-hero__name">{{ $user->name }}</h1>
+            <div class="profil-hero__name-row">
+                <h1 class="profil-hero__name" id="heroName">{{ $user->name }}</h1>
+                @if($isOwnProfile)
+                <button class="profil-hero__edit-btn" onclick="toggleEditForm()" title="Modifier le profil">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg>
+                    Modifier
+                </button>
+                @endif
+            </div>
             <div class="profil-hero__meta">
                 @php
                     $roleClass = match($user->role) {
@@ -41,7 +49,7 @@
                     };
                 @endphp
                 <span class="usr-role-badge {{ $roleClass }}">{{ $user->getRoleLabel() }}</span>
-                <span class="profil-hero__email">{{ $user->email }}</span>
+                <span class="profil-hero__email" id="heroEmail">{{ $user->email }}</span>
             </div>
             <div class="profil-hero__dates">
                 <span>
@@ -59,6 +67,32 @@
             </div>
         </div>
     </div>
+
+    {{-- Edit Form (hidden by default) --}}
+    @if($isOwnProfile)
+    <div class="profil-edit-form" id="editForm" style="display: none;">
+        <div class="profil-edit-form__inner">
+            <div class="profil-edit-form__field">
+                <label for="editName">Nom</label>
+                <input type="text" id="editName" class="form-input" value="{{ $user->name }}">
+            </div>
+            <div class="profil-edit-form__field">
+                <label for="editEmail">Adresse email</label>
+                <input type="email" id="editEmail" class="form-input" value="{{ $user->email }}">
+            </div>
+            <div class="profil-edit-form__actions">
+                <button class="btn btn-sm btn-outline" onclick="toggleEditForm()">Annuler</button>
+                <button class="btn btn-sm btn-primary" onclick="saveProfile()">Enregistrer</button>
+            </div>
+        </div>
+        @if($user->pending_email)
+        <div class="profil-pending-email">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Un changement d'email vers <strong>{{ $user->pending_email }}</strong> est en attente de verification.
+        </div>
+        @endif
+    </div>
+    @endif
 </div>
 
 {{-- ACTIVITY STATS CARDS --}}
@@ -113,7 +147,6 @@
 
 {{-- TWO COLUMN: CHART + CONTENT SUMMARY --}}
 <div class="profil-two-cols">
-    {{-- Activity Chart --}}
     <div class="admin-card profil-chart-card">
         <div class="profil-card-header">
             <h2>Activite sur 3 mois</h2>
@@ -128,7 +161,6 @@
         </div>
     </div>
 
-    {{-- Content Summary --}}
     <div class="admin-card profil-content-card">
         <div class="profil-card-header">
             <h2>Contenus rediges</h2>
@@ -199,6 +231,149 @@
     @endif
 </div>
 
+{{-- ============================================
+     SUPER-ADMIN GLOBAL OVERVIEW
+     ============================================ --}}
+@if($isSuperAdminOwnProfile)
+
+<div class="profil-global-divider">
+    <div class="profil-global-divider__line"></div>
+    <div class="profil-global-divider__label">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Vue d'ensemble de la plateforme
+    </div>
+    <div class="profil-global-divider__line"></div>
+</div>
+
+{{-- Global Stats --}}
+<div class="profil-section-label">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    Statistiques globales — {{ now()->translatedFormat('F Y') }}
+</div>
+<div class="profil-stats-grid">
+    <div class="profil-stat-card profil-stat--slate">
+        <div class="profil-stat__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="profil-stat__value">{{ $globalStats['total_actions_month'] }}</div>
+        <div class="profil-stat__label">Actions ce mois</div>
+    </div>
+    <div class="profil-stat-card profil-stat--green">
+        <div class="profil-stat__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        <div class="profil-stat__value">{{ $globalStats['total_created_month'] }}</div>
+        <div class="profil-stat__label">Creations</div>
+    </div>
+    <div class="profil-stat-card profil-stat--blue">
+        <div class="profil-stat__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg></div>
+        <div class="profil-stat__value">{{ $globalStats['total_updated_month'] }}</div>
+        <div class="profil-stat__label">Modifications</div>
+    </div>
+    <div class="profil-stat-card profil-stat--bordeaux">
+        <div class="profil-stat__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div>
+        <div class="profil-stat__value">{{ $globalStats['total_deleted_month'] }}</div>
+        <div class="profil-stat__label">Suppressions</div>
+    </div>
+    <div class="profil-stat-card profil-stat--indigo">
+        <div class="profil-stat__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div class="profil-stat__value">{{ $globalStats['active_users_month'] }}</div>
+        <div class="profil-stat__label">Utilisateurs actifs</div>
+    </div>
+    <div class="profil-stat-card profil-stat--orange">
+        <div class="profil-stat__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div class="profil-stat__value">{{ $globalStats['most_active_model'] ? class_basename($globalStats['most_active_model']->model_type) : '—' }}</div>
+        <div class="profil-stat__label">Type le plus actif</div>
+    </div>
+</div>
+
+{{-- Leaderboard --}}
+<div class="admin-card profil-leaderboard-card">
+    <div class="profil-card-header">
+        <h2>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 7 7 7 7"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5C17 4 17 7 17 7"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            Classement des contributeurs — {{ now()->translatedFormat('F Y') }}
+        </h2>
+    </div>
+    <div class="admin-table-wrapper">
+        <table class="admin-table profil-leaderboard-table">
+            <thead>
+                <tr>
+                    <th style="width: 40px;">#</th>
+                    <th>Utilisateur</th>
+                    <th>Role</th>
+                    <th style="text-align: center;">Articles</th>
+                    <th style="text-align: center;">Actions</th>
+                    <th>Derniere activite</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($leaderboard as $index => $member)
+                <tr class="{{ $member->id === auth()->id() ? 'profil-leaderboard-self' : '' }}">
+                    <td>
+                        <span class="profil-leaderboard-rank {{ $index < 3 ? 'profil-leaderboard-rank--top' . ($index + 1) : '' }}">{{ $index + 1 }}</span>
+                    </td>
+                    <td>
+                        <div class="usr-user-cell">
+                            @php $mbg = match($member->role) { 'super-admin' => '#1e293b', 'editeur' => '#1D8C4F', default => '#3b82f6' }; @endphp
+                            <div class="usr-avatar" style="background: {{ $member->avatar ? 'transparent' : $mbg }}; width: 32px; height: 32px; font-size: 11px;">
+                                @if($member->avatar)
+                                    <img src="{{ asset('storage/' . $member->avatar) }}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                                @else
+                                    {{ $member->initials }}
+                                @endif
+                            </div>
+                            <div>
+                                <a href="{{ route('admin.profil.show', $member) }}" class="usr-user-name" style="font-size: 12px;">{{ $member->name }}</a>
+                                <div class="usr-user-email">{{ $member->email }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        @php $rc = match($member->role) { 'super-admin' => 'superadmin', 'editeur' => 'editeur', default => 'redacteur' }; @endphp
+                        <span class="profil-leaderboard-badge profil-leaderboard-badge--{{ $rc }}">{{ $member->getRoleLabel() }}</span>
+                    </td>
+                    <td style="text-align: center; font-weight: 600;">{{ $member->articles_created }}</td>
+                    <td style="text-align: center;">
+                        <span class="profil-leaderboard-actions">{{ $member->total_actions }}</span>
+                    </td>
+                    <td>
+                        @if($member->last_action_at)
+                            <span class="profil-leaderboard-time">{{ \Carbon\Carbon::parse($member->last_action_at)->diffForHumans() }}</span>
+                        @else
+                            <span style="color: var(--text-400);">—</span>
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{-- Global Activity Timeline --}}
+<div class="admin-card profil-timeline-card">
+    <div class="profil-card-header">
+        <h2>Activite globale de la plateforme</h2>
+        <span class="profil-timeline-period">Tous les utilisateurs</span>
+    </div>
+    @if($globalTimeline->count() > 0)
+    <div class="profil-timeline" id="globalTimelineContainer">
+        @include('back-end.profil._global-timeline-items', ['globalTimeline' => $globalTimeline])
+    </div>
+    @if($globalTimeline->hasMorePages())
+    <div class="profil-timeline-more" id="globalLoadMoreWrapper">
+        <button class="btn btn-outline btn-sm" id="globalLoadMoreBtn" onclick="loadMoreGlobalTimeline()" data-page="2" data-user="{{ $user->id }}">
+            Charger plus d'activites
+        </button>
+    </div>
+    @endif
+    @else
+    <div class="profil-empty-content" style="padding: 40px 20px;">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#cbd5e1" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <p>Aucune activite enregistree sur la plateforme</p>
+    </div>
+    @endif
+</div>
+
+@endif
+
 @endsection
 
 @section('scripts')
@@ -207,7 +382,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('activityChart');
     if (!ctx) return;
-
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -289,26 +463,58 @@ function uploadAvatar(input) {
     }
     const formData = new FormData();
     formData.append('avatar', file);
-
     fetch('/admin/utilisateurs/{{ $user->id }}/avatar', {
         method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            'Accept': 'application/json',
-        },
+        headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, 'Accept': 'application/json' },
         body: formData
     })
     .then(r => r.json())
     .then(data => {
         if (data.success) {
-            const avatarDiv = document.getElementById('profileAvatar');
-            avatarDiv.innerHTML = '<img src="' + data.avatar_url + '" alt="" id="avatarImg">';
+            document.getElementById('profileAvatar').innerHTML = '<img src="' + data.avatar_url + '" alt="" id="avatarImg">';
             showToast('success', data.message);
         } else {
             showToast('error', data.message || 'Erreur lors de l\'upload.');
         }
     })
     .catch(() => showToast('error', 'Erreur lors de l\'upload.'));
+}
+
+// --- Edit Profile ---
+function toggleEditForm() {
+    const form = document.getElementById('editForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+function saveProfile() {
+    const name = document.getElementById('editName').value.trim();
+    const email = document.getElementById('editEmail').value.trim();
+    if (!name || !email) {
+        showToast('warning', 'Veuillez remplir tous les champs.');
+        return;
+    }
+    fetch('/admin/profil/{{ $user->id }}/update-profile', {
+        method: 'PUT',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: name, email: email })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            showToast('success', data.message);
+            if (data.nameChanged) {
+                document.getElementById('heroName').textContent = data.newName;
+            }
+            toggleEditForm();
+        } else {
+            showToast('error', data.message || 'Erreur lors de la mise a jour.');
+        }
+    })
+    .catch(() => showToast('error', 'Erreur lors de la mise a jour.'));
 }
 
 // --- Load More Timeline ---
@@ -318,7 +524,6 @@ function loadMoreTimeline() {
     const userId = btn.dataset.user;
     btn.disabled = true;
     btn.textContent = 'Chargement...';
-
     fetch('/admin/profil/' + userId + '/timeline?page=' + page, {
         headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
     })
@@ -331,6 +536,34 @@ function loadMoreTimeline() {
             btn.textContent = 'Charger plus d\'activites';
         } else {
             document.getElementById('loadMoreWrapper').remove();
+        }
+    })
+    .catch(() => {
+        btn.disabled = false;
+        btn.textContent = 'Charger plus d\'activites';
+        showToast('error', 'Erreur de chargement.');
+    });
+}
+
+// --- Load More Global Timeline ---
+function loadMoreGlobalTimeline() {
+    const btn = document.getElementById('globalLoadMoreBtn');
+    const page = btn.dataset.page;
+    const userId = btn.dataset.user;
+    btn.disabled = true;
+    btn.textContent = 'Chargement...';
+    fetch('/admin/profil/' + userId + '/global-timeline?page=' + page, {
+        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(r => r.json())
+    .then(data => {
+        document.getElementById('globalTimelineContainer').insertAdjacentHTML('beforeend', data.html);
+        if (data.hasMore) {
+            btn.dataset.page = data.nextPage;
+            btn.disabled = false;
+            btn.textContent = 'Charger plus d\'activites';
+        } else {
+            document.getElementById('globalLoadMoreWrapper').remove();
         }
     })
     .catch(() => {

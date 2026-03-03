@@ -11,7 +11,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     use \App\Traits\Auditable;
 
-    protected $fillable = ['name', 'email', 'password', 'role', 'avatar', 'last_login_at', 'must_change_password'];
+    protected $fillable = ['name', 'email', 'password', 'role', 'avatar', 'last_login_at', 'must_change_password', 'pending_email', 'email_verification_token'];
     protected $hidden = ['password', 'remember_token'];
 
     protected function casts(): array

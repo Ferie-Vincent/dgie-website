@@ -46,6 +46,9 @@ Route::get('/mediatheque', [\App\Http\Controllers\MediathequeController::class, 
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::get('/evenements/{slug}', [\App\Http\Controllers\EvenementFrontController::class, 'show'])->name('event.show');
 
+// Vérification email (route publique, pas de middleware auth)
+Route::get('/verify-email/{token}', [ProfileController::class, 'verifyEmail'])->name('verify-email');
+
 // Formulaires publics (rate-limited)
 Route::post('/contact', [\App\Http\Controllers\FormSubmissionController::class, 'submitContact'])->middleware('throttle:3,10')->name('contact.submit');
 Route::post('/newsletter', [\App\Http\Controllers\FormSubmissionController::class, 'subscribeNewsletter'])->middleware('throttle:3,10')->name('newsletter.subscribe');
@@ -130,6 +133,8 @@ Route::prefix('admin')->middleware(['admin', 'force-password-change'])->name('ad
     // Profil utilisateur (accessible à tous les admins)
     Route::get('profil/{user}', [ProfileController::class, 'show'])->name('profil.show');
     Route::get('profil/{user}/timeline', [ProfileController::class, 'timelineMore'])->name('profil.timeline');
+    Route::get('profil/{user}/global-timeline', [ProfileController::class, 'globalTimelineMore'])->name('profil.global-timeline');
+    Route::put('profil/{user}/update-profile', [ProfileController::class, 'updateProfile'])->name('profil.update-profile');
 
     // Avatar (propre compte ou super-admin)
     Route::post('utilisateurs/{utilisateur}/avatar', [UserController::class, 'updateAvatar'])->name('utilisateurs.avatar.update');
