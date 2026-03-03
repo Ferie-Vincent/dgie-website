@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\FaqItemController;
 use App\Http\Controllers\Admin\MagazineController;
+use App\Http\Controllers\Admin\ProfileController;
 
 // Accueil
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -125,6 +126,14 @@ Route::prefix('admin')->middleware(['admin', 'force-password-change'])->name('ad
     // Paramètres du site
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
+
+    // Profil utilisateur (accessible à tous les admins)
+    Route::get('profil/{user}', [ProfileController::class, 'show'])->name('profil.show');
+    Route::get('profil/{user}/timeline', [ProfileController::class, 'timelineMore'])->name('profil.timeline');
+
+    // Avatar (propre compte ou super-admin)
+    Route::post('utilisateurs/{utilisateur}/avatar', [UserController::class, 'updateAvatar'])->name('utilisateurs.avatar.update');
+    Route::delete('utilisateurs/{utilisateur}/avatar', [UserController::class, 'removeAvatar'])->name('utilisateurs.avatar.remove');
 
     // Utilisateurs (super-admin uniquement)
     Route::resource('utilisateurs', UserController::class)->except(['create', 'show', 'edit'])->middleware('superadmin');

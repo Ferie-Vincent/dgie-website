@@ -220,14 +220,18 @@
 
     {{-- User info footer --}}
     <div class="sidebar-footer">
-        <div class="sidebar-user">
+        <a href="{{ route('admin.profil.show', auth()->user()) }}" class="sidebar-user" title="Voir mon profil">
             <div class="sidebar-user-avatar">
-                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                @if(auth()->user()->avatar)
+                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}">
+                @else
+                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                @endif
             </div>
             <div class="sidebar-user-info">
                 <div class="sidebar-user-name">{{ auth()->user()->name }}</div>
-                <div class="sidebar-user-role">{{ ucfirst(auth()->user()->role) }}</div>
+                <div class="sidebar-user-role">{{ auth()->user()->getRoleLabel() }}</div>
             </div>
-        </div>
+        </a>
     </div>
 </aside>

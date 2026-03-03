@@ -74,8 +74,12 @@
                     <td><input type="checkbox" class="usr-checkbox"></td>
                     <td>
                         <div class="usr-user-cell">
-                            <div class="usr-avatar" style="background: {{ $user->role === 'super-admin' ? 'var(--admin-sidebar-bg, #1e293b)' : ($user->role === 'editeur' ? 'var(--admin-green, #1D8C4F)' : 'var(--admin-info, #3b82f6)') }};">
-                                {{ strtoupper(substr($user->name, 0, 2)) }}
+                            <div class="usr-avatar" style="background: {{ $user->avatar ? 'transparent' : ($user->role === 'super-admin' ? 'var(--admin-sidebar-bg, #1e293b)' : ($user->role === 'editeur' ? 'var(--admin-green, #1D8C4F)' : 'var(--admin-info, #3b82f6)')) }};">
+                                @if($user->avatar)
+                                    <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                @else
+                                    {{ $user->initials }}
+                                @endif
                             </div>
                             <div>
                                 <div class="usr-user-name">{{ $user->name }}</div>
@@ -108,6 +112,9 @@
                     </td>
                     <td>
                         <div class="usr-actions">
+                            <a href="{{ route('admin.profil.show', $user) }}" class="usr-action-btn" title="Voir le profil" aria-label="Voir le profil" style="color: var(--admin-info, #3b82f6);">
+                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </a>
                             <button class="usr-action-btn edit" title="Modifier" aria-label="Modifier"
                                 onclick="editUser({{ $user->id }}, '{{ addslashes($user->name) }}', '{{ $user->email }}', '{{ $user->role }}')">
                                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>
