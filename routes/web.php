@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\FaqItemController;
 use App\Http\Controllers\Admin\MagazineController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\OpportunityController;
 
 // Accueil
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -43,6 +44,7 @@ Route::get('/retour-reintegration', [\App\Http\Controllers\InstitutionController
 Route::get('/investir-contribuer', [\App\Http\Controllers\InstitutionController::class, 'investirContribuer'])->name('investir-contribuer');
 Route::get('/galerie', [\App\Http\Controllers\GalerieFrontController::class, 'index'])->name('galerie');
 Route::get('/mediatheque', [\App\Http\Controllers\MediathequeController::class, 'index'])->name('mediatheque');
+Route::get('/opportunites', [\App\Http\Controllers\OpportunitesController::class, 'index'])->name('opportunites');
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::get('/evenements/{slug}', [\App\Http\Controllers\EvenementFrontController::class, 'show'])->name('event.show');
 
@@ -108,6 +110,7 @@ Route::prefix('admin')->middleware(['admin', 'force-password-change'])->name('ad
     Route::resource('visuels', BannerController::class)->names('banners')->parameters(['visuels' => 'banner']);
     Route::resource('faqs', FaqItemController::class)->except(['create', 'show']);
     Route::resource('magazines', MagazineController::class)->except(['create', 'show']);
+    Route::resource('opportunites', OpportunityController::class)->except(['create', 'show', 'edit']);
 
     // Commentaires (modération)
     Route::get('comments', [CommentController::class, 'index'])->name('comments.index');
