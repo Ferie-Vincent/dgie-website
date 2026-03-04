@@ -12,12 +12,14 @@ class UserSeeder extends Seeder
     {
         $password = env('ADMIN_DEFAULT_PASSWORD', 'Dgie@2026!');
 
-        User::create([
-            'name' => 'Super Admin DGIE',
-            'email' => 'admin@dgie.gouv.ci',
-            'password' => Hash::make($password),
-            'role' => 'super-admin',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@dgie.gouv.ci'],
+            [
+                'name' => 'Super Admin DGIE',
+                'password' => Hash::make($password),
+                'role' => 'super-admin',
+            ]
+        );
 
         $this->command->info('Super Admin: admin@dgie.gouv.ci / [voir .env ADMIN_DEFAULT_PASSWORD]');
     }
