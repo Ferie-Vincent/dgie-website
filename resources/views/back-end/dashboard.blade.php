@@ -3,6 +3,10 @@
 @section('title', 'Tableau de bord')
 @section('breadcrumb', 'Tableau de bord')
 
+@section('head')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+@endsection
+
 @section('content')
 <div class="content-header">
     <div>
@@ -346,6 +350,65 @@
 </div>
 @endif
 
+{{-- Section Analytique --}}
+<div class="dash-charts-grid">
+    {{-- Activité globale --}}
+    <div class="dash-chart-card">
+        <div class="dash-chart-header">
+            <div class="dash-chart-title">
+                <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                Activité globale
+            </div>
+            <div class="dash-chart-legend">
+                <span class="dash-chart-legend__item"><span class="dash-chart-legend__dot" style="background: #1D8C4F;"></span> Créations</span>
+                <span class="dash-chart-legend__item"><span class="dash-chart-legend__dot" style="background: #3b82f6;"></span> Modifications</span>
+                <span class="dash-chart-legend__item"><span class="dash-chart-legend__dot" style="background: #ef4444;"></span> Suppressions</span>
+            </div>
+        </div>
+        <div class="dash-chart-wrapper">
+            <canvas id="activityChart"></canvas>
+        </div>
+    </div>
+
+    {{-- Colonne droite --}}
+    <div class="dash-chart-right">
+        {{-- Articles par statut --}}
+        <div class="dash-chart-card">
+            <div class="dash-chart-header">
+                <div class="dash-chart-title">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Articles par statut
+                </div>
+                <div class="dash-chart-legend">
+                    <span class="dash-chart-legend__item"><span class="dash-chart-legend__dot" style="background: #1D8C4F;"></span> Publié</span>
+                    <span class="dash-chart-legend__item"><span class="dash-chart-legend__dot" style="background: #f59e0b;"></span> Brouillon</span>
+                    <span class="dash-chart-legend__item"><span class="dash-chart-legend__dot" style="background: #94a3b8;"></span> Archivé</span>
+                </div>
+            </div>
+            <div class="dash-doughnut-wrapper">
+                <canvas id="statusChart"></canvas>
+                <div class="dash-doughnut-center">
+                    <div class="dash-doughnut-center__value">{{ $articlesByStatus['publie'] + $articlesByStatus['brouillon'] + $articlesByStatus['archive'] }}</div>
+                    <div class="dash-doughnut-center__label">Total</div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Publications par mois --}}
+        <div class="dash-chart-card">
+            <div class="dash-chart-header">
+                <div class="dash-chart-title">
+                    <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    Publications par mois
+                </div>
+            </div>
+            <div class="dash-chart-wrapper" style="height: 150px;">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{-- Two columns --}}
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
 
@@ -474,6 +537,92 @@
 
 @section('scripts')
 <script>
+// --- Charts ---
+(function() {
+    const tooltipStyle = {
+        backgroundColor: '#0f172a',
+        titleFont: { family: 'Inter, sans-serif', size: 12, weight: '600' },
+        bodyFont: { family: 'Inter, sans-serif', size: 11 },
+        padding: { x: 10, y: 8 },
+        cornerRadius: 8,
+        displayColors: true,
+        boxPadding: 4,
+    };
+
+    // 1. Activité globale (barres empilées)
+    new Chart(document.getElementById('activityChart'), {
+        type: 'bar',
+        data: {
+            labels: @json($activityLabels),
+            datasets: [
+                { label: 'Créations', data: @json($activityCreated), backgroundColor: '#1D8C4F', borderRadius: 3 },
+                { label: 'Modifications', data: @json($activityUpdated), backgroundColor: '#3b82f6', borderRadius: 3 },
+                { label: 'Suppressions', data: @json($activityDeleted), backgroundColor: '#ef4444', borderRadius: 3 },
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { intersect: false, mode: 'index' },
+            plugins: { legend: { display: false }, tooltip: tooltipStyle },
+            scales: {
+                x: { stacked: true, grid: { display: false }, ticks: { font: { size: 10, family: 'Inter' }, color: '#94a3b8' }, border: { display: false } },
+                y: { stacked: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 10, family: 'Inter' }, color: '#94a3b8', stepSize: 1 }, border: { display: false }, beginAtZero: true }
+            }
+        }
+    });
+
+    // 2. Articles par statut (doughnut)
+    new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Publié', 'Brouillon', 'Archivé'],
+            datasets: [{
+                data: [{{ $articlesByStatus['publie'] }}, {{ $articlesByStatus['brouillon'] }}, {{ $articlesByStatus['archive'] }}],
+                backgroundColor: ['#1D8C4F', '#f59e0b', '#94a3b8'],
+                borderWidth: 0,
+                hoverOffset: 4,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: { legend: { display: false }, tooltip: tooltipStyle }
+        }
+    });
+
+    // 3. Publications par mois (ligne)
+    new Chart(document.getElementById('monthlyChart'), {
+        type: 'line',
+        data: {
+            labels: @json($monthlyLabels),
+            datasets: [{
+                label: 'Articles publiés',
+                data: @json($monthlyData),
+                borderColor: '#E8772A',
+                backgroundColor: 'rgba(232, 119, 42, 0.08)',
+                borderWidth: 2.5,
+                pointBackgroundColor: '#E8772A',
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                tension: 0.3,
+                fill: true,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { intersect: false, mode: 'index' },
+            plugins: { legend: { display: false }, tooltip: tooltipStyle },
+            scales: {
+                x: { grid: { display: false }, ticks: { font: { size: 10, family: 'Inter' }, color: '#94a3b8' }, border: { display: false } },
+                y: { grid: { color: '#f1f5f9' }, ticks: { font: { size: 10, family: 'Inter' }, color: '#94a3b8', stepSize: 1 }, border: { display: false }, beginAtZero: true }
+            }
+        }
+    });
+})();
+
 function openPortraitModal(id, name, title, photoUrl, type) {
     const overlay = document.getElementById('portraitOverlay');
     const form = document.getElementById('portraitForm');
