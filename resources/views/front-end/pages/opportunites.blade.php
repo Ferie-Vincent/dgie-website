@@ -68,12 +68,15 @@
       <!-- Opportunités en vedette -->
       <div class="oppo-featured-grid">
         @foreach($featured as $item)
+        @php $isDgie = str_contains(strtolower($item->organisme ?? ''), 'dgie'); @endphp
         <article class="oppo-featured-card">
-          <div class="oppo-featured-card__image" style="background-image: url('{{ $item->image ? asset('storage/' . $item->image) : asset('assets/images/hero-bg.jpg') }}');">
+          <a href="{{ $isDgie ? route('opportunite.show', $item->slug) : ($item->url ?: route('opportunite.show', $item->slug)) }}" class="oppo-featured-card__image" style="background-image: url('{{ $item->image ? asset('storage/' . $item->image) : asset('assets/images/hero-bg.jpg') }}');" @if(!$isDgie && $item->url) target="_blank" rel="noopener" @endif>
             <span class="oppo-card__type oppo-card__type--{{ $item->type }}">{{ $item->type_label }}</span>
-          </div>
+          </a>
           <div class="oppo-featured-card__body">
-            <h3 class="oppo-featured-card__title">{{ $item->title }}</h3>
+            <h3 class="oppo-featured-card__title">
+              <a href="{{ $isDgie ? route('opportunite.show', $item->slug) : ($item->url ?: route('opportunite.show', $item->slug)) }}" @if(!$isDgie && $item->url) target="_blank" rel="noopener" @endif>{{ $item->title }}</a>
+            </h3>
             <p class="oppo-featured-card__desc">{{ Str::limit(strip_tags($item->description), 120) }}</p>
             @if($item->date_limite)
             <span class="oppo-card__deadline {{ $item->is_expired ? 'oppo-card__deadline--expired' : '' }}">
@@ -81,12 +84,14 @@
               {{ $item->is_expired ? 'Expiré' : 'Date limite : ' . $item->date_limite->isoFormat('D MMM YYYY') }}
             </span>
             @endif
-            @if($item->url)
-            <a href="{{ $item->url }}" class="oppo-card__link" target="_blank" rel="noopener">
-              En savoir plus
+            <a href="{{ $isDgie ? route('opportunite.show', $item->slug) : ($item->url ?: route('opportunite.show', $item->slug)) }}" class="oppo-card__link" @if(!$isDgie && $item->url) target="_blank" rel="noopener" @endif>
+              {{ $isDgie ? 'Lire la suite' : 'En savoir plus' }}
+              @if(!$isDgie && $item->url)
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              @else
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              @endif
             </a>
-            @endif
           </div>
         </article>
         @endforeach
@@ -98,9 +103,10 @@
       <!-- Grille des opportunités -->
       <div class="oppo-grid">
         @forelse($opportunites as $item)
+        @php $isDgie = str_contains(strtolower($item->organisme ?? ''), 'dgie'); @endphp
         <article class="oppo-card">
           @if($item->image)
-          <div class="oppo-card__image" style="background-image: url('{{ asset('storage/' . $item->image) }}');"></div>
+          <a href="{{ $isDgie ? route('opportunite.show', $item->slug) : ($item->url ?: route('opportunite.show', $item->slug)) }}" class="oppo-card__image" style="background-image: url('{{ asset('storage/' . $item->image) }}');" @if(!$isDgie && $item->url) target="_blank" rel="noopener" @endif></a>
           @endif
           <div class="oppo-card__body">
             <div class="oppo-card__meta">
@@ -112,7 +118,9 @@
               </span>
               @endif
             </div>
-            <h3 class="oppo-card__title">{{ $item->title }}</h3>
+            <h3 class="oppo-card__title">
+              <a href="{{ $isDgie ? route('opportunite.show', $item->slug) : ($item->url ?: route('opportunite.show', $item->slug)) }}" @if(!$isDgie && $item->url) target="_blank" rel="noopener" @endif>{{ $item->title }}</a>
+            </h3>
             <p class="oppo-card__desc">{{ Str::limit(strip_tags($item->description), 160) }}</p>
             <div class="oppo-card__footer">
               @if($item->organisme)
@@ -128,12 +136,14 @@
               </span>
               @endif
             </div>
-            @if($item->url)
-            <a href="{{ $item->url }}" class="oppo-card__link" target="_blank" rel="noopener">
-              En savoir plus
+            <a href="{{ $isDgie ? route('opportunite.show', $item->slug) : ($item->url ?: route('opportunite.show', $item->slug)) }}" class="oppo-card__link" @if(!$isDgie && $item->url) target="_blank" rel="noopener" @endif>
+              {{ $isDgie ? 'Lire la suite' : 'En savoir plus' }}
+              @if(!$isDgie && $item->url)
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              @else
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              @endif
             </a>
-            @endif
           </div>
         </article>
         @empty
