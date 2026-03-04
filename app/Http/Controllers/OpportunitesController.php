@@ -7,6 +7,19 @@ use Illuminate\Http\Request;
 
 class OpportunitesController extends Controller
 {
+    public function show(string $slug)
+    {
+        $opportunite = Opportunity::where('slug', $slug)->where('is_active', true)->firstOrFail();
+
+        $related = Opportunity::active()
+            ->where('type', $opportunite->type)
+            ->where('id', '!=', $opportunite->id)
+            ->take(4)
+            ->get();
+
+        return view('front-end.pages.opportunite-detail', compact('opportunite', 'related'));
+    }
+
     public function index(Request $request)
     {
         $query = Opportunity::active();

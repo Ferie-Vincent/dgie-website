@@ -45,6 +45,7 @@ Route::get('/investir-contribuer', [\App\Http\Controllers\InstitutionController:
 Route::get('/galerie', [\App\Http\Controllers\GalerieFrontController::class, 'index'])->name('galerie');
 Route::get('/mediatheque', [\App\Http\Controllers\MediathequeController::class, 'index'])->name('mediatheque');
 Route::get('/opportunites', [\App\Http\Controllers\OpportunitesController::class, 'index'])->name('opportunites');
+Route::get('/opportunites/{slug}', [\App\Http\Controllers\OpportunitesController::class, 'show'])->name('opportunite.show');
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::get('/evenements/{slug}', [\App\Http\Controllers\EvenementFrontController::class, 'show'])->name('event.show');
 

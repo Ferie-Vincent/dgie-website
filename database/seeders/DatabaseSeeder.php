@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             CountrySeeder::class,
             DepartmentSeeder::class,
+            OpportunitySeeder::class,
         ]);
     }
 }
