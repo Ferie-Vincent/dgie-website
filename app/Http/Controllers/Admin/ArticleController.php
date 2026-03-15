@@ -9,9 +9,27 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
 
 class ArticleController extends Controller
 {
+    private function optimizeAndStore($file, string $directory, int $maxWidth = 1200): string
+    {
+        $filename = uniqid() . '.jpg';
+        $path = $directory . '/' . $filename;
+
+        $image = ImageManager::gd()->read($file->getPathname());
+
+        if ($image->width() > $maxWidth) {
+            $image->scaleDown(width: $maxWidth);
+        }
+
+        $encoded = $image->toJpeg(80);
+        Storage::disk('public')->put($path, (string) $encoded);
+
+        return $path;
+    }
+
     public function index(Request $request)
     {
         $query = Article::with('category', 'author');
@@ -74,7 +92,7 @@ class ArticleController extends Controller
             $validated['read_time'] = max(1, (int) ceil(str_word_count(strip_tags($validated['content'])) / 200));
 
             if ($request->hasFile('image')) {
-                $validated['image'] = $request->file('image')->store('articles', 'public');
+                $validated['image'] = $this->optimizeAndStore($request->file('image'), 'articles');
             }
 
             if ($validated['status'] === 'publie' && empty($validated['published_at'])) {
@@ -144,7 +162,7 @@ class ArticleController extends Controller
             $validated['read_time'] = max(1, (int) ceil(str_word_count(strip_tags($validated['content'])) / 200));
 
             if ($request->hasFile('image')) {
-                $validated['image'] = $request->file('image')->store('articles', 'public');
+                $validated['image'] = $this->optimizeAndStore($request->file('image'), 'articles');
             }
 
             // Conserver la date existante si le champ est vide

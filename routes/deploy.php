@@ -78,6 +78,50 @@ Route::prefix('deploy/{token}')->group(function () {
             }
         });
 
+        Route::get('/optimize-images', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            try {
+                $output = '';
+                $maxWidth = 1200;
+                $quality = 80;
+                $directories = ['articles', 'banners', 'evenements', 'staff', 'dossiers'];
+
+                foreach ($directories as $dir) {
+                    $path = storage_path('app/public/' . $dir);
+                    if (!is_dir($path)) continue;
+
+                    foreach (glob($path . '/*.{jpg,jpeg,png}', GLOB_BRACE) as $file) {
+                        $info = getimagesize($file);
+                        if (!$info) continue;
+
+                        $originalSize = filesize($file);
+                        if ($info[0] <= $maxWidth && $originalSize < 200000) continue;
+
+                        $manager = \Intervention\Image\ImageManager::gd();
+                        $image = $manager->read($file);
+
+                        if ($image->width() > $maxWidth) {
+                            $image->scaleDown(width: $maxWidth);
+                        }
+
+                        $encoded = $image->toJpeg($quality);
+                        $newPath = preg_replace('/\.(png|jpeg)$/i', '.jpg', $file);
+                        file_put_contents($newPath, (string) $encoded);
+
+                        $newSize = filesize($newPath);
+                        $saved = $originalSize - $newSize;
+                        $output .= basename($file) . ": {$info[0]}x{$info[1]} → " . $image->width() . "x" . $image->height() . " (" . round($originalSize/1024) . "K → " . round($newSize/1024) . "K, saved " . round($saved/1024) . "K)\n";
+                    }
+                }
+
+                return '<pre>Images optimisées ✓' . "\n\n" . ($output ?: 'Toutes les images sont déjà optimisées.') . '</pre>';
+            } catch (\Throwable $e) {
+                return '<pre style="color:red">ERREUR: ' . $e->getMessage() . "\n\n" . $e->getTraceAsString() . '</pre>';
+            }
+        });
+
         Route::get('/optimize', function (string $token) {
             if ($token !== config('app.deploy_token')) {
                 abort(404);
