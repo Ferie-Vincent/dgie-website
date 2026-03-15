@@ -15,7 +15,7 @@
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700&display=swap">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="stylesheet" href="{{ asset('assets/css/style.css?v=24') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/style.css?v=25') }}">
   @yield('preload')
   @yield('head')
 </head>
