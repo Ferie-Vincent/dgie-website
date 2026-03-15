@@ -159,13 +159,10 @@
     <div class="container">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--slate-900);">Notre Localisation</h2>
-        <a href="https://maps.google.com/?q=DGIE+Plateau+Rue+du+Commerce+Abidjan" target="_blank" rel="noopener" style="font-size: 0.8rem; font-weight: 600; color: var(--green);">Ouvrir dans Google Maps &nearr;</a>
+        <a href="https://maps.app.goo.gl/vMv86ZNkTm7Q7jhB9" target="_blank" rel="noopener" style="font-size: 0.8rem; font-weight: 600; color: var(--green);">Ouvrir dans Google Maps &nearr;</a>
       </div>
       <div class="contact-map">
-        <div class="contact-map__placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:48px;height:48px;color:var(--slate-400);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <p>DGIE — {{ $contactInfo->address ?? 'Plateau, Rue du Commerce, Abidjan' }}</p>
-        </div>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3972.3270543780387!2d-4.0214!3d5.3205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1ebdb0a5ef3e5%3A0x4059606e2589e84e!2sDirection%20G%C3%A9n%C3%A9rale%20des%20Ivoiriens%20de%20l&#39;Ext%C3%A9rieur%20(DGIE)!5e0!3m2!1sfr!2sci!4v1710500000000!5m2!1sfr!2sci" width="100%" height="400" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Localisation DGIE — Plateau, Abidjan"></iframe>
       </div>
     </div>
   </section>

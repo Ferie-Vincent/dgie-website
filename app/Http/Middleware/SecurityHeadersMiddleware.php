@@ -29,7 +29,7 @@ class SecurityHeadersMiddleware
             "style-src 'self' https://fonts.googleapis.com 'unsafe-inline'",
             "font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com",
             "img-src 'self' https://img.youtube.com https://images.unsplash.com data:",
-            "frame-src 'self' https://www.youtube.com",
+            "frame-src 'self' https://www.youtube.com https://www.google.com https://maps.google.com",
             "connect-src 'self'",
             "object-src 'none'",
             "base-uri 'self'",
