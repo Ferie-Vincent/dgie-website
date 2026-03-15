@@ -2,7 +2,10 @@
 <header class="header" id="header">
   <div class="container">
     <a href="{{ route('home') }}" class="header__logo">
-      <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="DGIE — Direction Générale des Ivoiriens de l'Extérieur" width="180" height="50" fetchpriority="high">
+      <picture>
+        <source srcset="{{ asset('assets/images/logo-dgie.webp') }}" type="image/webp">
+        <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="DGIE — Direction Générale des Ivoiriens de l'Extérieur" width="180" height="50" fetchpriority="high">
+      </picture>
     </a>
     <nav class="nav" id="nav">
       <a href="{{ route('home') }}" class="nav__link {{ request()->routeIs('home') ? 'nav__link--active' : '' }}">Accueil</a>

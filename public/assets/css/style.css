@@ -833,6 +833,12 @@ p {
   background-position: center;
   transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.featured-card__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 
 .featured-card:hover .featured-card__bg {
   transform: scale(1.06);
@@ -1026,6 +1032,12 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.article-card__img-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   color: var(--slate-600);
   font-size: 0.75rem;
 }
