@@ -10,9 +10,13 @@
   <meta name="theme-color" content="#E8772A">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700&display=swap">
+  <link rel="dns-prefetch" href="https://img.youtube.com">
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700&display=swap" media="print" onload="this.media='all'">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="stylesheet" href="{{ asset('assets/css/style.css?v=23') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/style.css?v=24') }}">
+  @yield('preload')
   @yield('head')
 </head>
 <body>
@@ -31,7 +35,7 @@
   @include('front-end.partials.footer')
   @include('front-end.partials.back-to-top')
 
-  <script src="{{ asset('assets/js/main.js?v=11') }}"></script>
+  <script src="{{ asset('assets/js/main.js?v=12') }}" defer></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {

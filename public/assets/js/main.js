@@ -155,30 +155,38 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* --- Scroll header shadow --- */
+  /* --- Scroll header shadow (throttled) --- */
   var header = document.querySelector('.header');
   var backToTop = document.getElementById('backToTop');
 
   if (header || backToTop) {
+    var scrollTicking = false;
     window.addEventListener('scroll', function () {
-      var scrollY = window.scrollY;
+      if (!scrollTicking) {
+        requestAnimationFrame(function () {
+          var scrollY = window.scrollY;
 
-      if (header) {
-        if (scrollY > 10) {
-          header.classList.add('header--scrolled');
-        } else {
-          header.classList.remove('header--scrolled');
-        }
-      }
+          if (header) {
+            if (scrollY > 10) {
+              header.classList.add('header--scrolled');
+            } else {
+              header.classList.remove('header--scrolled');
+            }
+          }
 
-      if (backToTop) {
-        if (scrollY > 400) {
-          backToTop.classList.add('visible');
-        } else {
-          backToTop.classList.remove('visible');
-        }
+          if (backToTop) {
+            if (scrollY > 400) {
+              backToTop.classList.add('visible');
+            } else {
+              backToTop.classList.remove('visible');
+            }
+          }
+
+          scrollTicking = false;
+        });
+        scrollTicking = true;
       }
-    });
+    }, { passive: true });
   }
 
   /* --- Back to top --- */

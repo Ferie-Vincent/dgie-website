@@ -2,7 +2,7 @@
 @if(isset($bannerTop) && $bannerTop)
 <div class="banner-pub">
   <a href="{{ $bannerTop->url ?? '#' }}" target="_blank" rel="noopener">
-    <img src="{{ asset('storage/' . $bannerTop->image) }}" alt="{{ $bannerTop->alt_text ?? 'Espace publicitaire' }}" onerror="this.style.display='none'; this.parentElement.parentElement.classList.add('banner-pub--placeholder');">
+    <img src="{{ asset('storage/' . $bannerTop->image) }}" alt="{{ $bannerTop->alt_text ?? 'Espace publicitaire' }}" width="1200" height="100" onerror="this.style.display='none'; this.parentElement.parentElement.classList.add('banner-pub--placeholder');">
   </a>
 </div>
 @else
