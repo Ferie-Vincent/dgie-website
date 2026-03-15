@@ -162,7 +162,7 @@
         <a href="https://maps.app.goo.gl/vMv86ZNkTm7Q7jhB9" target="_blank" rel="noopener" style="font-size: 0.8rem; font-weight: 600; color: var(--green);">Ouvrir dans Google Maps &nearr;</a>
       </div>
       <div class="contact-map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3972.3270543780387!2d-4.0214!3d5.3205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1ebdb0a5ef3e5%3A0x4059606e2589e84e!2sDirection%20G%C3%A9n%C3%A9rale%20des%20Ivoiriens%20de%20l&#39;Ext%C3%A9rieur%20(DGIE)!5e0!3m2!1sfr!2sci!4v1710500000000!5m2!1sfr!2sci" width="100%" height="400" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Localisation DGIE — Plateau, Abidjan"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3972.3833032218604!2d-3.9989544547715012!3d5.358343331623063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1eb003e053339%3A0x76542d19f9855e1f!2sDirection%20G%C3%A9n%C3%A9rale%20des%20Ivoiriens%20de%20l&#39;Ext%C3%A8rieur%20(DGIE)!5e0!3m2!1sfr!2sci!4v1773604433288!5m2!1sfr!2sci" width="100%" height="400" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Localisation DGIE — Plateau, Abidjan"></iframe>
       </div>
     </div>
   </section>
