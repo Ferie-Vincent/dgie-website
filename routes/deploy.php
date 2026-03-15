@@ -99,20 +99,29 @@ Route::prefix('deploy/{token}')->group(function () {
                         $originalSize = filesize($file);
                         if ($info[0] <= $maxWidth && $originalSize < 200000) continue;
 
-                        $manager = \Intervention\Image\ImageManager::gd();
-                        $image = $manager->read($file);
+                        // Load image with native GD
+                        $src = match ($info[2]) {
+                            IMAGETYPE_JPEG => imagecreatefromjpeg($file),
+                            IMAGETYPE_PNG => imagecreatefrompng($file),
+                            default => null,
+                        };
+                        if (!$src) continue;
 
-                        if ($image->width() > $maxWidth) {
-                            $image->scaleDown(width: $maxWidth);
-                        }
+                        $origW = imagesx($src);
+                        $origH = imagesy($src);
+                        $newW = min($origW, $maxWidth);
+                        $newH = (int) round($origH * ($newW / $origW));
 
-                        $encoded = $image->toJpeg($quality);
-                        $newPath = preg_replace('/\.(png|jpeg)$/i', '.jpg', $file);
-                        file_put_contents($newPath, (string) $encoded);
+                        $dst = imagecreatetruecolor($newW, $newH);
+                        imagecopyresampled($dst, $src, 0, 0, 0, 0, $newW, $newH, $origW, $origH);
+                        imagedestroy($src);
 
-                        $newSize = filesize($newPath);
+                        imagejpeg($dst, $file, $quality);
+                        imagedestroy($dst);
+
+                        $newSize = filesize($file);
                         $saved = $originalSize - $newSize;
-                        $output .= basename($file) . ": {$info[0]}x{$info[1]} → " . $image->width() . "x" . $image->height() . " (" . round($originalSize/1024) . "K → " . round($newSize/1024) . "K, saved " . round($saved/1024) . "K)\n";
+                        $output .= basename($file) . ": {$origW}x{$origH} → {$newW}x{$newH} (" . round($originalSize/1024) . "K → " . round($newSize/1024) . "K, saved " . round($saved/1024) . "K)\n";
                     }
                 }
 
