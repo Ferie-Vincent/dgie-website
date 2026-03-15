@@ -2,6 +2,12 @@
 
 @section('title', 'DGIE — Direction Générale des Ivoiriens de l\'Extérieur')
 
+@section('preload')
+  @if(isset($featuredArticles) && $featuredArticles->count() && $featuredArticles->first()->image)
+  <link rel="preload" as="image" href="{{ asset('storage/' . $featuredArticles->first()->image) }}" fetchpriority="high">
+  @endif
+@endsection
+
 @section('meta')
   <meta name="description" content="La DGIE accompagne la diaspora ivoirienne : retour, réintégration, investissement et mobilisation des compétences. Découvrez nos services.">
   <meta property="og:title" content="DGIE — Direction Générale des Ivoiriens de l'Extérieur | Côte d'Ivoire">
@@ -80,7 +86,11 @@
         Fermer
       </button>
       <a href="{{ route('actualites') }}" class="welcome-modal__poster">
-        <img src="{{ asset('assets/images/modal-event.jpg') }}" alt="Événement DGIE" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'welcome-modal__fallback\'><img src=\'{{ asset("assets/images/logo-dgie.png") }}\' alt=\'DGIE\' class=\'welcome-modal__fallback-logo\'><h2>Direction Générale des Ivoiriens de l\'Extérieur</h2><span class=\'welcome-modal__fallback-cta\'>Découvrir</span></div>';">
+        <div class="welcome-modal__fallback">
+          <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="DGIE" class="welcome-modal__fallback-logo" width="120" height="34">
+          <h2>Direction Générale des Ivoiriens de l'Extérieur</h2>
+          <span class="welcome-modal__fallback-cta">Découvrir</span>
+        </div>
       </a>
     </div>
   </div>
@@ -124,7 +134,7 @@
               @if($sideArticle->category)
               <span class="featured-card__category {{ $sideArticle->category->color ?? 'cat-green' }}">{{ $sideArticle->category->name }}</span>
               @endif
-              <h3 class="featured-card__title">{{ $sideArticle->title }}</h3>
+              <h2 class="featured-card__title">{{ $sideArticle->title }}</h2>
               <div class="featured-card__meta">
                 <span>{{ $sideArticle->author->name ?? 'DGIE' }}</span>
                 <span>{{ ($sideArticle->published_at ?? $sideArticle->created_at)->isoFormat('D MMMM YYYY') }}</span>
@@ -186,13 +196,13 @@
         @if($adBanners->count() > 0)
         <div class="ad-banner">
           <a href="{{ $adBanners->first()->url ?? route('actualites') }}">
-            <img src="{{ $adBanners->first()->image ? asset('storage/' . $adBanners->first()->image) : asset('assets/images/ad-banner-1.jpg') }}" alt="{{ $adBanners->first()->alt_text ?? 'Publicité institutionnelle — DGIE' }}" loading="lazy">
+            <img src="{{ $adBanners->first()->image ? asset('storage/' . $adBanners->first()->image) : asset('assets/images/ad-banner-1.jpg') }}" alt="{{ $adBanners->first()->alt_text ?? 'Publicité institutionnelle — DGIE' }}" loading="lazy" width="800" height="200">
           </a>
         </div>
         @else
         <div class="ad-banner">
           <a href="{{ route('actualites') }}">
-            <img src="{{ asset('assets/images/ad-banner-1.jpg') }}" alt="Publicité institutionnelle — DGIE" loading="lazy">
+            <img src="{{ asset('assets/images/ad-banner-1.jpg') }}" alt="Publicité institutionnelle — DGIE" loading="lazy" width="800" height="200">
           </a>
         </div>
         @endif
@@ -229,13 +239,13 @@
         @if($adBanners->count() > 1)
         <div class="ad-banner">
           <a href="{{ $adBanners->get(1)->url ?? route('nos-services') }}">
-            <img src="{{ $adBanners->get(1)->image ? asset('storage/' . $adBanners->get(1)->image) : asset('assets/images/ad-banner-2.jpg') }}" alt="{{ $adBanners->get(1)->alt_text ?? 'Publicité institutionnelle — DGIE' }}" loading="lazy">
+            <img src="{{ $adBanners->get(1)->image ? asset('storage/' . $adBanners->get(1)->image) : asset('assets/images/ad-banner-2.jpg') }}" alt="{{ $adBanners->get(1)->alt_text ?? 'Publicité institutionnelle — DGIE' }}" loading="lazy" width="800" height="200">
           </a>
         </div>
         @else
         <div class="ad-banner">
           <a href="{{ route('nos-services') }}#investir">
-            <img src="{{ asset('assets/images/ad-banner-2.jpg') }}" alt="Publicité institutionnelle — DGIE" loading="lazy">
+            <img src="{{ asset('assets/images/ad-banner-2.jpg') }}" alt="Publicité institutionnelle — DGIE" loading="lazy" width="800" height="200">
           </a>
         </div>
         @endif
@@ -272,13 +282,13 @@
         @if($adBanners->count() > 2)
         <div class="ad-banner">
           <a href="{{ $adBanners->get(2)->url ?? '#' }}">
-            <img src="{{ $adBanners->get(2)->image ? asset('storage/' . $adBanners->get(2)->image) : asset('assets/images/ad-banner-3.jpg') }}" alt="{{ $adBanners->get(2)->alt_text ?? 'Publicité institutionnelle — DGIE' }}" loading="lazy">
+            <img src="{{ $adBanners->get(2)->image ? asset('storage/' . $adBanners->get(2)->image) : asset('assets/images/ad-banner-3.jpg') }}" alt="{{ $adBanners->get(2)->alt_text ?? 'Publicité institutionnelle — DGIE' }}" loading="lazy" width="800" height="200">
           </a>
         </div>
         @else
         <div class="ad-banner">
           <a href="https://www.gouv.ci">
-            <img src="{{ asset('assets/images/ad-banner-3.jpg') }}" alt="Le gouvernement à votre écoute — Côte d'Ivoire" loading="lazy">
+            <img src="{{ asset('assets/images/ad-banner-3.jpg') }}" alt="Le gouvernement à votre écoute — Côte d'Ivoire" loading="lazy" width="800" height="200">
           </a>
         </div>
         @endif
@@ -362,7 +372,7 @@
         <div class="mediatheque-section">
           @php $featured = $videos->first(); @endphp
           <a href="#" class="mediatheque-featured home-video-trigger" data-embed="{{ $featured->embed_url }}" data-title="{{ $featured->title }}">
-            <img src="{{ $featured->thumbnail }}" alt="{{ $featured->title }}" loading="lazy">
+            <img src="{{ $featured->thumbnail }}" alt="{{ $featured->title }}" loading="lazy" width="640" height="360">
             <div class="mediatheque-featured__play">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </div>
@@ -373,7 +383,7 @@
             @foreach($videos->skip(1) as $video)
             <a href="#" class="mediatheque-card home-video-trigger" data-embed="{{ $video->embed_url }}" data-title="{{ $video->title }}">
               <div class="mediatheque-card__thumb">
-                <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}" loading="lazy">
+                <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}" loading="lazy" width="320" height="180">
                 <div class="mediatheque-card__play">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                 </div>
@@ -406,7 +416,7 @@
 
         <!-- Widget DGIE -->
         <div class="sidebar-dgie-widget">
-          <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="Logo DGIE — Direction Générale des Ivoiriens de l'Extérieur" class="sidebar-dgie-widget__logo">
+          <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="Logo DGIE — Direction Générale des Ivoiriens de l'Extérieur" class="sidebar-dgie-widget__logo" width="120" height="34" loading="lazy">
           <p class="sidebar-dgie-widget__desc">La DGIE connecte la diaspora ivoirienne au développement national, en facilitant l'intégration à l'étranger, le retour au pays et l'investissement des compétences et ressources.</p>
         </div>
 
@@ -415,7 +425,7 @@
         @forelse($officials as $index => $staff)
         <div class="official-card {{ $officialStyles[$index] ?? 'official-card--slate' }}">
           <div class="official-card__img">
-            <img src="{{ $staff->photo ? asset('storage/' . $staff->photo) : asset('assets/images/logo-dgie.png') }}" alt="{{ $staff->name }}" loading="lazy">
+            <img src="{{ $staff->photo ? asset('storage/' . $staff->photo) : asset('assets/images/logo-dgie.png') }}" alt="{{ $staff->name }}" loading="lazy" width="300" height="350">
           </div>
           <div class="official-card__overlay">
             <p class="official-card__role-label">{{ $staff->title }}</p>
@@ -425,7 +435,7 @@
         @empty
         <div class="official-card">
           <div class="official-card__img">
-            <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="DGIE" loading="lazy">
+            <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="DGIE" loading="lazy" width="300" height="350">
           </div>
           <div class="official-card__overlay">
             <p class="official-card__role-label">Direction Générale des Ivoiriens de l'Extérieur</p>
@@ -474,7 +484,7 @@
         <!-- Chaîne WhatsApp QR -->
         <div class="sidebar-whatsapp">
           <a href="https://whatsapp.com/channel/0029VajlgosEgGfHcqyRBQ17" target="_blank" rel="noopener">
-            <img src="{{ asset('assets/images/whatsapp-qr.png') }}" alt="Scannez le QR code pour rejoindre la chaîne WhatsApp DGIE" class="sidebar-whatsapp__img">
+            <img src="{{ asset('assets/images/whatsapp-qr.png') }}" alt="Scannez le QR code pour rejoindre la chaîne WhatsApp DGIE" class="sidebar-whatsapp__img" width="250" height="250" loading="lazy">
           </a>
         </div>
 
@@ -556,7 +566,7 @@
             Vient de paraitre
           </div>
           <div class="sidebar-magazine__cover">
-            <img src="{{ asset('storage/' . $latestMagazine->cover_image) }}" alt="{{ $latestMagazine->title }}">
+            <img src="{{ asset('storage/' . $latestMagazine->cover_image) }}" alt="{{ $latestMagazine->title }}" width="280" height="380" loading="lazy">
           </div>
           <h3 class="sidebar-magazine__title">{{ $latestMagazine->title }}</h3>
           @if($latestMagazine->published_at)
@@ -624,7 +634,7 @@
         @forelse($homePartners as $partner)
         <a href="{{ $partner->url ?? '#' }}" target="_blank" rel="noopener" class="partners__card" title="{{ $partner->name }}">
           @if($partner->logo)
-          <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}" class="partners__card-logo">
+          <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}" class="partners__card-logo" width="120" height="60" loading="lazy">
           @else
           <div class="partners__card-placeholder">
             <span class="partners__icon">{{ $partner->abbreviation ?? Str::upper(Str::substr($partner->name, 0, 3)) }}</span>

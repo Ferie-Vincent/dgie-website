@@ -25,7 +25,7 @@
     <div class="footer__grid">
       <!-- Colonne 1 : Présentation + réseaux sociaux -->
       <div>
-        <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="DGIE" class="footer__logo" loading="lazy">
+        <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="DGIE" class="footer__logo" loading="lazy" width="150" height="42">
         <div class="footer__title">{{ $col1Title }}</div>
         <p>{{ $col1Desc }}</p>
         <div class="footer__social">
