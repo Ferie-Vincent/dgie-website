@@ -107,7 +107,9 @@
         <!-- Article principal -->
         @php $mainArticle = $featuredArticles->first(); @endphp
         <a href="{{ route('article.show', $mainArticle->slug) }}" class="featured-card">
-          <div class="featured-card__bg" style="background-image: url('{{ $mainArticle->image ? asset('storage/' . $mainArticle->image) : 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&h=600&fit=crop' }}'); background-size: cover; background-position: center;"></div>
+          <div class="featured-card__bg">
+            <img src="{{ $mainArticle->image ? asset('storage/' . $mainArticle->image) : 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&h=600&fit=crop' }}" alt="{{ $mainArticle->title }}" width="900" height="600" fetchpriority="high">
+          </div>
           <div class="featured-card__overlay"></div>
           <div class="featured-card__content">
             @if($mainArticle->category)
@@ -128,7 +130,9 @@
         <div class="featured-side">
           @foreach($featuredArticles->skip(1)->take(2) as $sideArticle)
           <a href="{{ route('article.show', $sideArticle->slug) }}" class="featured-card featured-card--small">
-            <div class="featured-card__bg" style="background-image: url('{{ $sideArticle->image ? asset('storage/' . $sideArticle->image) : 'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=600&h=400&fit=crop' }}'); background-size: cover; background-position: center;"></div>
+            <div class="featured-card__bg">
+              <img src="{{ $sideArticle->image ? asset('storage/' . $sideArticle->image) : 'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=600&h=400&fit=crop' }}" alt="{{ $sideArticle->title }}" width="600" height="400" loading="lazy">
+            </div>
             <div class="featured-card__overlay"></div>
             <div class="featured-card__content">
               @if($sideArticle->category)
@@ -176,7 +180,9 @@
           @forelse($latestArticles as $index => $article)
           <article class="article-card {{ $articleStyles[$index] ?? '' }}">
             <div class="article-card__img">
-              <div class="article-card__img-inner" style="background-image: url('{{ $article->image ? asset('storage/' . $article->image) : 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop' }}'); background-size: cover; background-position: center;"></div>
+              <div class="article-card__img-inner">
+                <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop' }}" alt="{{ $article->title }}" width="600" height="400" loading="lazy">
+              </div>
             </div>
             <div class="article-card__overlay">
               @if($article->category)
@@ -202,7 +208,10 @@
         @else
         <div class="ad-banner">
           <a href="{{ route('actualites') }}">
-            <img src="{{ asset('assets/images/ad-banner-1.jpg') }}" alt="Publicité institutionnelle — DGIE" loading="lazy" width="800" height="200">
+            <picture>
+              <source srcset="{{ asset('assets/images/ad-banner-1.webp') }}" type="image/webp">
+              <img src="{{ asset('assets/images/ad-banner-1.jpg') }}" alt="Publicité institutionnelle — DGIE" loading="lazy" width="800" height="200">
+            </picture>
           </a>
         </div>
         @endif
@@ -219,7 +228,9 @@
           @forelse($returnArticles as $index => $article)
           <article class="article-card {{ $returnStyles[$index] ?? '' }}">
             <div class="article-card__img">
-              <div class="article-card__img-inner" style="background-image: url('{{ $article->image ? asset('storage/' . $article->image) : 'https://images.unsplash.com/photo-1596496181871-9681eacf9764?w=600&h=400&fit=crop' }}'); background-size: cover; background-position: center;"></div>
+              <div class="article-card__img-inner">
+                <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://images.unsplash.com/photo-1596496181871-9681eacf9764?w=600&h=400&fit=crop' }}" alt="{{ $article->title }}" width="600" height="400" loading="lazy">
+              </div>
             </div>
             <div class="article-card__overlay">
               @if($article->category)
@@ -245,7 +256,10 @@
         @else
         <div class="ad-banner">
           <a href="{{ route('nos-services') }}#investir">
-            <img src="{{ asset('assets/images/ad-banner-2.jpg') }}" alt="Publicité institutionnelle — DGIE" loading="lazy" width="800" height="200">
+            <picture>
+              <source srcset="{{ asset('assets/images/ad-banner-2.webp') }}" type="image/webp">
+              <img src="{{ asset('assets/images/ad-banner-2.jpg') }}" alt="Publicité institutionnelle — DGIE" loading="lazy" width="800" height="200">
+            </picture>
           </a>
         </div>
         @endif
@@ -262,7 +276,9 @@
           @forelse($investArticles as $index => $article)
           <article class="article-card {{ $investStyles[$index] ?? '' }}">
             <div class="article-card__img">
-              <div class="article-card__img-inner" style="background-image: url('{{ $article->image ? asset('storage/' . $article->image) : 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop' }}'); background-size: cover; background-position: center;"></div>
+              <div class="article-card__img-inner">
+                <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop' }}" alt="{{ $article->title }}" width="600" height="400" loading="lazy">
+              </div>
             </div>
             <div class="article-card__overlay">
               @if($article->category)
@@ -288,7 +304,10 @@
         @else
         <div class="ad-banner">
           <a href="https://www.gouv.ci">
-            <img src="{{ asset('assets/images/ad-banner-3.jpg') }}" alt="Le gouvernement à votre écoute — Côte d'Ivoire" loading="lazy" width="800" height="200">
+            <picture>
+              <source srcset="{{ asset('assets/images/ad-banner-2.webp') }}" type="image/webp">
+              <img src="{{ asset('assets/images/ad-banner-3.jpg') }}" alt="Le gouvernement à votre écoute — Côte d'Ivoire" loading="lazy" width="800" height="200">
+            </picture>
           </a>
         </div>
         @endif
@@ -305,7 +324,9 @@
           @forelse($actionSocialeArticles as $index => $article)
           <article class="article-card {{ $socialeStyles[$index] ?? '' }}">
             <div class="article-card__img">
-              <div class="article-card__img-inner" style="background-image: url('{{ $article->image ? asset('storage/' . $article->image) : 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=600&h=400&fit=crop' }}'); background-size: cover; background-position: center;"></div>
+              <div class="article-card__img-inner">
+                <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=600&h=400&fit=crop' }}" alt="{{ $article->title }}" width="600" height="400" loading="lazy">
+              </div>
             </div>
             <div class="article-card__overlay">
               @if($article->category)
@@ -484,7 +505,10 @@
         <!-- Chaîne WhatsApp QR -->
         <div class="sidebar-whatsapp">
           <a href="https://whatsapp.com/channel/0029VajlgosEgGfHcqyRBQ17" target="_blank" rel="noopener">
-            <img src="{{ asset('assets/images/whatsapp-qr.png') }}" alt="Scannez le QR code pour rejoindre la chaîne WhatsApp DGIE" class="sidebar-whatsapp__img" width="250" height="250" loading="lazy">
+            <picture>
+              <source srcset="{{ asset('assets/images/whatsapp-qr.webp') }}" type="image/webp">
+              <img src="{{ asset('assets/images/whatsapp-qr.png') }}" alt="Scannez le QR code pour rejoindre la chaîne WhatsApp DGIE" class="sidebar-whatsapp__img" width="250" height="250" loading="lazy">
+            </picture>
           </a>
         </div>
 
