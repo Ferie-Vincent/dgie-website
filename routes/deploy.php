@@ -131,6 +131,48 @@ Route::prefix('deploy/{token}')->group(function () {
             }
         });
 
+        Route::get('/fix-footer-links', function (string $token) {
+            if ($token !== config('app.deploy_token')) {
+                abort(404);
+            }
+            try {
+                $setting = \App\Models\Setting::where('key', 'footer_quick_links')->first();
+                if (!$setting) {
+                    return '<pre>Aucun setting footer_quick_links trouvé</pre>';
+                }
+
+                $links = json_decode($setting->value, true);
+                $mapping = [
+                    '/pages/nos-services.html' => '/nos-services',
+                    '/pages/nos-services.html#faq' => '/contact#faq',
+                    '/pages/actualites.html' => '/actualites',
+                    '/pages/coin-des-diaspos.html' => '/coin-des-diaspos',
+                    '/pages/la-dgie.html' => '/la-dgie',
+                    '/pages/contact.html' => '/contact',
+                    '/pages/galerie.html' => '/galerie',
+                    '/pages/dossiers.html' => '/dossiers',
+                ];
+
+                $before = json_encode($links, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+                foreach ($links as &$link) {
+                    $url = $link['url'] ?? '';
+                    if (isset($mapping[$url])) {
+                        $link['url'] = $mapping[$url];
+                    }
+                }
+
+                $setting->value = json_encode($links, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                $setting->save();
+
+                $after = json_encode($links, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+                return '<pre>Liens footer corrigés ✓' . "\n\nAVANT:\n" . $before . "\n\nAPRÈS:\n" . $after . '</pre>';
+            } catch (\Throwable $e) {
+                return '<pre style="color:red">ERREUR: ' . $e->getMessage() . '</pre>';
+            }
+        });
+
         Route::get('/optimize', function (string $token) {
             if ($token !== config('app.deploy_token')) {
                 abort(404);
