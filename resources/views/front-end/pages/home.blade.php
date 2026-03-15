@@ -77,23 +77,6 @@
       </a>
     </div>
   </div>
-  @else
-  <div class="welcome-modal" id="welcomeModal" role="dialog" aria-modal="true" aria-label="Événement à venir">
-    <div class="welcome-modal__backdrop" id="welcomeModalBackdrop"></div>
-    <div class="welcome-modal__dialog">
-      <button class="welcome-modal__close" id="welcomeModalClose" aria-label="Fermer">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        Fermer
-      </button>
-      <a href="{{ route('actualites') }}" class="welcome-modal__poster">
-        <div class="welcome-modal__fallback">
-          <img src="{{ asset('assets/images/logo-dgie.png') }}" alt="DGIE" class="welcome-modal__fallback-logo" width="120" height="34">
-          <h2>Direction Générale des Ivoiriens de l'Extérieur</h2>
-          <span class="welcome-modal__fallback-cta">Découvrir</span>
-        </div>
-      </a>
-    </div>
-  </div>
   @endif
 @endsection
 
