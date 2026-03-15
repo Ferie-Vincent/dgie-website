@@ -641,7 +641,7 @@
         @forelse($homePartners as $partner)
         <a href="{{ $partner->url ?? '#' }}" target="_blank" rel="noopener" class="partners__card" title="{{ $partner->name }}">
           @if($partner->logo)
-          <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}" class="partners__card-logo" width="120" height="60" loading="lazy">
+          <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}" class="partners__card-logo" loading="lazy">
           @else
           <div class="partners__card-placeholder">
             <span class="partners__icon">{{ $partner->abbreviation ?? Str::upper(Str::substr($partner->name, 0, 3)) }}</span>
