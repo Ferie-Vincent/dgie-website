@@ -9214,27 +9214,13 @@ select:focus-visible {
   animation: ccSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Background : dégradé vert pour meilleur contraste et visibilité */
+/* Background : vert foncé uni pour contraste optimal avec texte blanc */
 .cc-banner::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #0a3319 0%, #0e4422 25%, #11522a 50%, #0e4422 100%);
+  background: #1a5632;
   z-index: 0;
-}
-
-/* Motifs décoratifs subtils */
-.cc-banner::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: 0.04;
-  background-image:
-    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c0 15-12 25-25 25C18 30 30 42 30 55c0-13 12-25 25-25C42 30 30 18 30 5z' fill='%23fff'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='6' fill='none' stroke='%23fff' stroke-width='1'/%3E%3C/svg%3E");
-  background-size: 90px 90px, 70px 70px;
-  background-position: 10px 5px, 50px 35px;
 }
 
 @keyframes ccSlideUp {
