@@ -3,7 +3,7 @@
    Cache des assets et pages pour navigation hors-ligne
    ============================================ */
 
-const CACHE_VERSION = 'dgie-v25';
+const CACHE_VERSION = 'dgie-v26';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const PAGES_CACHE = CACHE_VERSION + '-pages';
 const IMAGES_CACHE = CACHE_VERSION + '-images';
@@ -15,7 +15,9 @@ const PRECACHE_ASSETS = [
   '/assets/css/style.css?v=25',
   '/assets/js/main.js?v=12',
   '/assets/images/logo-dgie.png',
-  '/assets/images/favicon.svg',
+  '/assets/images/favicon-32.png',
+  '/assets/images/icons/icon-192.png',
+  '/assets/images/icons/icon-512.png',
   '/assets/images/armoirie-ci.png'
 ];
 
