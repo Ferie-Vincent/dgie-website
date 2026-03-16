@@ -9219,7 +9219,7 @@ select:focus-visible {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #4a9e6e 0%, #5cad7a 40%, #6bb886 100%);
+  background: linear-gradient(135deg, #1a6b3c 0%, #228a4e 40%, #2a9d5a 100%);
   z-index: 0;
 }
 
