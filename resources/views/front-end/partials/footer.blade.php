@@ -14,7 +14,7 @@
       $col4Title = $footerSettings['footer_col4_title'] ?? 'Contact';
       $footerAddress = $footerSettings['footer_address'] ?? ($contactInfo->address ?? 'Abidjan, Côte d\'Ivoire');
       $footerPhone = $footerSettings['footer_phone'] ?? ($contactInfo->phone_1 ?? '+225 XX XX XX XX XX');
-      $footerEmail = $footerSettings['footer_email'] ?? ($contactInfo->email ?? 'contact@dgie.gouv.ci');
+      $footerEmail = $footerSettings['footer_email'] ?? ($contactInfo->email ?? 'contact@ivoiriendelexterieur.ci');
       $footerHours = $footerSettings['footer_hours'] ?? 'Lundi – Vendredi : 8h00 – 16h30';
       $footerCopyright = $footerSettings['footer_copyright'] ?? ('© ' . date('Y') . ' DGIE — République de Côte d\'Ivoire. Tous droits réservés.');
 

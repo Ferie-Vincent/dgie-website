@@ -71,7 +71,7 @@
             </div>
             <div>
               <h3 class="contact-item__label">Courrier Électronique</h3>
-              <p class="contact-item__text">{{ $contactInfo->email ?? 'contact@dgie.gouv.ci' }}</p>
+              <p class="contact-item__text">{{ $contactInfo->email ?? 'contact@ivoiriendelexterieur.com' }}</p>
             </div>
           </div>
 

@@ -8,14 +8,14 @@
   <meta property="og:title" content="Politique de confidentialité — DGIE">
   <meta property="og:description" content="Politique de confidentialité du site de la DGIE : données collectées, finalités, durée de conservation, droits des utilisateurs et gestion des cookies.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.dgie.gouv.ci/pages/politique-confidentialite.html">
-  <meta property="og:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta property="og:url" content="https://www.ivoiriendelexterieur.com/pages/politique-confidentialite.html">
+  <meta property="og:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <meta property="og:locale" content="fr_CI">
   <meta property="og:site_name" content="DGIE — Direction Générale des Ivoiriens de l'Extérieur">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Politique de confidentialité — DGIE">
   <meta name="twitter:description" content="Politique de confidentialité du site de la DGIE : données collectées, finalités, droits des utilisateurs et cookies.">
-  <meta name="twitter:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta name="twitter:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
 @endsection
 
 @section('content')
@@ -44,7 +44,7 @@
           <section>
             <h2>Introduction</h2>
             <p>La Direction Générale des Ivoiriens de l'Extérieur (DGIE) accorde une importance particulière à la protection de vos données personnelles. La présente politique de confidentialité a pour objet de vous informer sur la manière dont nous collectons, traitons et protégeons vos données lorsque vous utilisez notre site internet.</p>
-            <p>En naviguant sur le site <strong>www.dgie.gouv.ci</strong>, vous acceptez les pratiques décrites dans la présente politique.</p>
+            <p>En naviguant sur le site <strong>www.ivoiriendelexterieur.com</strong>, vous acceptez les pratiques décrites dans la présente politique.</p>
           </section>
 
           <!-- Responsable du traitement -->
@@ -54,7 +54,7 @@
             <ul>
               <li><strong>Organisme :</strong> Direction Générale des Ivoiriens de l'Extérieur (DGIE)</li>
               <li><strong>Adresse :</strong> {{ $contactInfo->address ?? 'Plateau, Rue du Commerce — Abidjan, Côte d\'Ivoire' }}</li>
-              <li><strong>E-mail :</strong> {{ $contactInfo->email ?? 'contact@dgie.gouv.ci' }}</li>
+              <li><strong>E-mail :</strong> {{ $contactInfo->email ?? 'contact@ivoiriendelexterieur.com' }}</li>
             </ul>
           </section>
 
@@ -114,7 +114,7 @@
               <li><strong>Droit d'opposition :</strong> vous pouvez vous opposer au traitement de vos données pour des motifs légitimes</li>
               <li><strong>Droit de désinscription :</strong> vous pouvez vous désinscrire de la newsletter à tout moment via le lien prévu à cet effet dans chaque e-mail</li>
             </ul>
-            <p>Pour exercer l'un de ces droits, veuillez adresser votre demande par e-mail à l'adresse suivante : <strong>dpo@dgie.gouv.ci</strong>, en précisant votre identité et la nature de votre demande. Une réponse vous sera apportée dans un délai de 30 jours ouvrés.</p>
+            <p>Pour exercer l'un de ces droits, veuillez adresser votre demande par e-mail à l'adresse suivante : <strong>dpo@ivoiriendelexterieur.com</strong>, en précisant votre identité et la nature de votre demande. Une réponse vous sera apportée dans un délai de 30 jours ouvrés.</p>
           </section>
 
           <!-- Cookies -->
@@ -154,7 +154,7 @@
             <h2>Contact du délégué à la protection des données</h2>
             <p>Pour toute question relative à la protection de vos données personnelles ou pour exercer vos droits, vous pouvez contacter le délégué à la protection des données (DPO) de la DGIE :</p>
             <ul>
-              <li><strong>E-mail :</strong> dpo@dgie.gouv.ci</li>
+              <li><strong>E-mail :</strong> dpo@ivoiriendelexterieur.com</li>
               <li><strong>Adresse postale :</strong> DGIE — Délégué à la protection des données, Plateau, Rue du Commerce, Abidjan, Côte d'Ivoire</li>
             </ul>
             <p>Vous pouvez également adresser une réclamation auprès de l'<strong>ARTCI</strong> (Autorité de Régulation des Télécommunications/TIC de Côte d'Ivoire), autorité compétente en matière de protection des données personnelles.</p>
@@ -202,7 +202,7 @@
             </div>
             <div class="sidebar-contact-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              <span>{{ $contactInfo->email ?? 'contact@dgie.gouv.ci' }}</span>
+              <span>{{ $contactInfo->email ?? 'contact@ivoiriendelexterieur.com' }}</span>
             </div>
             <div class="sidebar-contact-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>

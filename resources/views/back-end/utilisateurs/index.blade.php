@@ -176,7 +176,7 @@
             </div>
             <div class="form-group">
                 <label class="usr-label">Adresse email *</label>
-                <input type="email" id="input-email" class="form-input" placeholder="nom.prenom@dgie.gouv.ci">
+                <input type="email" id="input-email" class="form-input" placeholder="nom.prenom@ivoiriendelexterieur.com">
             </div>
             <div class="form-group">
                 <label class="usr-label">Rôle *</label>

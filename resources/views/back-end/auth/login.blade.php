@@ -39,7 +39,7 @@
 
                     <div class="form-group">
                         <label for="email">Adresse e-mail</label>
-                        <input type="email" id="email" name="email" class="form-input" placeholder="admin@dgie.gouv.ci" value="{{ old('email') }}" required autofocus>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="admin@ivoiriendelexterieur.com" value="{{ old('email') }}" required autofocus>
                     </div>
 
                     <div class="form-group">

@@ -13,14 +13,14 @@
   <meta property="og:title" content="DGIE — Direction Générale des Ivoiriens de l'Extérieur | Côte d'Ivoire">
   <meta property="og:description" content="La DGIE accompagne la diaspora ivoirienne : retour, réintégration, investissement et mobilisation des compétences. Découvrez nos services.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.dgie.gouv.ci/">
-  <meta property="og:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta property="og:url" content="https://www.ivoiriendelexterieur.com/">
+  <meta property="og:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <meta property="og:locale" content="fr_CI">
   <meta property="og:site_name" content="DGIE — Direction Générale des Ivoiriens de l'Extérieur">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DGIE — Direction Générale des Ivoiriens de l'Extérieur">
   <meta name="twitter:description" content="La DGIE accompagne la diaspora ivoirienne : retour, réintégration, investissement et mobilisation des compétences.">
-  <meta name="twitter:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta name="twitter:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <link rel="canonical" href="{{ route('home') }}">
 @endsection
 
@@ -31,8 +31,8 @@
     "@@type": "GovernmentOrganization",
     "name": "Direction Générale des Ivoiriens de l'Extérieur",
     "alternateName": "DGIE",
-    "url": "https://www.dgie.gouv.ci",
-    "logo": "https://www.dgie.gouv.ci/assets/images/logo-dgie.png",
+    "url": "https://www.ivoiriendelexterieur.com",
+    "logo": "https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png",
     "description": "La DGIE est une structure du Ministère des Affaires Étrangères de Côte d'Ivoire chargée de la relation avec les Ivoiriens établis à l'étranger.",
     "address": {
       "@@type": "PostalAddress",
@@ -41,7 +41,7 @@
     },
     "contactPoint": {
       "@@type": "ContactPoint",
-      "email": "{{ $contactInfo->email ?? 'contact@dgie.gouv.ci' }}",
+      "email": "{{ $contactInfo->email ?? 'contact@ivoiriendelexterieur.com' }}",
       "contactType": "customer service",
       "availableLanguage": "French"
     },

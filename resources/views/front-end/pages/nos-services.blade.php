@@ -7,14 +7,14 @@
   <meta property="og:title" content="Nos services — DGIE">
   <meta property="og:description" content="Retour et réinsertion, investissement diaspora, mobilisation des compétences : tous les services de la DGIE.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta property="og:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <meta property="og:locale" content="fr_CI">
-  <meta property="og:url" content="https://www.dgie.gouv.ci/pages/nos-services.html">
+  <meta property="og:url" content="https://www.ivoiriendelexterieur.com/pages/nos-services.html">
   <meta property="og:site_name" content="DGIE — Direction Générale des Ivoiriens de l'Extérieur">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Nos services — DGIE">
   <meta name="twitter:description" content="Retour et réinsertion, investissement diaspora, mobilisation des compétences : tous les services de la DGIE.">
-  <meta name="twitter:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta name="twitter:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <link rel="canonical" href="{{ route('nos-services') }}">
   <script type="application/ld+json">
   {

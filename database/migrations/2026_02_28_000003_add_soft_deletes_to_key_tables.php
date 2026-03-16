@@ -8,29 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('articles', function (Blueprint $table) {
-            $table->softDeletes();
-        });
+        $tables = ['articles', 'evenements', 'dossiers', 'galerie_albums', 'documents', 'magazines'];
 
-        Schema::table('evenements', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-
-        Schema::table('dossiers', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-
-        Schema::table('galerie_albums', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-
-        Schema::table('documents', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-
-        Schema::table('magazines', function (Blueprint $table) {
-            $table->softDeletes();
-        });
+        foreach ($tables as $t) {
+            if (!Schema::hasColumn($t, 'deleted_at')) {
+                Schema::table($t, function (Blueprint $table) {
+                    $table->softDeletes();
+                });
+            }
+        }
     }
 
     public function down(): void

@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /admin/
 Disallow: /storage/
 
-Sitemap: https://www.dgie.gouv.ci/sitemap.xml
+Sitemap: https://www.ivoiriendelexterieur.com/sitemap.xml

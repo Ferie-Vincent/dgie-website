@@ -7,14 +7,14 @@
   <meta property="og:title" content="Investir et Contribuer — DGIE">
   <meta property="og:description" content="Mobilisez vos compétences et investissez en Côte d'Ivoire avec l'appui de la DGIE.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta property="og:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <meta property="og:locale" content="fr_CI">
-  <meta property="og:url" content="https://www.dgie.gouv.ci/pages/investir-contribuer.html">
+  <meta property="og:url" content="https://www.ivoiriendelexterieur.com/pages/investir-contribuer.html">
   <meta property="og:site_name" content="DGIE — Direction Générale des Ivoiriens de l'Extérieur">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Investir et Contribuer — DGIE">
   <meta name="twitter:description" content="Mobilisez vos compétences et investissez en Côte d'Ivoire avec l'appui de la DGIE.">
-  <meta name="twitter:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta name="twitter:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <link rel="canonical" href="{{ route('investir-contribuer') }}">
 @endsection
 

@@ -8,14 +8,14 @@
   <meta property="og:title" content="Mentions légales — DGIE">
   <meta property="og:description" content="Mentions légales du site de la Direction Générale des Ivoiriens de l'Extérieur : éditeur, hébergement, propriété intellectuelle et droit applicable.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.dgie.gouv.ci/pages/mentions-legales.html">
-  <meta property="og:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta property="og:url" content="https://www.ivoiriendelexterieur.com/pages/mentions-legales.html">
+  <meta property="og:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <meta property="og:locale" content="fr_CI">
   <meta property="og:site_name" content="DGIE — Direction Générale des Ivoiriens de l'Extérieur">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Mentions légales — DGIE">
   <meta name="twitter:description" content="Mentions légales du site de la Direction Générale des Ivoiriens de l'Extérieur : éditeur, hébergement, propriété intellectuelle et droit applicable.">
-  <meta name="twitter:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta name="twitter:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
 @endsection
 
 @section('content')
@@ -48,7 +48,7 @@
               <li><strong>Dénomination :</strong> Direction Générale des Ivoiriens de l'Extérieur (DGIE)</li>
               <li><strong>Adresse :</strong> {{ $contactInfo->address ?? 'Plateau, Rue du Commerce — Abidjan, Côte d\'Ivoire' }}</li>
               <li><strong>Téléphone :</strong> {{ $contactInfo->phone_1 ?? '+225 XX XX XX XX XX' }}</li>
-              <li><strong>E-mail :</strong> {{ $contactInfo->email ?? 'contact@dgie.gouv.ci' }}</li>
+              <li><strong>E-mail :</strong> {{ $contactInfo->email ?? 'contact@ivoiriendelexterieur.com' }}</li>
               <li><strong>Statut juridique :</strong> Établissement public administratif, créé par le décret n°2023-973 du 06 décembre 2023</li>
             </ul>
           </section>
@@ -153,7 +153,7 @@
             </div>
             <div class="sidebar-contact-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              <span>{{ $contactInfo->email ?? 'contact@dgie.gouv.ci' }}</span>
+              <span>{{ $contactInfo->email ?? 'contact@ivoiriendelexterieur.com' }}</span>
             </div>
             <div class="sidebar-contact-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>

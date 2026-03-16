@@ -72,4 +72,11 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    RewriteEngine On
+
+    RewriteCond %{QUERY_STRING} (^|&)p=\d+(&|$) [OR]
+    RewriteCond %{QUERY_STRING} (^|&)cat=\d+(&|$) [OR]
+    RewriteCond %{QUERY_STRING} (^|&)tag=[^&]+(&|$)
+    RewriteRule ^ - [R=410,L]
 </IfModule>

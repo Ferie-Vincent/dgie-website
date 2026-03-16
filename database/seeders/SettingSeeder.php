@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Setting;
+use Illuminate\Database\Seeder;
 
 class SettingSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class SettingSeeder extends Seeder
             // Contact
             ['key' => 'contact_address', 'value' => 'Abidjan, Plateau, Immeuble CAISTAB, 5e étage', 'group' => 'contact'],
             ['key' => 'contact_phone', 'value' => '+225 27 20 21 XX XX', 'group' => 'contact'],
-            ['key' => 'contact_email', 'value' => 'info@dgie.gouv.ci', 'group' => 'contact'],
+            ['key' => 'contact_email', 'value' => 'info@ivoiriendelexterieur.com', 'group' => 'contact'],
             ['key' => 'contact_hours', 'value' => 'Lundi - Vendredi : 8h00 - 16h30', 'group' => 'contact'],
             ['key' => 'contact_map_url', 'value' => '', 'group' => 'contact'],
 

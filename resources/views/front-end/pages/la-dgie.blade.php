@@ -7,14 +7,14 @@
   <meta property="og:title" content="La DGIE — Missions et Organisation">
   <meta property="og:description" content="Découvrez la Direction Générale des Ivoiriens de l'Extérieur : missions, organisation et textes de référence.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta property="og:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <meta property="og:locale" content="fr_CI">
-  <meta property="og:url" content="https://www.dgie.gouv.ci/pages/la-dgie.html">
+  <meta property="og:url" content="https://www.ivoiriendelexterieur.com/pages/la-dgie.html">
   <meta property="og:site_name" content="DGIE — Direction Générale des Ivoiriens de l'Extérieur">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="La DGIE — Missions et Organisation">
   <meta name="twitter:description" content="Découvrez la Direction Générale des Ivoiriens de l'Extérieur : missions, organisation et textes de référence.">
-  <meta name="twitter:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta name="twitter:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <link rel="canonical" href="{{ route('la-dgie') }}">
 @endsection
 
@@ -319,7 +319,7 @@
             </div>
             <div class="sidebar-contact-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              <span>{{ $contactInfo->email ?? 'contact@dgie.gouv.ci' }}</span>
+              <span>{{ $contactInfo->email ?? 'contact@ivoiriendelexterieur.com' }}</span>
             </div>
             <div class="sidebar-contact-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>

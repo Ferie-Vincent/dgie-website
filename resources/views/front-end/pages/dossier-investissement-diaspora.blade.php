@@ -7,14 +7,14 @@
   <meta property="og:title" content="Investissement diaspora en Côte d'Ivoire — DGIE">
   <meta property="og:description" content="Découvrez les mécanismes mis en place pour faciliter l'investissement de la diaspora ivoirienne dans les secteurs porteurs.">
   <meta property="og:type" content="article">
-  <meta property="og:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta property="og:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <meta property="og:locale" content="fr_CI">
-  <meta property="og:url" content="https://www.dgie.gouv.ci/pages/dossier-investissement-diaspora.html">
+  <meta property="og:url" content="https://www.ivoiriendelexterieur.com/pages/dossier-investissement-diaspora.html">
   <meta property="og:site_name" content="DGIE — Direction Générale des Ivoiriens de l'Extérieur">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Investissement diaspora en Côte d'Ivoire — DGIE">
   <meta name="twitter:description" content="Découvrez les mécanismes mis en place pour faciliter l'investissement de la diaspora ivoirienne dans les secteurs porteurs.">
-  <meta name="twitter:image" content="https://www.dgie.gouv.ci/assets/images/logo-dgie.png">
+  <meta name="twitter:image" content="https://www.ivoiriendelexterieur.com/assets/images/logo-dgie.png">
   <link rel="canonical" href="{{ url('/dossiers/investissement-diaspora') }}">
 @endsection
 

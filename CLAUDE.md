@@ -11,7 +11,7 @@ Laravel 12 web application for the **DGIE** (Direction Générale des Ivoiriens 
 ## Development Environment
 
 - **Server**: MAMP (Apache + MySQL), dev server at `http://127.0.0.1:8001`
-- **PHP**: 8.3.14 via MAMP (`/Applications/MAMP/bin/php/php8.3.14/bin/php`)
+- **PHP**: 8.3.30 via MAMP (`/Applications/MAMP/bin/php/php8.3.30/bin/php`)
 - **Database**: MySQL on port 8889, database `dgie`, credentials `root`/`root`
 - **Chrome DevTools MCP** configured for live browser inspection
 

@@ -27,6 +27,7 @@
     gtag('js', new Date());
     gtag('config', 'G-H3SHBWK6HQ');
   </script>
+
 </head>
 <body>
 <a href="#main-content" class="skip-link">Aller au contenu principal</a>
