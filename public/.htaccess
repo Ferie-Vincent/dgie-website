@@ -55,6 +55,28 @@
 
     RewriteEngine On
 
+    # ── 410 Gone for legacy WordPress query parameters ──
+    # Must be AFTER RewriteEngine On and BEFORE the Laravel front controller
+    RewriteCond %{QUERY_STRING} (^|&)p=\d+(&|$) [OR]
+    RewriteCond %{QUERY_STRING} (^|&)page_id=\d+(&|$) [OR]
+    RewriteCond %{QUERY_STRING} (^|&)cat=\d+(&|$) [OR]
+    RewriteCond %{QUERY_STRING} (^|&)tag=[^&]+(&|$) [OR]
+    RewriteCond %{QUERY_STRING} (^|&)paged=\d+(&|$) [OR]
+    RewriteCond %{QUERY_STRING} (^|&)m=\d+(&|$) [OR]
+    RewriteCond %{QUERY_STRING} (^|&)feed=[^&]+(&|$) [OR]
+    RewriteCond %{QUERY_STRING} (^|&)attachment_id=\d+(&|$) [OR]
+    RewriteCond %{QUERY_STRING} (^|&)author=\d+(&|$)
+    RewriteRule ^$ - [R=410,L]
+
+    # ── 410 Gone for WordPress path patterns ──
+    RewriteRule ^wp-(admin|login|content|includes|cron|json|signup|trackback) - [R=410,L]
+    RewriteRule ^(xmlrpc|wp-login)\.php$ - [R=410,L]
+    RewriteRule ^feed/?$ - [R=410,L]
+    RewriteRule ^comments/feed/?$ - [R=410,L]
+    RewriteRule ^author/ - [R=410,L]
+    RewriteRule ^category/ - [R=410,L]
+    RewriteRule ^tag/ - [R=410,L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -72,11 +94,4 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-
-    RewriteEngine On
-
-    RewriteCond %{QUERY_STRING} (^|&)p=\d+(&|$) [OR]
-    RewriteCond %{QUERY_STRING} (^|&)cat=\d+(&|$) [OR]
-    RewriteCond %{QUERY_STRING} (^|&)tag=[^&]+(&|$)
-    RewriteRule ^ - [R=410,L]
 </IfModule>

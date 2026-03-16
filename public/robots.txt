@@ -1,5 +1,24 @@
 User-agent: *
 Disallow: /admin/
 Disallow: /storage/
+Disallow: /*?p=*
+Disallow: /*?page_id=*
+Disallow: /*?cat=*
+Disallow: /*?tag=*
+Disallow: /*?paged=*
+Disallow: /*?m=*
+Disallow: /*?feed=*
+Disallow: /*?author=*
+Disallow: /*?attachment_id=*
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /wp-content/
+Disallow: /wp-includes/
+Disallow: /xmlrpc.php
+Disallow: /feed/
+Disallow: /author/
+Disallow: /category/
+Disallow: /tag/
+Disallow: /comments/feed/
 
 Sitemap: https://www.ivoiriendelexterieur.com/sitemap.xml
