@@ -19,6 +19,14 @@
   @yield('preload')
   @yield('head')
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H3SHBWK6HQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H3SHBWK6HQ');
+  </script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Aller au contenu principal</a>

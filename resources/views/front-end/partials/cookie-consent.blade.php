@@ -67,31 +67,15 @@
   var banner = document.getElementById('cookieBanner');
   var panel = document.getElementById('ccPanel');
   var overlay = document.getElementById('ccPanelOverlay');
-  var analyticsCheckbox = document.getElementById('ccAnalytics');
 
   function getConsent() {
-    try { return JSON.parse(localStorage.getItem(COOKIE_KEY)); } catch(e) { return null; }
+    return localStorage.getItem(COOKIE_KEY);
   }
 
-  function setConsent(analytics) {
-    localStorage.setItem(COOKIE_KEY, JSON.stringify({ analytics: analytics, date: new Date().toISOString() }));
+  function setConsent() {
+    localStorage.setItem(COOKIE_KEY, JSON.stringify({ accepted: true, date: new Date().toISOString() }));
     banner.style.display = 'none';
     closePanel();
-    if (analytics) loadGA();
-  }
-
-  function loadGA() {
-    if (window._gaLoaded) return;
-    window._gaLoaded = true;
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-H3SHBWK6HQ';
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', 'G-H3SHBWK6HQ', { anonymize_ip: true });
   }
 
   function openPanel() {
@@ -106,23 +90,18 @@
     document.body.style.overflow = '';
   }
 
-  // Init
-  var consent = getConsent();
-  if (consent === null) {
+  // Show banner only if user hasn't responded yet
+  if (!getConsent()) {
     banner.style.display = 'block';
-  } else if (consent.analytics) {
-    loadGA();
   }
 
   // Buttons
-  document.getElementById('ccAcceptAll').addEventListener('click', function() { setConsent(true); });
-  document.getElementById('ccDecline').addEventListener('click', function() { setConsent(false); });
+  document.getElementById('ccAcceptAll').addEventListener('click', setConsent);
+  document.getElementById('ccDecline').addEventListener('click', setConsent);
   document.getElementById('ccCustomize').addEventListener('click', openPanel);
   document.getElementById('ccCustomizeLink').addEventListener('click', function(e) { e.preventDefault(); openPanel(); });
   document.getElementById('ccPanelClose').addEventListener('click', closePanel);
   overlay.addEventListener('click', closePanel);
-  document.getElementById('ccSavePrefs').addEventListener('click', function() {
-    setConsent(analyticsCheckbox.checked);
-  });
+  document.getElementById('ccSavePrefs').addEventListener('click', setConsent);
 })();
 </script>
