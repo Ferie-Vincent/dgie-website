@@ -10,18 +10,18 @@ Application web full-stack Laravel 12 pour la Direction Générale des Ivoiriens
 
 ## Stack Technologique
 
-| Composant | Technologie | Version |
-|-----------|-------------|---------|
-| Backend | PHP / Laravel | 8.3.14 / ^12.0 |
-| Base de données | MySQL | via MAMP (dev) / Plesk (prod) |
-| Templates | Blade | Intégré Laravel |
-| Build | Vite | ^7.0.7 |
-| HTTP Client | Axios | ^1.11.0 |
-| Graphiques | Chart.js | 4.4.7 (CDN) |
-| Éditeur WYSIWYG | CKEditor 5 | 43.3.1 |
-| CSS | Écriture manuelle | 2 fichiers (~14 100 lignes) |
-| Tests | PHPUnit | ^11.5.3 |
-| CI/CD | GitHub Actions | → FTP → Plesk |
+| Composant       | Technologie       | Version                       |
+|-----------------|-------------------|-------------------------------|
+| Backend         | PHP / Laravel     | 8.3.14 / ^12.0                |
+| Base de données | MySQL             | via MAMP (dev) / Plesk (prod) |
+| Templates       | Blade             | Intégré Laravel               |
+| Build           | Vite              | ^7.0.7                        |
+| HTTP Client     | Axios             | ^1.11.0                       |
+| Graphiques      | Chart.js          | 4.4.7 (CDN)                   |
+| Éditeur WYSIWYG | CKEditor 5        | 43.3.1                        |
+| CSS             | Écriture manuelle | 2 fichiers (~14 100 lignes)   |
+| Tests           | PHPUnit           | ^11.5.3                       |
+| CI/CD           | GitHub Actions    | → FTP → Plesk                 |
 
 ---
 
@@ -31,21 +31,21 @@ Application web full-stack Laravel 12 pour la Direction Générale des Ivoiriens
 
 ```
 ┌─────────────────────────────────────────────────┐
-│                   NAVIGATEUR                     │
+│                   NAVIGATEUR                    │
 ├──────────────────┬──────────────────────────────┤
 │   Front-End      │      Admin Panel             │
 │   (public)       │      (/admin/*)              │
 ├──────────────────┴──────────────────────────────┤
-│              Routes (web.php)                    │
-│         + Middleware Chain                        │
+│              Routes (web.php)                   │
+│            + Middleware Chain                   │
 ├─────────────────────────────────────────────────┤
-│              Controllers                         │
-│   12 front-end  │  26 admin                     │
+│              Controllers                        │
+│     12 front-end  │  26 admin                   │
 ├─────────────────────────────────────────────────┤
-│         Models (28) + Traits (Auditable)         │
+│         Models (28) + Traits (Auditable)        │
 ├─────────────────────────────────────────────────┤
-│              MySQL Database                      │
-│         (47 migrations, 28 tables)               │
+│              MySQL Database                     │
+│         (47 migrations, 28 tables)              │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -55,11 +55,11 @@ Application web full-stack Laravel 12 pour la Direction Générale des Ivoiriens
 
 **3 rôles** : `super-admin`, `editeur`, `redacteur`
 
-| Rôle | Accès |
-|------|-------|
+| Rôle        | Accès                                            |
+|-------------|--------------------------------------------------|
 | super-admin | Tout + gestion utilisateurs + vue globale profil |
-| editeur | CRUD complet sur tout le contenu |
-| redacteur | Accès limité |
+| editeur     | CRUD complet sur tout le contenu                 |
+| redacteur   | Accès limité                                     |
 
 **Chaîne middleware** :
 1. `admin` — vérifie authentification + rôle valide
@@ -89,11 +89,11 @@ Le trait `Auditable` (5 modèles) journalise automatiquement vers `audit_logs` :
 **Transport** : `sendmail` (prod), `log` (dev)
 **From** : `contact@ivoiriendelexterieur.com`
 
-| Mailable | Sujet | Vue |
-|----------|-------|-----|
-| PasswordReset | Réinitialisation de mot de passe — Plateforme DGIE | emails.password-reset |
-| UserInvitation | Invitation — Plateforme DGIE | emails.user-invitation |
-| VerifyEmailChange | Vérification de votre nouvelle adresse email — DGIE | emails.verify-email-change |
+| Mailable            | Sujet                                               | Vue                                    |
+|---------------------|-----------------------------------------------------|----------------------------------------|
+| PasswordReset       | Réinitialisation de mot de passe — Plateforme DGIE  | emails.password-reset                  |
+| UserInvitation      | Invitation — Plateforme DGIE                        | emails.user-invitation                 |
+| VerifyEmailChange   | Vérification de votre nouvelle adresse email — DGIE | emails.verify-email-change             |
 
 Templates : HTML card-based, 520px, branding orange (#E8772A)
 
@@ -103,10 +103,10 @@ Templates : HTML card-based, 520px, branding orange (#E8772A)
 
 **Deux fichiers CSS monolithiques** (pas de framework) :
 
-| Fichier | Lignes | Usage | Version actuelle |
-|---------|--------|-------|-----------------|
-| `public/assets/css/style.css` | ~8 700 | Front-end (BEM) | v=21 |
-| `public/assets/css/admin.css` | ~5 400 | Admin panel | v=14 |
+| Fichier                       | Lignes | Usage           | Version actuelle |
+|-------------------------------|--------|-----------------|------------------|
+| `public/assets/css/style.css` | ~8 700 | Front-end (BEM) | v=21             |
+| `public/assets/css/admin.css` | ~5 400 | Admin panel     | v=14             |
 
 **Variables CSS principales** :
 - Couleurs : `--orange` (#E8772A), `--green` (#1D8C4F), `--bordeaux`, `--slate-*`, `--blue`, `--danger`
@@ -153,16 +153,16 @@ Chaque module admin : `index.blade.php` avec :
 
 ## Stockage de Fichiers
 
-| Type | Emplacement | Taille max |
-|------|------------|-----------|
-| Avatars | `storage/avatars/{user_id}.{ext}` | 2 MB |
-| Images articles | `storage/articles/` | 2 MB (couverture), 5 MB (additionnelles) |
-| Photos staff | `storage/staff/` | 2 MB |
-| Logos partenaires | `storage/partners/` | 2 MB |
-| Galerie | `storage/galerie/` | 51 MB |
-| Bannières | `storage/banners/` | 5 MB |
-| Documents | `storage/documents/` | 10 MB |
-| Magazines (PDF) | `storage/magazines/` | 20 MB |
+| Type              | Emplacement                           | Taille max                               |
+|-------------------|---------------------------------------|------------------------------------------|
+| Avatars           | `storage/avatars/{user_id}.{ext}`     | 2 MB                                     |
+| Images articles   | `storage/articles/`                   | 2 MB (couverture), 5 MB (additionnelles) |
+| Photos staff      | `storage/staff/`                      | 2 MB                                     |
+| Logos partenaires | `storage/partners/`                   | 2 MB                                     |
+| Galerie           | `storage/galerie/`                    | 51 MB                                    |
+| Bannières         | `storage/banners/`                    | 5 MB                                     |
+| Documents         | `storage/documents/`                  | 10 MB                                    |
+| Magazines (PDF)   | `storage/magazines/`                  | 20 MB                                    |
 
 ---
 

@@ -11,9 +11,9 @@
       </svg>
     </div>
     <div class="cc-banner__text">
-      <p>Nous utilisons des cookies pour améliorer votre expérience sur ce site.<br>
+      <p style="color:white !important">Nous utilisons des cookies pour améliorer votre expérience sur ce site.<br>
       Pour un aperçu complet des cookies utilisés, consultez vos <a href="#" class="cc-banner__link" id="ccCustomizeLink">paramètres personnels</a>.</p>
-      <p>Consultez notre <a href="{{ route('politique-confidentialite') }}" class="cc-banner__link">Politique de confidentialité</a>.</p>
+      <p style="color:white !important">Consultez notre <a href="{{ route('politique-confidentialite') }}" class="cc-banner__link">Politique de confidentialité</a>.</p>
     </div>
     <div class="cc-banner__actions">
       <button type="button" class="cc-btn cc-btn--accept" id="ccAcceptAll">Tout accepter</button>

@@ -436,17 +436,17 @@ PollQuestion 1───∞ PollOption (poll_question_id)
 
 ## Référence des Valeurs Enum
 
-| Champ | Valeurs |
-|-------|---------|
-| users.role | super-admin, editeur, redacteur |
-| articles.status | brouillon, publie, archive |
-| articles.section | general, retour, investir, action-sociale |
-| evenements.section | general, diaspora |
-| dossiers.department | DAOSAR, DMCRIE, DAS, DGIE |
-| galerie_albums.type | photo, video |
-| testimonials.type | general, retour, success_story |
-| staff.type | ministre, dg, directeur, autre |
-| documents.type | juridique, rapport, organigramme, autre |
-| banners.position | top, sidebar, popup |
-| cultural_items.type | musique, livre, film, gastronomie |
-| contact_messages.status | unread, read, replied |
+| Champ                   | Valeurs                                  |
+|-------------------------|------------------------------------------|
+| users.role              | super-admin, editeur, redacteur          |
+| articles.status         | brouillon, publie, archive               |
+| articles.section        | general, retour, investir, action-sociale|
+| evenements.section      | general, diaspora                        |
+| dossiers.department     | DAOSAR, DMCRIE, DAS, DGIE                |
+| galerie_albums.type     | photo, video                             |
+| testimonials.type       | general, retour, success_story           |
+| staff.type              | ministre, dg, directeur, autre           |
+| documents.type          | juridique, rapport, organigramme, autre  |
+| banners.position        | top, sidebar, popup                      |
+| cultural_items.type     | musique, livre, film, gastronomie        |
+| contact_messages.status | unread, read, replied                    |
