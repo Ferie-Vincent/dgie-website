@@ -9214,12 +9214,12 @@ select:focus-visible {
   animation: ccSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Background : dégradé orange foncé pour meilleur contraste texte blanc */
+/* Background : dégradé vert pour meilleur contraste et visibilité */
 .cc-banner::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #a8511a 0%, #be5f1e 25%, #d06b24 50%, #c5621f 100%);
+  background: linear-gradient(135deg, #145e35 0%, #187a42 25%, #1D8C4F 50%, #1a7d46 100%);
   z-index: 0;
 }
 
