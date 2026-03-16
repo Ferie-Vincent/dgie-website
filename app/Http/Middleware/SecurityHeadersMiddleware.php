@@ -25,12 +25,12 @@ class SecurityHeadersMiddleware
         // Content Security Policy
         $csp = implode('; ', [
             "default-src 'self'",
-            "script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval'",
+            "script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com 'unsafe-inline' 'unsafe-eval'",
             "style-src 'self' https://fonts.googleapis.com 'unsafe-inline'",
             "font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com",
-            "img-src 'self' https://img.youtube.com https://images.unsplash.com data:",
+            "img-src 'self' https://img.youtube.com https://images.unsplash.com https://www.google-analytics.com https://www.googletagmanager.com https://stats.g.doubleclick.net data:",
             "frame-src 'self' https://www.youtube.com https://www.google.com https://maps.google.com",
-            "connect-src 'self'",
+            "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net",
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",
