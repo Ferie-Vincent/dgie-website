@@ -9216,7 +9216,7 @@ select:focus-visible {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #2d7a54 0%, #3a8f6a 30%, #4ea67e 60%, #5fb88d 100%);
+  background: linear-gradient(135deg, #c5621f 0%, #E8772A 30%, #f0923f 60%, #f4a85e 100%);
   z-index: 0;
 }
 
@@ -9272,7 +9272,7 @@ select:focus-visible {
 }
 
 .cc-banner__icon svg rect {
-  fill: rgba(255,255,255,.12);
+  fill: rgba(255,255,255,.15);
 }
 
 .cc-banner__text {
@@ -9326,12 +9326,12 @@ select:focus-visible {
 
 .cc-btn--accept {
   background: #fff;
-  color: #2d7a54;
+  color: #c5621f;
   border-color: #fff;
 }
 
 .cc-btn--accept:hover {
-  background: #f0fdf4;
+  background: #fff7ed;
 }
 
 .cc-btn--decline {
