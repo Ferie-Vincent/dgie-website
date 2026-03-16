@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@yield('title', 'DGIE — Direction Générale des Ivoiriens de l\'Extérieur')</title>
   @yield('meta')
-  <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon.svg') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicon-32.png') }}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/images/icons/icon-192.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/apple-touch-icon.png') }}">
   <link rel="manifest" href="{{ asset('manifest.json') }}">
   <meta name="theme-color" content="#E8772A">
   <link rel="preconnect" href="https://fonts.googleapis.com">
