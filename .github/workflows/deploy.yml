@@ -85,7 +85,7 @@ jobs:
             set ftp:passive-mode yes;
             set net:max-retries 3;
             set net:reconnect-interval-base 5;
-            open ftp://ivoirien:Azertyuiop1234.@51.15.161.5;
+            open ftp://ivoirien:Azertyuiop1234.@51.15.161.8;
             mirror --reverse --verbose --parallel=5 \
               --exclude ^\.git/ \
               --exclude ^node_modules/ \
