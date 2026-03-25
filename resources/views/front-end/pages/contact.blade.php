@@ -58,7 +58,7 @@
             </div>
             <div>
               <h3 class="contact-item__label">Téléphone & Fax</h3>
-              <p class="contact-item__text">{{ $contactInfo->phone_1 ?? '+225 XX XX XX XX XX' }}</p>
+              <p class="contact-item__text">{{ $contactInfo->phone_1 ?? '+225 27 22 55 56 91' }}</p>
               @if($contactInfo && $contactInfo->phone_2)
               <p class="contact-item__text">{{ $contactInfo->phone_2 }}</p>
               @endif
