@@ -83,10 +83,12 @@ jobs:
             set ssl:verify-certificate no;
             set ftp:ssl-protect-data yes;
             set ftp:passive-mode yes;
-            set net:max-retries 3;
-            set net:reconnect-interval-base 5;
+            set net:max-retries 5;
+            set net:reconnect-interval-base 10;
+            set net:timeout 30;
+            set net:connection-limit 3;
             open ftp://ivoirien:Azertyuiop1234.@51.15.161.8;
-            mirror --reverse --verbose --parallel=5 \
+            mirror --reverse --verbose --parallel=3 \
               --exclude ^\.git/ \
               --exclude ^node_modules/ \
               --exclude ^vendor/ \
@@ -100,10 +102,10 @@ jobs:
               --exclude ^SPEC-DGIE\.md$ \
               ./ /httpdocs/;
             echo 'Syncing vendor dependencies...';
-            mirror --reverse --verbose --parallel=5 \
+            mirror --reverse --verbose --parallel=3 \
               vendor/composer/ /httpdocs/vendor/composer/;
             put vendor/autoload.php -o /httpdocs/vendor/autoload.php;
-            mirror --reverse --verbose --parallel=5 \
+            mirror --reverse --verbose --parallel=3 \
               vendor/intervention/ /httpdocs/vendor/intervention/;
             quit;
           "
