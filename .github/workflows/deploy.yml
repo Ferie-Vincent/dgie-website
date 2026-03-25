@@ -87,7 +87,7 @@ jobs:
             set net:reconnect-interval-base 10;
             set net:timeout 30;
             set net:connection-limit 3;
-            open ftp://ivoirien:Azertyuiop1234.@51.15.161.8;
+            open ftp://ivoirien:Azertyuiop1234.@51.15.160.8;
             mirror --reverse --verbose --parallel=3 \
               --exclude ^\.git/ \
               --exclude ^node_modules/ \
