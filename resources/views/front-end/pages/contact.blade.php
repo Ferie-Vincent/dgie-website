@@ -48,7 +48,7 @@
             <div>
               <h3 class="contact-item__label">Adresse Physique</h3>
               <p class="contact-item__text">Direction Générale des Ivoiriens de l'Extérieur</p>
-              <p class="contact-item__text">{{ $contactInfo->address ?? 'Plateau, Rue du Commerce, Abidjan, Côte d\'Ivoire' }}</p>
+              <p class="contact-item__text">{{ $contactInfo->address ?? '2plateaux ENA, à côté de la Chambre National des Métiers de Côte d\'Ivoire' }}</p>
             </div>
           </div>
 
