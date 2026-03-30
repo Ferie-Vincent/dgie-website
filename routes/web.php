@@ -53,18 +53,6 @@ Route::get('/login_up.php', function () {
     abort(410);
 });
 
-Route::get('/', function (\Illuminate\Http\Request $request) {
-    $wpParams = ['page_id', 'p', 'cat', 'tag', 'paged', 'feed', 'attachment_id'];
-
-    foreach ($wpParams as $param) {
-        if ($request->has($param)) {
-            abort(410);
-        }
-    }
-
-    return app()->call('App\Http\Controllers\HomeController@index');
-})->name('home.filtered');
-
 // Actualités
 Route::get('/actualites', [\App\Http\Controllers\ActualiteController::class, 'index'])->name('actualites');
 Route::get('/actualites/{slug}', [\App\Http\Controllers\ActualiteController::class, 'show'])->name('article.show');
