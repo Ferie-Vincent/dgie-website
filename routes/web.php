@@ -1,36 +1,69 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\LoginController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\CulturalItemController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\DocumentController;
 use App\Http\Controllers\Admin\DossierController;
 use App\Http\Controllers\Admin\EvenementController;
+use App\Http\Controllers\Admin\FaqItemController;
 use App\Http\Controllers\Admin\FlashInfoController;
 use App\Http\Controllers\Admin\GalerieController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\StaffController;
-use App\Http\Controllers\Admin\PartnerController;
-use App\Http\Controllers\Admin\SettingController;
-use App\Http\Controllers\Admin\ContactMessageController;
-use App\Http\Controllers\Admin\NewsletterController;
-use App\Http\Controllers\Admin\CountryController;
-use App\Http\Controllers\Admin\PollController;
-use App\Http\Controllers\Admin\DocumentController;
-use App\Http\Controllers\Admin\DepartmentController;
-use App\Http\Controllers\Admin\TestimonialController;
-use App\Http\Controllers\Admin\CulturalItemController;
-use App\Http\Controllers\Admin\ToolkitItemController;
-use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\Admin\CommentController;
-use App\Http\Controllers\Admin\FaqItemController;
+use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\MagazineController;
-use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\NewsletterController;
 use App\Http\Controllers\Admin\OpportunityController;
+use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\PollController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\ToolkitItemController;
+use App\Http\Controllers\Admin\UserController;
+use Illuminate\Support\Facades\Route;
 
 // Accueil
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| 410 Gone - Nettoyage des anciennes URLs WordPress / spam
+|--------------------------------------------------------------------------
+| Ces routes renvoient un code 410 (Gone) pour dire à Google
+| que ces pages n'existent plus et ne reviendront jamais.
+|
+*/
+
+Route::get('/index.php/{any}', function () {
+    abort(410);
+})->where('any', '.*');
+
+Route::get('/login.php', function () {
+    abort(410);
+});
+
+Route::get('/login_up.php', function () {
+    abort(410);
+});
+
+Route::get('/', function (\Illuminate\Http\Request $request) {
+    $wpParams = ['page_id', 'p', 'cat', 'tag', 'paged', 'feed', 'attachment_id'];
+
+    foreach ($wpParams as $param) {
+        if ($request->has($param)) {
+            abort(410);
+        }
+    }
+
+    return app()->call('App\Http\Controllers\HomeController@index');
+})->name('home.filtered');
 
 // Actualités
 Route::get('/actualites', [\App\Http\Controllers\ActualiteController::class, 'index'])->name('actualites');
