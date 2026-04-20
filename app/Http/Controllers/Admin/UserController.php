@@ -33,6 +33,17 @@ class UserController extends Controller
         return view('back-end.utilisateurs.index', compact('users', 'roles', 'roleCounts'));
     }
 
+    public function create()
+    {
+        $roles = [
+            ['value' => 'super-admin', 'label' => 'Super Administrateur'],
+            ['value' => 'editeur', 'label' => 'Éditeur'],
+            ['value' => 'redacteur', 'label' => 'Rédacteur'],
+        ];
+
+        return view('back-end.utilisateurs.create', compact('roles'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -72,13 +83,25 @@ class UserController extends Controller
             ->with('success', $message);
     }
 
+    public function edit(User $utilisateur)
+    {
+        return view('back-end.utilisateurs.edit', compact('utilisateur'));
+    }
+
     public function update(Request $request, User $utilisateur)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $utilisateur->id,
             'role' => 'required|in:super-admin,editeur,redacteur',
+            'password' => 'nullable|string|min:8|confirmed',
         ]);
+
+        if ($request->filled('password')) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
 
         $utilisateur->update($validated);
 

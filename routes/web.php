@@ -119,7 +119,7 @@ Route::prefix('admin')->middleware(['admin', 'force-password-change'])->name('ad
     Route::resource('dossiers', DossierController::class);
     Route::resource('evenements', EvenementController::class);
     Route::resource('flash-infos', FlashInfoController::class);
-    Route::resource('galerie', GalerieController::class)->except(['create', 'show', 'edit']);
+    Route::resource('galerie', GalerieController::class)->except(['show']);
     Route::resource('staff', StaffController::class);
     Route::resource('partners', PartnerController::class);
     Route::resource('countries', CountryController::class);
@@ -166,6 +166,6 @@ Route::prefix('admin')->middleware(['admin', 'force-password-change'])->name('ad
     Route::delete('utilisateurs/{utilisateur}/avatar', [UserController::class, 'removeAvatar'])->name('utilisateurs.avatar.remove');
 
     // Utilisateurs (super-admin uniquement)
-    Route::resource('utilisateurs', UserController::class)->except(['create', 'show', 'edit'])->middleware('superadmin');
+    Route::resource('utilisateurs', UserController::class)->except(['show'])->middleware('superadmin');
     Route::post('utilisateurs/{utilisateur}/reset-password', [UserController::class, 'resetPassword'])->name('utilisateurs.reset-password')->middleware('superadmin');
 });

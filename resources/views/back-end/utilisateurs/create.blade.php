@@ -29,20 +29,14 @@
             <div class="form-group">
                 <label for="role">Rôle <span class="required">*</span></label>
                 <select id="role" name="role" class="form-select" required>
-                    <option value="redacteur" {{ old('role') == 'redacteur' ? 'selected' : '' }}>Rédacteur</option>
-                    <option value="editeur" {{ old('role') == 'editeur' ? 'selected' : '' }}>Éditeur</option>
-                    <option value="super-admin" {{ old('role') == 'super-admin' ? 'selected' : '' }}>Super Admin</option>
+                    @foreach($roles as $role)
+                        <option value="{{ $role['value'] }}" {{ old('role') == $role['value'] ? 'selected' : '' }}>{{ $role['label'] }}</option>
+                    @endforeach
                 </select>
                 @error('role') <span class="form-error">{{ $message }}</span> @enderror
             </div>
-            <div class="form-group">
-                <label for="password">Mot de passe <span class="required">*</span></label>
-                <input type="password" id="password" name="password" class="form-input" required>
-                @error('password') <span class="form-error">{{ $message }}</span> @enderror
-            </div>
-            <div class="form-group">
-                <label for="password_confirmation">Confirmer le mot de passe <span class="required">*</span></label>
-                <input type="password" id="password_confirmation" name="password_confirmation" class="form-input" required>
+            <div class="form-group full-width">
+                <p class="form-help">Un mot de passe temporaire sera généré automatiquement et envoyé par email à l'utilisateur.</p>
             </div>
         </div>
         <div class="form-actions">
