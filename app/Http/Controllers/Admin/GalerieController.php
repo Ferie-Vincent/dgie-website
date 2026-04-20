@@ -26,6 +26,11 @@ class GalerieController extends Controller
         return view('back-end.galerie.index', compact('albums', 'videos'));
     }
 
+    public function create()
+    {
+        return view('back-end.galerie.create');
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -89,6 +94,12 @@ class GalerieController extends Controller
 
         return redirect()->route('admin.galerie.index')
             ->with('success', 'Album créé avec succès.');
+    }
+
+    public function edit(GalerieAlbum $galerie)
+    {
+        $galerie->load('items');
+        return view('back-end.galerie.edit', compact('galerie'));
     }
 
     public function update(Request $request, GalerieAlbum $galerie)
